@@ -1,0 +1,49 @@
+ncverilog: 15.20-s084: (c) Copyright 1995-2020 Cadence Design Systems, Inc.
+TOOL:	ncverilog	15.20-s084: Started on Sep 16, 2022 at 17:45:39 CST
+ncverilog
+	../sim/tb_Top.sv
+	./Top_example.sv
+	+access+rw
+Recompiling... reason: file './Top_example.sv' is newer than expected.
+	expected: Fri Sep 16 16:03:30 2022
+	actual:   Fri Sep 16 17:45:33 2022
+file: ./Top_example.sv
+	module worklib.Top:sv
+		errors: 0, warnings: 0
+		Caching library 'worklib' ....... Done
+	Elaborating the design hierarchy:
+ncelab: *W,DSEMEL: This SystemVerilog design will be simulated as per IEEE 1800-2009 SystemVerilog simulation semantics. Use -disable_sem2009 option for turning off SV 2009 simulation semantics.
+	Building instance overlay tables: .................... Done
+	Generating native compiled code:
+		worklib.Top:sv <0x04fb573d>
+			streams:   4, words:  2834
+	Building instance specific data structures.
+	Loading native compiled code:     .................... Done
+	Design hierarchy summary:
+		                 Instances  Unique
+		Modules:                 2       2
+		Registers:              14      14
+		Scalar wires:            3       -
+		Vectored wires:          2       -
+		Always blocks:           3       3
+		Initial blocks:          4       4
+		Cont. assignments:       0       1
+		Pseudo assignments:      4       4
+		Simulation timescale:  1us
+	Writing initial simulation snapshot: worklib.Top_test:sv
+Loading snapshot worklib.Top_test:sv .................... Done
+ncsim: *W,DSEM2009: This SystemVerilog design is simulated as per IEEE 1800-2009 SystemVerilog simulation semantics. Use -disable_sem2009 option for turning off SV 2009 simulation semantics.
+*Verdi* Loading libsscore_ius152.so
+ncsim> source /usr/cad/cadence/INCISIV/cur/tools/inca/files/ncsimrc
+ncsim> run
+FSDB Dumper for IUS, Release Verdi_P-2019.06, Linux, 05/26/2019
+(C) 1996 - 2019 by Synopsys, Inc.
+*Verdi* FSDB WARNING: The FSDB file already exists. Overwriting the FSDB file may crash the programs that are using this file.
+*Verdi* : Create FSDB file 'Lab1_test.fsdb'
+*Verdi* : Begin traversing the scope (Top_test), layer (0).
+*Verdi* : Enable +all dumping.
+*Verdi* : End of traversing.
+Simulation complete via $finish(1) at time 1000 S + 0
+../sim/tb_Top.sv:45 initial #(cycle*10000000) $finish;
+ncsim> exit
+TOOL:	ncverilog	15.20-s084: Exiting on Sep 16, 2022 at 17:45:53 CST  (total: 00:00:14)
