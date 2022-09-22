@@ -137,7 +137,10 @@ module DE2_115 (
 );
 
 logic keydown;
+logic func_keydown;
 logic [3:0] random_value;
+logic [3:0] mem_value;
+logic [3:0] prev_value;
 
 Debounce deb0(
 	.i_in(KEY[0]),
@@ -146,11 +149,21 @@ Debounce deb0(
 	.o_neg(keydown)
 );
 
+Debounce deb1(
+	.i_in(KEY[2]),
+	.i_rst_n(KEY[1]),
+	.i_clk(CLOCK_50),
+	.o_neg(func_keydown)
+);
+
 Top top0(
 	.i_clk(CLOCK_50),
 	.i_rst_n(KEY[1]),
+	.i_mem(func_keydown),
 	.i_start(keydown),
-	.o_random_out(random_value)
+	.o_random_out(random_value),
+	.o_mem_out(mem_value),
+	.o_prev_out(prev_value)
 );
 
 SevenHexDecoder seven_dec0(
@@ -159,12 +172,24 @@ SevenHexDecoder seven_dec0(
 	.o_seven_one(HEX0)
 );
 
+SevenHexDecoder seven_dec1(
+	.i_hex(mem_value),
+	.o_seven_ten(HEX5),
+	.o_seven_one(HEX4)
+);
+
+SevenHexDecoder seven_dec2(
+	.i_hex(prev_value),
+	.o_seven_ten(HEX7),
+	.o_seven_one(HEX6)
+);
+
 assign HEX2 = '1;
 assign HEX3 = '1;
-assign HEX4 = '1;
-assign HEX5 = '1;
-assign HEX6 = '1;
-assign HEX7 = '1;
+// assign HEX4 = '1;
+// assign HEX5 = '1;
+// assign HEX6 = '1;
+// assign HEX7 = '1;
 
 `ifdef DUT_LAB1
 	initial begin
