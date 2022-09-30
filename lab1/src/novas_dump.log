@@ -23,15 +23,15 @@ HOME=/home/raid7_2/userb09/b09011
 PATH=/usr/spring_soft/verdi/cur/bin:/usr/spring_soft/verdi/cur/nLint/bin:/usr/mentor/calibre/cur/bin:/usr/cad/synopsys/customexplorer/cur/bin:/usr/cad/cadence/SPECTRE/cur/tools/dfII/bin:/usr/cad/cadence/SPECTRE/cur/tools/bin:/usr/cad/cadence/STRATUS/cur/tools/bin:/usr/cad/cadence/JASPER/cur/bin:/usr/cad/cadence/EDI/cur/tools/celtic/bin:/usr/cad/cadence/EDI/cur/tools/plato/bin:/usr/cad/cadence/EDI/cur/tools/dfII/bin:/usr/cad/cadence/EDI/cur/tools/fe/bin:/usr/cad/cadence/EDI/cur/tools/cdsdoc/bin:/usr/cad/cadence/EDI/cur/tools/bin:/usr/cad/cadence/EDI/cur//tools/tlfUtil/bin:/usr/cad/cadence/RC/cur/tools/bin:/usr/cad/cadence/MMSIM/cur/tools/dfII/bin:/usr/cad/cadence/MMSIM/cur/tools/bin:/usr/cad/cadence/NEOCIRCUIT/cur/tools/NeoCircuit/bin:bin.linux:/usr/cad/cadence/SPB/cur/tools/specctra/bin:/usr/cad/cadence/SPB/cur/tools/pcb/bin:/usr/cad/cadence/SPB/cur/tools/dfII/bin:/usr/cad/cadence/SPB/cur/tools/bin:/usr/cad/cadence/INCISIV/cur/tools/bin:/usr/cad/cadence/INCISIV/cur/tools/vtools/vfault/bin:/usr/cad/cadence/INCISIV/cur/tools/dfII/bin:/usr/cad/cadence/IC/cur/tools/dfII/bin:/usr/cad/cadence/IC/cur/tools/dracula/bin:/usr/cad/cadence/IC/cur/tools/bin:/usr/cad/cadence/EXT/cur/tools/bin:/usr/cad/cadence/ETS/cur/tools/bin:/usr/cad/cadence/CONFRML/cur/./bin:/usr/cad/cadence/CONFRML/cur/tools/bin:/usr/cad/cadence/CCD/cur/tools/bin:/usr/cad/cadence/ASSURA/cur/tools/assura/bin:/usr/cad/cadence/ASSURA/cur/tools/dsm/bin:/usr/cad/cadence/ASSURA/cur/tools/bin:/usr/cad/cadence/ASSURA/cur/tools/dfII/bin:/usr/lib64/qt-3.3/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/home/raid7_4/raid1_1/linux/novas/verdi/cur/bin
 MAIL=/var/spool/mail/b09011
 SHELL=/bin/tcsh
-SSH_CLIENT=140.112.194.56 1365 22
-SSH_CONNECTION=140.112.194.56 1365 140.112.20.72 22
-SSH_TTY=/dev/pts/10
+SSH_CLIENT=140.112.194.56 14005 22
+SSH_CONNECTION=140.112.194.56 14005 140.112.20.72 22
+SSH_TTY=/dev/pts/31
 TERM=xterm
-DISPLAY=localhost:22.0
+DISPLAY=localhost:31.0
 SELINUX_ROLE_REQUESTED=
 SELINUX_LEVEL_REQUESTED=
 SELINUX_USE_CURRENT_RANGE=
-XDG_SESSION_ID=21392
+XDG_SESSION_ID=23967
 XDG_RUNTIME_DIR=/run/user/4575
 HOSTTYPE=x86_64-linux
 VENDOR=unknown
@@ -73,12 +73,12 @@ TCL_LIBRARY=/usr/cad/cadence/INCISIV/cur/tools/inca/files/tcl/library
 Runtime command line arguments:
 argv[0]=ncverilog
 argv[1]=../sim/tb_Top.sv
-argv[2]=./Top_example.sv
+argv[2]=./Top.sv
 argv[3]=+access+rw
 77 profile - 100
-          CPU/Mem usage: 0.150 sys,  1.140 user,  69.02M sys,  0.00M vm
+          CPU/Mem usage: 0.160 sys,  1.160 user,  69.03M sys,  0.00M vm
 78 VC callback profile - scalar:0 vector:0
-79 Fri Sep 16 17:45:41 2022
+79 Tue Sep 20 13:27:28 2022
 80 pliAppInit
 81 FSDB_GATE is disabled.
 82 Enable Parallel Dumping.
@@ -87,7 +87,7 @@ argv[3]=+access+rw
 85 LIBSSCORE=found /home/raid7_4/raid1_1/linux/novas/verdi/cur/share/PLI/IUS/LINUX/libsscore_ius152.so through $LD_LIBRARY_PATH setting.
 86 argv[0]: Lab1_test.fsdb
 87 argv[0]: 0
-88 argv[1]: (handle)0xb714a90 Top_test
+88 argv[1]: (handle)0xb87db30 Top_test
 89 argv[2]: +all
 90 FSDB Dumper for IUS, Release Verdi_P-2019.06, Linux, 05/26/2019
 91 (C) 1996 - 2019 by Synopsys, Inc.
@@ -97,44 +97,44 @@ argv[3]=+access+rw
 95 *Verdi* : Create FSDB file 'Lab1_test.fsdb'
 96 sps_call_fsdbDumpvars at 0 : /home/raid7_2/userb09/b09011/Digital-Circuit/lab1/sim/tb_Top.sv(23)
 97 argv[0]: 0
-98 argv[1]: (handle)0xb714a90 Top_test
+98 argv[1]: (handle)0xb87db30 Top_test
 99 argv[2]: +all
 100 *Verdi* : Begin traversing the scope (Top_test), layer (0).
 101 *Verdi* : Enable +all dumping.
 102 *Verdi* : End of traversing.
 103 fsdbDumpvars traverse var: profile - 
-          CPU/Mem usage: 0.160 sys,  1.150 user,  150.88M sys,  0.00M vm
-                   incr: 0.000 sys,  0.010 user,  3.27M sys,  0.00M vm
-                   accu: 0.000 sys,  0.010 user,  3.27M sys,  0.00M vm
-              accu incr: 0.000 sys,  0.010 user,  3.27M sys,  0.00M vm
+          CPU/Mem usage: 0.170 sys,  1.170 user,  150.88M sys,  0.00M vm
+                   incr: 0.000 sys,  0.000 user,  3.27M sys,  0.00M vm
+                   accu: 0.000 sys,  0.000 user,  3.27M sys,  0.00M vm
+              accu incr: 0.000 sys,  0.000 user,  3.27M sys,  0.00M vm
 
-          Count usage: 18 var,  18 idcode,  18 callback
-                 incr: 18 var,  18 idcode,  18 callback
-                 accu: 18 var,  18 idcode,  18 callback
-            accu incr: 18 var,  18 idcode,  18 callback
+          Count usage: 20 var,  20 idcode,  20 callback
+                 incr: 20 var,  20 idcode,  20 callback
+                 accu: 20 var,  20 idcode,  20 callback
+            accu incr: 20 var,  20 idcode,  20 callback
 104 VC callback profile - scalar:0 vector:0
-105 Fri Sep 16 17:45:41 2022
+105 Tue Sep 20 13:27:28 2022
 106 fsdbDumpvars: profile - 
-          CPU/Mem usage: 0.160 sys,  1.150 user,  151.93M sys,  0.00M vm
+          CPU/Mem usage: 0.170 sys,  1.170 user,  151.94M sys,  0.00M vm
                    incr: 0.000 sys,  0.000 user,  1.05M sys,  0.00M vm
-                   accu: 0.000 sys,  0.010 user,  4.33M sys,  0.00M vm
+                   accu: 0.000 sys,  0.000 user,  4.33M sys,  0.00M vm
               accu incr: 0.000 sys,  0.000 user,  1.05M sys,  0.00M vm
 
-          Count usage: 18 var,  18 idcode,  18 callback
+          Count usage: 20 var,  20 idcode,  20 callback
                  incr: 0 var,  0 idcode,  0 callback
-                 accu: 18 var,  18 idcode,  18 callback
+                 accu: 20 var,  20 idcode,  20 callback
             accu incr: 0 var,  0 idcode,  0 callback
-107 VC callback profile - scalar:6 vector:12
-108 Fri Sep 16 17:45:41 2022
+107 VC callback profile - scalar:6 vector:14
+108 Tue Sep 20 13:27:28 2022
 109 End of simulation at 1000000000
-110 VC callback profile - scalar:40000017 vector:20372193
-111 Fri Sep 16 17:45:53 2022
+110 VC callback profile - scalar:40000017 vector:60000048
+111 Tue Sep 20 13:28:49 2022
 112 Begin FSDB profile info:
-113 FSDB Writer : bc1(40000017) bcn(20372193) mtf/stf(0/4)
-FSDB Writer elapsed time : flush(3.080948) io wait(0.000000) theadpool wait(0.000000) target functin(0.000000)
+113 FSDB Writer : bc1(40000017) bcn(60000048) mtf/stf(0/12)
+FSDB Writer elapsed time : flush(67.820675) io wait(0.000000) theadpool wait(0.000000) target functin(0.000000)
 FSDB Writer cpu time : MT Compression : 0
 114 End FSDB profile info
-115 Parallel profile    -  Flush:3 Expand:2 ProduceWait:0 ConsumerWait:76 BlockUsed:366
-116                        ProduceTime:11.077116370 ConsumerTime:11.046767756 Buffer:128MB
+115 Parallel profile    -  Flush:3 Expand:2 ProduceWait:11 ConsumerWait:42 BlockUsed:612
+116                        ProduceTime:19.226632096 ConsumerTime:31.708563834 Buffer:128MB
 117 SimExit
 118 Sim process exit
