@@ -1,13 +1,13 @@
 module RsaPrep(
     input i_clk,
 	input i_rst,
-    input [255:0] i_N;
-    input [255:0] i_a;
-    input [255:0] i_b;
-    input [7:0] i_k;
-    input i_input_ready;
-    output [255:0] o_m;
-    output o_output_ready;
+    input [255:0] i_N,
+    input [256:0] i_a,
+    input [255:0] i_b,
+    input [8:0] i_k,
+    input i_input_ready,
+    output [255:0] o_m,
+    output o_output_ready
 );
 
 // ===== States =====
@@ -19,7 +19,7 @@ logic [255:0] o_m_r, o_m_w;
 logic o_output_ready_r, o_output_ready_w;
 
 // ===== Registers & Wires =====
-logic [1:0] states_r, state_w;
+logic [1:0] state_r, state_w;
 logic [7:0] count_r, count_w;
 logic [255:0] t_r, t_w;
 
@@ -72,9 +72,9 @@ always_comb begin
 end
 
 // ===== Sequential Circuits =====
-always_ff @(posedge i_clk or negedge i_rst_n) begin
+always_ff @(posedge i_clk or negedge i_rst) begin
     // reset
-    if (!i_rst_n) begin
+    if (!i_rst) begin
         t_r              <= i_b;
         o_m_r            <= 256'd0;
         o_output_ready_r <= 1'd0;

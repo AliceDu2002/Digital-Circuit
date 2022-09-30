@@ -10,12 +10,13 @@ module Rsa256Core (
 );
 
 // ===== states =====
-parameter S_IDLE = 2'd0;
-parameter S_PREP = 2'd1;
-parameter S_MONT = 2'd2;
-parameter S_CALC = 2'd3;
+parameter S_IDLE = 3'd0;
+parameter S_PREP = 3'd1;
+parameter S_MONT = 3'd2;
+parameter S_CALC = 3'd3;
+parameter S_WAIT = 3'd4;
 parameter [256:0] const_a = {1'd1, 256'd0};
-parameter [8:0] const_k = {1'd1, 7'd0};
+parameter [8:0] const_k = {1'd1, 8'd0};
 
 // ===== output buffers =====
 logic [255:0] o_a_pow_r, o_a_pow_w;
@@ -37,8 +38,8 @@ assign o_a_pow_d = o_a_pow_r;
 assign o_finished = o_a_pow_r;
 
 RsaPrep Prep (
-	.i_clk(CLOCK_50),
-	.i_reset(KEY[0]),
+	.i_clk(i_clk),
+	.i_rst(i_rst),
 	.i_N(i_n),
 	.i_a(const_a),
 	.i_b(i_a),
@@ -49,8 +50,8 @@ RsaPrep Prep (
 );
 
 RsaMont Montm (
-	.i_clk(CLOCK_50),
-	.i_reset(KEY[0]),
+	.i_clk(i_clk),
+	.i_rst(i_rst),
 	.i_N(i_n),
 	.i_a(o_a_pow_r),
 	.i_b(t_r),
@@ -60,8 +61,8 @@ RsaMont Montm (
 );
 
 RsaMont Montt (
-	.i_clk(CLOCK_50),
-	.i_reset(KEY[0]),
+	.i_clk(i_clk),
+	.i_rst(i_rst),
 	.i_N(i_n),
 	.i_a(t_r),
 	.i_b(t_r),
@@ -85,7 +86,7 @@ always_comb begin
 	mont_ready_t_w = mont_ready_t_r;
 	mont_finished_m_w = mont_finished_m_r;
 	mont_finished_t_w = mont_finished_t_r;
-	case(start_r):
+	case(state_r)
 	S_IDLE: begin
 		if(i_start) begin
 			state_w = S_PREP;
@@ -98,11 +99,11 @@ always_comb begin
 			t_w = t;
 			o_a_pow_w = 1;
 			state_w = S_MONT;
-			mont_ready_w = 1;
+			prep_ready_w = 1;
 		end
 	end
 	S_MONT: begin
-		mont_ready_w = 0;
+		prep_ready_w = 0;
 		count_w = count_r + 1;
 		if(i_d[count_r] == 1) begin
 			mont_ready_m_w = 1;
@@ -116,7 +117,7 @@ always_comb begin
 		end
 	end	
 	S_CALC: begin
-		if(count < 256) begin
+		if(count_r < 256) begin
 			state_w = S_MONT;
 		end	
 		else begin
@@ -124,10 +125,11 @@ always_comb begin
 			state_w = S_IDLE;
 		end
 	end
+	endcase
 end
 
-always_ff @(posedge i_clk or negedge i_rst_n) begin
-	if (!i_rst_n) begin
+always_ff @(posedge i_clk or negedge i_rst) begin
+	if (!i_rst) begin
 		state_r <= 0;
 		o_a_pow_r <= 1;
 		o_finished_r <= 0;
