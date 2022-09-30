@@ -52,8 +52,8 @@ always_comb begin
 	S_GRAB: begin
 		o_random_out_w = (o_random_out_r * 32'd1103515245 + 32'd12345 ) % 16;
 		count_w = 0;
-		duration_w = duration_r + 32'd1000;
-		if (duration_r > 32'd20000) begin
+		duration_w = duration_r + 32'd2000;
+		if (duration_r > 32'd40000) begin
 			state_w = S_STOP;
 		end
 		else begin
@@ -67,8 +67,8 @@ always_comb begin
 			state_w = S_PROC;
 		end
 	end
-
 	endcase
+	$display(seed);
 end
 
 // ===== Sequential Circuits =====

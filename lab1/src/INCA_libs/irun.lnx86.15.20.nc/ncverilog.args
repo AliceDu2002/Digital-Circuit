@@ -3,5 +3,5 @@
 // Do not modify this file
 //
 ../sim/tb_Top.sv
-./Top_example.sv
+./Top.sv
 +access+rw

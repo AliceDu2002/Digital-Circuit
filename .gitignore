@@ -16,6 +16,7 @@ c5_pin_model_dump.txt
 *.ipregen.rpt
 *_summary.csv
 *_early_pwr.csv
+*.fsdb
 
 # junk directories
 /.qsys_edit
