@@ -1,11 +1,13 @@
 module RsaPrep(
-    input [255:0] N;
-    input [255:0] a;
-    input [255:0] b;
-    input input_ready;
-    input [7:0] k;
-    output [255:0] m;
-    output output_ready;
+    input i_clk,
+	input i_rst,
+    input [255:0] i_N;
+    input [255:0] i_a;
+    input [255:0] i_b;
+    input i_input_ready;
+    input [7:0] i_k;
+    output [255:0] o_m;
+    output o_output_ready;
 );
 
 endmodule

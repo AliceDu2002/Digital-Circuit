@@ -12,6 +12,4 @@ module Rsa256Core (
 // operations for RSA256 decryption
 // namely, the Montgomery algorithm
 
-
-
 endmodule
