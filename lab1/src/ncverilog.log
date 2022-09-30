@@ -1,13 +1,10 @@
 ncverilog: 15.20-s084: (c) Copyright 1995-2020 Cadence Design Systems, Inc.
-TOOL:	ncverilog	15.20-s084: Started on Sep 16, 2022 at 17:45:39 CST
+TOOL:	ncverilog	15.20-s084: Started on Sep 20, 2022 at 13:27:26 CST
 ncverilog
 	../sim/tb_Top.sv
-	./Top_example.sv
+	./Top.sv
 	+access+rw
-Recompiling... reason: file './Top_example.sv' is newer than expected.
-	expected: Fri Sep 16 16:03:30 2022
-	actual:   Fri Sep 16 17:45:33 2022
-file: ./Top_example.sv
+file: ./Top.sv
 	module worklib.Top:sv
 		errors: 0, warnings: 0
 		Caching library 'worklib' ....... Done
@@ -15,14 +12,16 @@ file: ./Top_example.sv
 ncelab: *W,DSEMEL: This SystemVerilog design will be simulated as per IEEE 1800-2009 SystemVerilog simulation semantics. Use -disable_sem2009 option for turning off SV 2009 simulation semantics.
 	Building instance overlay tables: .................... Done
 	Generating native compiled code:
-		worklib.Top:sv <0x04fb573d>
-			streams:   4, words:  2834
+		worklib.Top:sv <0x4b847a39>
+			streams:   4, words:  3432
+		worklib.Top_test:sv <0x3ce9d0a5>
+			streams:   9, words:  8279
 	Building instance specific data structures.
 	Loading native compiled code:     .................... Done
 	Design hierarchy summary:
 		                 Instances  Unique
 		Modules:                 2       2
-		Registers:              14      14
+		Registers:              16      16
 		Scalar wires:            3       -
 		Vectored wires:          2       -
 		Always blocks:           3       3
@@ -46,4 +45,4 @@ FSDB Dumper for IUS, Release Verdi_P-2019.06, Linux, 05/26/2019
 Simulation complete via $finish(1) at time 1000 S + 0
 ../sim/tb_Top.sv:45 initial #(cycle*10000000) $finish;
 ncsim> exit
-TOOL:	ncverilog	15.20-s084: Exiting on Sep 16, 2022 at 17:45:53 CST  (total: 00:00:14)
+TOOL:	ncverilog	15.20-s084: Exiting on Sep 20, 2022 at 13:28:52 CST  (total: 00:01:26)
