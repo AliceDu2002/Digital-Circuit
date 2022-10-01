@@ -1,86 +1,74 @@
 ncverilog: 15.20-s084: (c) Copyright 1995-2020 Cadence Design Systems, Inc.
-TOOL:	ncverilog	15.20-s084: Started on Sep 30, 2022 at 20:34:45 CST
+TOOL:	ncverilog	15.20-s084: Started on Oct 01, 2022 at 22:32:58 CST
 ncverilog
 	+access+r
-	./tb_verilog/tb.sv
+	tb_verilog/tb.sv
 	Rsa256Core.sv
 	RsaPrep.sv
 	RsaMont.sv
-Recompiling... reason: file './Rsa256Core.sv' is newer than expected.
-	expected: Fri Sep 30 20:32:22 2022
-	actual:   Fri Sep 30 20:34:25 2022
-file: ./tb_verilog/tb.sv
+Recompiling... reason: file './RsaMont.sv' is newer than expected.
+	expected: Sat Oct  1 22:20:16 2022
+	actual:   Sat Oct  1 22:32:57 2022
+file: tb_verilog/tb.sv
 			$fread(encrypted_data, fp_e);
 			     |
-ncvlog: *W,NOSYST (./tb_verilog/tb.sv,37|8): System function '$fread' invoked as a task. Return value will be ignored.
+ncvlog: *W,NOSYST (tb_verilog/tb.sv,37|8): System function '$fread' invoked as a task. Return value will be ignored.
 			$fread(golden, fp_d);
 			     |
-ncvlog: *W,NOSYST (./tb_verilog/tb.sv,38|8): System function '$fread' invoked as a task. Return value will be ignored.
-file: Rsa256Core.sv
-	module worklib.Rsa256Core:sv
+ncvlog: *W,NOSYST (tb_verilog/tb.sv,38|8): System function '$fread' invoked as a task. Return value will be ignored.
+file: RsaMont.sv
+	module worklib.RsaMont:sv
 		errors: 0, warnings: 0
 		Caching library 'worklib' ....... Done
 	Elaborating the design hierarchy:
 ncelab: *W,DSEMEL: This SystemVerilog design will be simulated as per IEEE 1800-2009 SystemVerilog simulation semantics. Use -disable_sem2009 option for turning off SV 2009 simulation semantics.
-    .state(state_w),
-         |
-ncelab: *E,ICDPAV (./RsaMont.sv,32|9): Illegal combination of driver and procedural assignment to variable state_w detected (procedural assignment found in always block at line 37 in file ./RsaMont.sv).
-always_ff @(posedge i_clk or negedge i_rst) begin
-        |
-ncelab: *E,MULAXX (./RsaMont.sv,88|8): Multiple drivers to always_ff output variable counter_r detected.
-always_ff @(posedge i_clk or negedge i_rst) begin
-        |
-ncelab: *E,MULAXX (./RsaMont.sv,88|8): Multiple drivers to always_ff output variable counter_r detected.
-always_ff @(posedge i_clk or negedge i_rst) begin
-        |
-ncelab: *E,MULAXX (./RsaMont.sv,88|8): Multiple drivers to always_ff output variable counter_r detected.
-always_ff @(posedge i_clk or negedge i_rst) begin
-        |
-ncelab: *E,MULAXX (./RsaMont.sv,88|8): Multiple drivers to always_ff output variable counter_r detected.
-always_ff @(posedge i_clk or negedge i_rst) begin
-        |
-ncelab: *E,MULAXX (./RsaMont.sv,88|8): Multiple drivers to always_ff output variable counter_r detected.
-always_ff @(posedge i_clk or negedge i_rst) begin
-        |
-ncelab: *E,MULAXX (./RsaMont.sv,88|8): Multiple drivers to always_ff output variable counter_r detected.
-always_ff @(posedge i_clk or negedge i_rst) begin
-        |
-ncelab: *E,MULAXX (./RsaMont.sv,88|8): Multiple drivers to always_ff output variable counter_r detected.
-always_ff @(posedge i_clk or negedge i_rst) begin
-        |
-ncelab: *E,MULAXX (./RsaMont.sv,88|8): Multiple drivers to always_ff output variable counter_r detected.
-    .m_out(m_w)
-         |
-ncelab: *E,ICDPAV (./RsaMont.sv,33|9): Illegal combination of driver and procedural assignment to variable m_w detected (procedural assignment found in always block at line 37 in file ./RsaMont.sv).
-    .state(state_w),
-         |
-ncelab: *E,ICDPAV (./RsaMont.sv,32|9): Illegal combination of driver and procedural assignment to variable state_w detected (procedural assignment found in always block at line 37 in file ./RsaMont.sv).
-always_ff @(posedge i_clk or negedge i_rst) begin
-        |
-ncelab: *E,MULAXX (./RsaMont.sv,88|8): Multiple drivers to always_ff output variable counter_r detected.
-always_ff @(posedge i_clk or negedge i_rst) begin
-        |
-ncelab: *E,MULAXX (./RsaMont.sv,88|8): Multiple drivers to always_ff output variable counter_r detected.
-always_ff @(posedge i_clk or negedge i_rst) begin
-        |
-ncelab: *E,MULAXX (./RsaMont.sv,88|8): Multiple drivers to always_ff output variable counter_r detected.
-always_ff @(posedge i_clk or negedge i_rst) begin
-        |
-ncelab: *E,MULAXX (./RsaMont.sv,88|8): Multiple drivers to always_ff output variable counter_r detected.
-always_ff @(posedge i_clk or negedge i_rst) begin
-        |
-ncelab: *E,MULAXX (./RsaMont.sv,88|8): Multiple drivers to always_ff output variable counter_r detected.
-always_ff @(posedge i_clk or negedge i_rst) begin
-        |
-ncelab: *E,MULAXX (./RsaMont.sv,88|8): Multiple drivers to always_ff output variable counter_r detected.
-always_ff @(posedge i_clk or negedge i_rst) begin
-        |
-ncelab: *E,MULAXX (./RsaMont.sv,88|8): Multiple drivers to always_ff output variable counter_r detected.
-always_ff @(posedge i_clk or negedge i_rst) begin
-        |
-ncelab: *E,MULAXX (./RsaMont.sv,88|8): Multiple drivers to always_ff output variable counter_r detected.
-    .m_out(m_w)
-         |
-ncelab: *E,ICDPAV (./RsaMont.sv,33|9): Illegal combination of driver and procedural assignment to variable m_w detected (procedural assignment found in always block at line 37 in file ./RsaMont.sv).
-ncverilog: *E,ELBERR: Error during elaboration (status 1), exiting.
-TOOL:	ncverilog	15.20-s084: Exiting on Sep 30, 2022 at 20:34:46 CST  (total: 00:00:01)
+	Building instance overlay tables: .................... Done
+	Generating native compiled code:
+		worklib.Rsa256Core:sv <0x26497f05>
+			streams:  18, words: 11063
+		worklib.RsaMont:sv <0x1d8fd131>
+			streams:   4, words:  5555
+		worklib.RsaPrep:sv <0x49551fcf>
+			streams:   4, words:  5853
+		worklib.tb:sv <0x28d7554f>
+			streams:  12, words: 10279
+	Building instance specific data structures.
+	Loading native compiled code:     .................... Done
+	Design hierarchy summary:
+		                   Instances  Unique
+		Modules:                   5       4
+		Registers:                71      60
+		Scalar wires:             14       -
+		Vectored wires:           17       -
+		Always blocks:             9       7
+		Initial blocks:            3       3
+		Cont. assignments:         1       6
+		Pseudo assignments:       19      19
+		Simulation timescale:  100ps
+	Writing initial simulation snapshot: worklib.tb:sv
+Loading snapshot worklib.tb:sv .................... Done
+ncsim: *W,DSEM2009: This SystemVerilog design is simulated as per IEEE 1800-2009 SystemVerilog simulation semantics. Use -disable_sem2009 option for turning off SV 2009 simulation semantics.
+*Verdi* Loading libsscore_ius152.so
+ncsim> source /usr/cad/cadence/INCISIV/cur/tools/inca/files/ncsimrc
+ncsim> run
+FSDB Dumper for IUS, Release Verdi_P-2019.06, Linux, 05/26/2019
+(C) 1996 - 2019 by Synopsys, Inc.
+*Verdi* : Create FSDB file 'lab2.fsdb'
+*Verdi* : Begin traversing the scopes, layer (0).
+*Verdi* : End of traversing.
+Open failed on file "../pc_python/golden/enc1.bin". No such file or directory
+Open failed on file "../pc_python/golden/dec1.txt". No such file or directory
+			$fread(encrypted_data, fp_e);
+			     |
+ncsim: *E,SYSFMT (./tb_verilog/tb.sv,37|8):  Null file descriptor passed to $fread.
+			$fread(golden, fp_d);
+			     |
+ncsim: *E,SYSFMT (./tb_verilog/tb.sv,38|8):  Null file descriptor passed to $fread.
+=========
+enc   0 = xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+=========
+Too slow, abort.
+Simulation complete via $finish(1) at time 5 MS + 0
+./tb_verilog/tb.sv:58 		$finish;
+ncsim> exit
+TOOL:	ncverilog	15.20-s084: Exiting on Oct 01, 2022 at 22:33:01 CST  (total: 00:00:03)

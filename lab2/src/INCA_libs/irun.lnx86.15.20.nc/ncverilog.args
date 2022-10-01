@@ -3,7 +3,7 @@
 // Do not modify this file
 //
 +access+r
-./tb_verilog/tb.sv
+tb_verilog/tb.sv
 Rsa256Core.sv
 RsaPrep.sv
 RsaMont.sv
