@@ -3,5 +3,5 @@
 // Do not modify this file
 //
 tb_Top.sv
-../src/Top_example.sv
+./../src/Top.sv
 +access+rw

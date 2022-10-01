@@ -1,13 +1,13 @@
 ncverilog: 15.20-s084: (c) Copyright 1995-2020 Cadence Design Systems, Inc.
-TOOL:	ncverilog	15.20-s084: Started on Sep 15, 2022 at 22:48:17 CST
+TOOL:	ncverilog	15.20-s084: Started on Sep 16, 2022 at 10:25:23 CST
 ncverilog
 	tb_Top.sv
-	../src/Top_example.sv
+	./../src/Top.sv
 	+access+rw
-Recompiling... reason: file '../src/Top_example.sv' is newer than expected.
-	expected: Thu Sep 15 16:04:36 2022
-	actual:   Thu Sep 15 22:47:01 2022
-file: ../src/Top_example.sv
+file: tb_Top.sv
+	module worklib.Top_test:sv
+		errors: 0, warnings: 0
+file: ./../src/Top.sv
 	module worklib.Top:sv
 		errors: 0, warnings: 0
 		Caching library 'worklib' ....... Done
@@ -15,19 +15,18 @@ file: ../src/Top_example.sv
 ncelab: *W,DSEMEL: This SystemVerilog design will be simulated as per IEEE 1800-2009 SystemVerilog simulation semantics. Use -disable_sem2009 option for turning off SV 2009 simulation semantics.
 	Building instance overlay tables: .................... Done
 	Generating native compiled code:
-		worklib.Top:sv <0x10780c1d>
-			streams:   4, words:  1420
+		worklib.Top_test:sv <0x3ce9d0a5>
+			streams:   9, words:  8279
 	Building instance specific data structures.
 	Loading native compiled code:     .................... Done
 	Design hierarchy summary:
 		                 Instances  Unique
 		Modules:                 2       2
-		Registers:              10      10
+		Registers:               4       4
 		Scalar wires:            3       -
 		Vectored wires:          2       -
-		Always blocks:           3       3
+		Always blocks:           1       1
 		Initial blocks:          4       4
-		Cont. assignments:       0       1
 		Pseudo assignments:      4       4
 		Simulation timescale:  1us
 	Writing initial simulation snapshot: worklib.Top_test:sv
@@ -46,4 +45,4 @@ FSDB Dumper for IUS, Release Verdi_P-2019.06, Linux, 05/26/2019
 Simulation complete via $finish(1) at time 1000 S + 0
 ./tb_Top.sv:45 initial #(cycle*10000000) $finish;
 ncsim> exit
-TOOL:	ncverilog	15.20-s084: Exiting on Sep 15, 2022 at 22:48:25 CST  (total: 00:00:08)
+TOOL:	ncverilog	15.20-s084: Exiting on Sep 16, 2022 at 10:25:31 CST  (total: 00:00:08)

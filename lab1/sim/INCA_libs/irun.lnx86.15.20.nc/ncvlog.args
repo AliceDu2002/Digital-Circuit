@@ -6,7 +6,7 @@
 ./INCA_libs/irun.lnx86.15.20.nc
 -RUNMODE
 tb_Top.sv
-../src/Top_example.sv
+./../src/Top.sv
 -CDSLIB
 ./INCA_libs/irun.lnx86.15.20.nc/cdsrun.lib
 -HDLVAR
