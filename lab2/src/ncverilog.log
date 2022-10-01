@@ -1,0 +1,86 @@
+ncverilog: 15.20-s084: (c) Copyright 1995-2020 Cadence Design Systems, Inc.
+TOOL:	ncverilog	15.20-s084: Started on Sep 30, 2022 at 20:34:45 CST
+ncverilog
+	+access+r
+	./tb_verilog/tb.sv
+	Rsa256Core.sv
+	RsaPrep.sv
+	RsaMont.sv
+Recompiling... reason: file './Rsa256Core.sv' is newer than expected.
+	expected: Fri Sep 30 20:32:22 2022
+	actual:   Fri Sep 30 20:34:25 2022
+file: ./tb_verilog/tb.sv
+			$fread(encrypted_data, fp_e);
+			     |
+ncvlog: *W,NOSYST (./tb_verilog/tb.sv,37|8): System function '$fread' invoked as a task. Return value will be ignored.
+			$fread(golden, fp_d);
+			     |
+ncvlog: *W,NOSYST (./tb_verilog/tb.sv,38|8): System function '$fread' invoked as a task. Return value will be ignored.
+file: Rsa256Core.sv
+	module worklib.Rsa256Core:sv
+		errors: 0, warnings: 0
+		Caching library 'worklib' ....... Done
+	Elaborating the design hierarchy:
+ncelab: *W,DSEMEL: This SystemVerilog design will be simulated as per IEEE 1800-2009 SystemVerilog simulation semantics. Use -disable_sem2009 option for turning off SV 2009 simulation semantics.
+    .state(state_w),
+         |
+ncelab: *E,ICDPAV (./RsaMont.sv,32|9): Illegal combination of driver and procedural assignment to variable state_w detected (procedural assignment found in always block at line 37 in file ./RsaMont.sv).
+always_ff @(posedge i_clk or negedge i_rst) begin
+        |
+ncelab: *E,MULAXX (./RsaMont.sv,88|8): Multiple drivers to always_ff output variable counter_r detected.
+always_ff @(posedge i_clk or negedge i_rst) begin
+        |
+ncelab: *E,MULAXX (./RsaMont.sv,88|8): Multiple drivers to always_ff output variable counter_r detected.
+always_ff @(posedge i_clk or negedge i_rst) begin
+        |
+ncelab: *E,MULAXX (./RsaMont.sv,88|8): Multiple drivers to always_ff output variable counter_r detected.
+always_ff @(posedge i_clk or negedge i_rst) begin
+        |
+ncelab: *E,MULAXX (./RsaMont.sv,88|8): Multiple drivers to always_ff output variable counter_r detected.
+always_ff @(posedge i_clk or negedge i_rst) begin
+        |
+ncelab: *E,MULAXX (./RsaMont.sv,88|8): Multiple drivers to always_ff output variable counter_r detected.
+always_ff @(posedge i_clk or negedge i_rst) begin
+        |
+ncelab: *E,MULAXX (./RsaMont.sv,88|8): Multiple drivers to always_ff output variable counter_r detected.
+always_ff @(posedge i_clk or negedge i_rst) begin
+        |
+ncelab: *E,MULAXX (./RsaMont.sv,88|8): Multiple drivers to always_ff output variable counter_r detected.
+always_ff @(posedge i_clk or negedge i_rst) begin
+        |
+ncelab: *E,MULAXX (./RsaMont.sv,88|8): Multiple drivers to always_ff output variable counter_r detected.
+    .m_out(m_w)
+         |
+ncelab: *E,ICDPAV (./RsaMont.sv,33|9): Illegal combination of driver and procedural assignment to variable m_w detected (procedural assignment found in always block at line 37 in file ./RsaMont.sv).
+    .state(state_w),
+         |
+ncelab: *E,ICDPAV (./RsaMont.sv,32|9): Illegal combination of driver and procedural assignment to variable state_w detected (procedural assignment found in always block at line 37 in file ./RsaMont.sv).
+always_ff @(posedge i_clk or negedge i_rst) begin
+        |
+ncelab: *E,MULAXX (./RsaMont.sv,88|8): Multiple drivers to always_ff output variable counter_r detected.
+always_ff @(posedge i_clk or negedge i_rst) begin
+        |
+ncelab: *E,MULAXX (./RsaMont.sv,88|8): Multiple drivers to always_ff output variable counter_r detected.
+always_ff @(posedge i_clk or negedge i_rst) begin
+        |
+ncelab: *E,MULAXX (./RsaMont.sv,88|8): Multiple drivers to always_ff output variable counter_r detected.
+always_ff @(posedge i_clk or negedge i_rst) begin
+        |
+ncelab: *E,MULAXX (./RsaMont.sv,88|8): Multiple drivers to always_ff output variable counter_r detected.
+always_ff @(posedge i_clk or negedge i_rst) begin
+        |
+ncelab: *E,MULAXX (./RsaMont.sv,88|8): Multiple drivers to always_ff output variable counter_r detected.
+always_ff @(posedge i_clk or negedge i_rst) begin
+        |
+ncelab: *E,MULAXX (./RsaMont.sv,88|8): Multiple drivers to always_ff output variable counter_r detected.
+always_ff @(posedge i_clk or negedge i_rst) begin
+        |
+ncelab: *E,MULAXX (./RsaMont.sv,88|8): Multiple drivers to always_ff output variable counter_r detected.
+always_ff @(posedge i_clk or negedge i_rst) begin
+        |
+ncelab: *E,MULAXX (./RsaMont.sv,88|8): Multiple drivers to always_ff output variable counter_r detected.
+    .m_out(m_w)
+         |
+ncelab: *E,ICDPAV (./RsaMont.sv,33|9): Illegal combination of driver and procedural assignment to variable m_w detected (procedural assignment found in always block at line 37 in file ./RsaMont.sv).
+ncverilog: *E,ELBERR: Error during elaboration (status 1), exiting.
+TOOL:	ncverilog	15.20-s084: Exiting on Sep 30, 2022 at 20:34:46 CST  (total: 00:00:01)

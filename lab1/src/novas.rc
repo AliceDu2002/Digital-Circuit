@@ -111,6 +111,8 @@ FSM = 1
 Branch = 1
 [DesignTree]
 IfShowModule = {TRUE, FALSE}
+[DisabledMessages]
+version = Verdi_P-2019.06
 [Editor]
 editorName = TurboEditor
 [Emacs]
@@ -198,6 +200,8 @@ StickSet-FillColor = purple6
 StickSet-TextColor = black
 [FSM_Dlg-Print]
 Orientation = Landscape
+[FileBrowser]
+nWaveOpenFsdbDirHistory = "\"/home/raid7_2/userb09/b09011/Digital-Circuit/lab1/src/Lab1_test.fsdb\""
 [Form]
 version = Verdi_P-2019.06
 [General]
@@ -321,6 +325,10 @@ PrinterName = lp
 FileName = test.ps
 PaperSize = A4 - 210x297 (mm)
 ColorPrint = FALSE
+[QtDialog]
+openFileDlg = 232,134,602,483
+qWaveSignalDialog = 240,112,800,479
+QwUserAskDlg = 468,216,324,134
 [Session Cache]
 1 = string (session file name)
 2 = string (session file name)
@@ -534,8 +542,8 @@ waveform_vertical_scroll_bar = TRUE
 scope_to_save_with_macro
 open_file_dir
 open_rc_file_dir
-getSignalForm = 0 0 800 479 100 30 100 30
-viewPort = 262 220 960 332 100 65
+getSignalForm = 240 112 800 479 245 381 505 183
+viewPort = 0 23 1280 657 100 65
 signalSpacing = 5
 digitalSignalHeight = 15
 analogSignalHeight = 98
@@ -602,6 +610,7 @@ analogVoltageStyle = pwl
 analogCurrentStyle = pwl
 analogOthersStyle = pwl
 busSignalLayer = -c ID_ORANGE8
+busXLayer = -c ID_RED5
 busZLayer = -c ID_ORANGE6
 busMixedLayer = -c ID_GREEN5
 busNotComputedLayer = -c ID_GRAY1
@@ -805,6 +814,7 @@ curveWindow_Drag&Drop_Mode = TRUE
 hspiceIncOpenMode = TRUE
 pcSelectMode = TRUE
 hierarchyDelimiter = /
+RecentFile1 = "\"/home/raid7_2/userb09/b09011/Digital-Circuit/lab1/src/Lab1_test.fsdb\""
 open_file_time_range = FALSE
 value_window_aligment = Right
 signal_window_alignment = Auto
