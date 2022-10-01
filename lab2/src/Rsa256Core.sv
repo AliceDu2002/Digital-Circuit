@@ -19,18 +19,18 @@ parameter [256:0] const_a = {1'd1, 256'd0};
 parameter [8:0] const_k = {1'd1, 8'd0};
 
 // ===== output buffers =====
-logic [255:0] o_a_pow_r, o_a_pow_w;
+logic [255:0] o_a_pow, o_a_pow_r, o_a_pow_w;
 logic o_finished_r, o_finished_w;
 
 // ===== registers & wires =====
 logic [1:0] state_r, state_w;
-logic [255:0] t, t_r, t_w;
+logic [255:0] t1, t2, t_r, t_w;
 logic prep_ready_r, prep_ready_w;
 logic mont_ready_m_r, mont_ready_m_w;
 logic mont_ready_t_r, mont_ready_t_w;
-logic prep_finished_r, prep_finished_w;
-logic mont_finished_m_r, mont_finished_m_w;
-logic mont_finished_t_r, mont_finished_t_w;
+logic prep_finished, prep_finished_r, prep_finished_w;
+logic mont_finished_m, mont_finished_m_r, mont_finished_m_w;
+logic mont_finished_t, mont_finished_t_r, mont_finished_t_w;
 logic [7:0] count_r, count_w;
 
 // ===== output assignment =====
@@ -45,8 +45,8 @@ RsaPrep Prep (
 	.i_b(i_a),
 	.i_input_ready(prep_ready_r),
 	.i_k(const_k),
-	.o_m(t),
-	.o_output_ready(prep_finished_w)
+	.o_m(t1),
+	.o_output_ready(prep_finished)
 );
 
 RsaMont Montm (
@@ -56,8 +56,8 @@ RsaMont Montm (
 	.i_a(o_a_pow_r),
 	.i_b(t_r),
 	.i_input_ready(mont_ready_m_r),
-	.o_m(o_a_pow_w),
-	.o_output_ready(mont_finished_m_w)
+	.o_m(o_a_pow),
+	.o_output_ready(mont_finished_m)
 );
 
 RsaMont Montt (
@@ -67,14 +67,17 @@ RsaMont Montt (
 	.i_a(t_r),
 	.i_b(t_r),
 	.i_input_ready(mont_ready_t_r),
-	.o_m(t_w),
-	.o_output_ready(mont_finished_t_w)
+	.o_m(t2),
+	.o_output_ready(mont_finished_t)
 );
 
 // operations for RSA256 decryption
 // namely, the Montgomery algorithm
 
 always_comb begin
+	prep_finished_w = prep_finished;
+	mont_finished_m_w = mont_finished_m;
+	mont_finished_t_w = mont_finished_t;
 	state_w = state_r;
 	o_a_pow_w = o_a_pow_r;
 	o_finished_w = o_finished_r;
@@ -96,7 +99,7 @@ always_comb begin
 	S_PREP: begin
 		prep_ready_w = 0;
 		if(prep_finished_r) begin
-			t_w = t;
+			t_w = t1;
 			o_a_pow_w = 1;
 			state_w = S_MONT;
 			prep_ready_w = 1;
@@ -114,6 +117,8 @@ always_comb begin
 	S_WAIT: begin
 		if(mont_finished_m_r && mont_finished_t_r) begin
 			state_w = S_CALC;
+			t_w = t2;
+			o_a_pow_w = o_a_pow;
 		end
 	end	
 	S_CALC: begin
