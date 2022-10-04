@@ -83,9 +83,3 @@ define VIEW_MAP ( $VIEW_MAP \
 , .svms => svms \
 , .SVMS => SVMS \
 )
-define ELAB_SNAPSHOT
-<<<<<<< HEAD
-define SNAPSHOT worklib.tb_RsaPrep:sv
-=======
-define SNAPSHOT worklib.tb:sv
->>>>>>> RsaMont-test

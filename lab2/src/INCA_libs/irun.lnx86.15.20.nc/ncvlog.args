@@ -5,8 +5,13 @@
 -XLMODE
 ./INCA_libs/irun.lnx86.15.20.nc
 -RUNMODE
+<<<<<<< HEAD
 tb_RsaPrep.sv
 RsaPrep.sv
+=======
+tb_RsaMont.sv
+RsaMont.sv
+>>>>>>> RsaMont-test
 -CDSLIB
 ./INCA_libs/irun.lnx86.15.20.nc/cdsrun.lib
 -HDLVAR

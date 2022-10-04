@@ -2,6 +2,12 @@
 // File created by:  ncverilog
 // Do not modify this file
 //
+<<<<<<< HEAD
 +access+r
 tb_RsaPrep.sv
 RsaPrep.sv
+=======
++access+rw
+tb_RsaMont.sv
+RsaMont.sv
+>>>>>>> RsaMont-test

@@ -326,11 +326,18 @@ FileName = test.ps
 PaperSize = A4 - 210x297 (mm)
 ColorPrint = FALSE
 [QtDialog]
+<<<<<<< HEAD
 QwUserAskDlg = 609,340,324,134
 QwWarnMsgDlg = 650,375,600,250
 openFileDlg = 659,290,602,483
 qWaveSignalDialog = 560,292,800,479
 QwQuestionMsgDlg = 596,328,324,110
+=======
+QwUserAskDlg = 609,340,324,128
+QwWarnMsgDlg = 650,375,600,250
+openFileDlg = 625,371,602,483
+qWaveSignalDialog = 560,292,800,479
+>>>>>>> RsaMont-test
 [Session Cache]
 1 = string (session file name)
 2 = string (session file name)
@@ -545,7 +552,11 @@ scope_to_save_with_macro
 open_file_dir
 open_rc_file_dir
 getSignalForm = 560 292 800 479 164 381 390 89
+<<<<<<< HEAD
 viewPort = 0 0 1920 1061 204 387
+=======
+viewPort = -23 548 1920 1061 204 575
+>>>>>>> RsaMont-test
 signalSpacing = 5
 digitalSignalHeight = 15
 analogSignalHeight = 98
@@ -853,7 +864,10 @@ displayVerticalRuler = FALSE
 displayHorizontalRuler = FALSE
 displayVerticalGrid = FALSE
 displayHorizontalGrid = FALSE
+<<<<<<< HEAD
 RecentFile2 = "\"/home/raid7_2/userb09/b09027/Digital-Circuit/lab2/src/lab2.fsdb\""
+=======
+>>>>>>> RsaMont-test
 [cov_hier_name_column]
 justify = TRUE
 [coverageColors]
