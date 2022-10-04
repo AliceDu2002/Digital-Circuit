@@ -81,7 +81,7 @@ end
 // ===== Sequential Circuits =====
 always_ff @(posedge i_clk or negedge i_rst) begin
     // reset
-    if (!i_rst) begin
+    if (i_rst) begin
         o_m_r            <= 256'd0;
         o_output_ready_r <= 1'd0;
         count_r          <= 8'd0;
