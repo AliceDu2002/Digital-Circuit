@@ -42,3 +42,7 @@ dse1_base.qsf
 *.pak
 *.var
 *.args
+
+BSSLib.lib++/
+INCA_libs/
+nWaveLog/
