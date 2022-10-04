@@ -22,6 +22,8 @@ logic o_output_ready_r, o_output_ready_w;
 logic [1:0] state_r, state_w;
 logic [8:0] count_r, count_w;
 logic [255:0] t_r, t_w;
+logic [255:0] N;
+logic [256:0] A;
 
 // ===== Output Assignments =====
 assign o_m = o_m_r;
@@ -34,28 +36,32 @@ always_comb begin
     o_output_ready_w = o_output_ready_r;
     state_w = state_r;
     count_w = count_r;
+    t_w = t_r;
 
     // FSM
     case(state_r)
     S_IDLE: begin
         o_output_ready_w = 0;
         if (i_input_ready) begin
+            N = i_N;
+            A = i_a;
+            t_w = i_b;
             state_w = S_PROC;
         end
     end
 
     S_PROC: begin
         if (count_r <= 255) begin
-            if (i_a[count_r]) begin
-                if (o_m_r + t_r >= i_N) begin
-                    o_m_w = o_m_r + t_r - i_N;
+            if (A[count_r]) begin
+                if (o_m_r + t_r >= N) begin
+                    o_m_w = o_m_r + t_r - N;
                 end
                 else begin
                     o_m_w = o_m_r + t_r;
                 end
             end
-            if (t_r + t_r > i_N) begin
-                t_w = t_r + t_r - i_N;
+            if (t_r + t_r > N) begin
+                t_w = t_r + t_r - N;
             end
             else begin
                 t_w = t_r + t_r;
@@ -75,7 +81,6 @@ end
 always_ff @(posedge i_clk or negedge i_rst) begin
     // reset
     if (!i_rst) begin
-        t_r              <= i_b;
         o_m_r            <= 256'd0;
         o_output_ready_r <= 1'd0;
         count_r          <= 8'd0;
