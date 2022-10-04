@@ -19,11 +19,11 @@ parameter [256:0] const_a = {1'd1, 256'd0};
 parameter [8:0] const_k = {1'd1, 8'd0};
 
 // ===== output buffers =====
-logic [255:0] o_a_pow, o_a_pow_r, o_a_pow_w;
+logic [255:0] o_a_pow, o_a_pow_d, o_a_pow_r, o_a_pow_w;
 logic o_finished_r, o_finished_w;
 
 // ===== registers & wires =====
-logic [1:0] state_r, state_w;
+logic [2:0] state_r, state_w;
 logic [255:0] t1, t2, t_r, t_w;
 logic prep_ready_r, prep_ready_w;
 logic mont_ready_m_r, mont_ready_m_w;
@@ -31,14 +31,14 @@ logic mont_ready_t_r, mont_ready_t_w;
 logic prep_finished, prep_finished_r, prep_finished_w;
 logic mont_finished_m, mont_finished_m_r, mont_finished_m_w;
 logic mont_finished_t, mont_finished_t_r, mont_finished_t_w;
-logic [7:0] count_r, count_w;
+logic [8:0] count_r, count_w;
 logic [255:0] a;
 logic [255:0] d;
 logic [255:0] n;
 
 // ===== output assignment =====
 assign o_a_pow_d = o_a_pow_r;
-assign o_finished = o_a_pow_r;
+assign o_finished = o_finished_r;
 
 RsaPrep Prep (
 	.i_clk(i_clk),
@@ -78,7 +78,7 @@ RsaMont Montt (
 // namely, the Montgomery algorithm
 
 always_comb begin
-	prep_finished_w = prep_finished;
+	// prep_finished_w = prep_finished;
 	// mont_finished_m_w = mont_finished_m;
 	// mont_finished_t_w = mont_finished_t;
 	state_w = state_r;
@@ -94,7 +94,10 @@ always_comb begin
 	mont_finished_t_w = mont_finished_t_r;
 	case(state_r)
 	S_IDLE: begin
+		o_finished_w = 0;
 		if(i_start) begin
+			t_w = 0;
+			count_w = 0;
 			state_w = S_PREP;
 			prep_ready_w = 1;
 			a = i_a;
@@ -104,33 +107,38 @@ always_comb begin
 	end
 	S_PREP: begin
 		prep_ready_w = 0;
-		if(prep_finished_r) begin
+		if(prep_finished) begin
 			t_w = t1;
 			o_a_pow_w = 1;
 			state_w = S_MONT;
-			prep_ready_w = 1;
 		end
 	end
 	S_MONT: begin
-		prep_ready_w = 0;
 		count_w = count_r + 1;
 		if(d[count_r] == 1) begin
 			mont_ready_m_w = 1;
+		end
+		else begin
+			mont_finished_m_w = 1;
 		end
 		mont_ready_t_w = 1;
 		state_w = S_WAIT;
 	end
 	S_WAIT: begin
+		mont_ready_m_w = 0;
+		mont_ready_t_w = 0;
 		if(mont_finished_m) begin
 			mont_finished_m_w = 1;
+			o_a_pow_w = o_a_pow;
 		end
 		if(mont_finished_t) begin
 			mont_finished_t_w = 1;
 		end
 		if(mont_finished_m_r && mont_finished_t_r) begin
+			mont_finished_t_w = 0;
+			mont_finished_m_w = 0;
 			state_w = S_CALC;
 			t_w = t2;
-			o_a_pow_w = o_a_pow;
 		end
 	end	
 	S_CALC: begin

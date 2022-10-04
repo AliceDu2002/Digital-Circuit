@@ -15,18 +15,18 @@ parameter S_IDLE = 1'd0;
 parameter S_PROC = 1'd1;
 
 // ===== Output Buffers =====
-logic [255:0] o_m_r, o_m_w;
+logic [256:0] o_m_r, o_m_w;
 logic o_output_ready_r, o_output_ready_w;
 
 // ===== Registers & Wires =====
 logic [1:0] state_r, state_w;
 logic [8:0] count_r, count_w;
-logic [255:0] t_r, t_w;
-logic [255:0] N;
+logic [256:0] t_r, t_w;
+logic [256:0] N;
 logic [256:0] A;
 
 // ===== Output Assignments =====
-assign o_m = o_m_r;
+assign o_m = o_m_r[255:0];
 assign o_output_ready = o_output_ready_r;
 
 // ===== Combinational Circuits =====
