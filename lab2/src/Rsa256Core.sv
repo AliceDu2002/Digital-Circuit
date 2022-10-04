@@ -146,7 +146,7 @@ always_comb begin
 end
 
 always_ff @(posedge i_clk or negedge i_rst) begin
-	if (!i_rst) begin
+	if (i_rst) begin
 		state_r <= 0;
 		o_a_pow_r <= 1;
 		o_finished_r <= 0;
