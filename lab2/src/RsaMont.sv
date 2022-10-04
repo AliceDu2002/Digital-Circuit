@@ -35,7 +35,7 @@ always_comb begin
         m_w = 0;
         o_ready_w = 0;
         if(i_input_ready) begin
-            counter_w = 0;
+            counter_w = 7'd0;
             state_w = S_PROC;
             N = i_N;
             a = i_a;
