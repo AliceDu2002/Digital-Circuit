@@ -20,7 +20,7 @@ logic o_output_ready_r, o_output_ready_w;
 
 // ===== Registers & Wires =====
 logic [1:0] state_r, state_w;
-logic [7:0] count_r, count_w;
+logic [8:0] count_r, count_w;
 logic [255:0] t_r, t_w;
 
 // ===== Output Assignments =====
@@ -78,7 +78,7 @@ always_ff @(posedge i_clk or negedge i_rst) begin
         t_r              <= i_b;
         o_m_r            <= 256'd0;
         o_output_ready_r <= 1'd0;
-        count_r          <= 1'd0;
+        count_r          <= 8'd0;
         state_r          <= S_IDLE;
     end
     else begin

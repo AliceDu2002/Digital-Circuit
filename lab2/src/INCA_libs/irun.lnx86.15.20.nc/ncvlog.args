@@ -5,10 +5,8 @@
 -XLMODE
 ./INCA_libs/irun.lnx86.15.20.nc
 -RUNMODE
-tb_verilog/tb.sv
-Rsa256Core.sv
+tb_RsaPrep.sv
 RsaPrep.sv
-RsaMont.sv
 -CDSLIB
 ./INCA_libs/irun.lnx86.15.20.nc/cdsrun.lib
 -HDLVAR

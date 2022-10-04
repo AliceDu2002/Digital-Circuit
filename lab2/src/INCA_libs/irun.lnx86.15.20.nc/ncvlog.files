@@ -2,7 +2,5 @@
 // File created by:  ncverilog
 // Do not modify this file
 //
-/home/raid7_2/userb09/b09027/Digital-Circuit/lab2/src/tb_verilog/tb.sv
-/home/raid7_2/userb09/b09027/Digital-Circuit/lab2/src/Rsa256Core.sv
+/home/raid7_2/userb09/b09027/Digital-Circuit/lab2/src/tb_RsaPrep.sv
 /home/raid7_2/userb09/b09027/Digital-Circuit/lab2/src/RsaPrep.sv
-/home/raid7_2/userb09/b09027/Digital-Circuit/lab2/src/RsaMont.sv

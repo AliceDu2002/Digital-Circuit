@@ -1,0 +1,32 @@
+ncverilog: 15.20-s084: (c) Copyright 1995-2020 Cadence Design Systems, Inc.
+TOOL:	ncverilog	15.20-s084: Started on Oct 02, 2022 at 22:01:39 CST
+ncverilog
+	+access+r
+	tb.sv
+	../Rsa256Core.sv
+file: tb.sv
+			$fread(encrypted_data, fp_e);
+			     |
+ncvlog: *W,NOSYST (tb.sv,37|8): System function '$fread' invoked as a task. Return value will be ignored.
+			$fread(golden, fp_d);
+			     |
+ncvlog: *W,NOSYST (tb.sv,38|8): System function '$fread' invoked as a task. Return value will be ignored.
+	module worklib.tb:sv
+		errors: 0, warnings: 2
+file: ../Rsa256Core.sv
+	module worklib.Rsa256Core:sv
+		errors: 0, warnings: 0
+		Caching library 'worklib' ....... Done
+	Elaborating the design hierarchy:
+		Caching library 'worklib' ....... Done
+RsaPrep Prep (
+           |
+ncelab: *E,CUVMUR (../Rsa256Core.sv,40|11): instance 'tb.core@Rsa256Core<module>.Prep' of design unit 'RsaPrep' is unresolved in 'worklib.Rsa256Core:sv'.
+RsaMont Montm (
+            |
+ncelab: *E,CUVMUR (../Rsa256Core.sv,52|12): instance 'tb.core@Rsa256Core<module>.Montm' of design unit 'RsaMont' is unresolved in 'worklib.Rsa256Core:sv'.
+RsaMont Montt (
+            |
+ncelab: *E,CUVMUR (../Rsa256Core.sv,63|12): instance 'tb.core@Rsa256Core<module>.Montt' of design unit 'RsaMont' is unresolved in 'worklib.Rsa256Core:sv'.
+ncverilog: *E,ELBERR: Error during elaboration (status 1), exiting.
+TOOL:	ncverilog	15.20-s084: Exiting on Oct 02, 2022 at 22:01:39 CST  (total: 00:00:00)
