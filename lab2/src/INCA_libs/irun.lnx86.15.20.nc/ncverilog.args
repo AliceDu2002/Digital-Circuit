@@ -2,8 +2,6 @@
 // File created by:  ncverilog
 // Do not modify this file
 //
-+access+r
-tb_verilog/tb.sv
-Rsa256Core.sv
-RsaPrep.sv
++access+rw
+tb_RsaMont.sv
 RsaMont.sv

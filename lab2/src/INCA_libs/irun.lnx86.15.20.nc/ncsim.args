@@ -2,12 +2,12 @@
 // File created by:  ncverilog
 // Do not modify this file
 //
-+access+r
++access+rw
 -MESSAGES
 +EMGRLOG
 ncverilog.log
 -XLSTIME
-1664634778
+1664850146
 -XLKEEP
 -XLMODE
 ./INCA_libs/irun.lnx86.15.20.nc

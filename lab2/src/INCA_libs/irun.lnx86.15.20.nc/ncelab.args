@@ -2,10 +2,10 @@
 // File created by:  ncverilog
 // Do not modify this file
 //
-+access+r
++access+rw
 -noshowtop
 -ACCESS
-+r
++rw
 -MESSAGES
 -XLMODE
 ./INCA_libs/irun.lnx86.15.20.nc
