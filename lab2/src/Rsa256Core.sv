@@ -76,8 +76,8 @@ RsaMont Montt (
 
 always_comb begin
 	prep_finished_w = prep_finished;
-	mont_finished_m_w = mont_finished_m;
-	mont_finished_t_w = mont_finished_t;
+	// mont_finished_m_w = mont_finished_m;
+	// mont_finished_t_w = mont_finished_t;
 	state_w = state_r;
 	o_a_pow_w = o_a_pow_r;
 	o_finished_w = o_finished_r;
@@ -115,6 +115,12 @@ always_comb begin
 		state_w = S_WAIT;
 	end
 	S_WAIT: begin
+		if(mont_finished_m) begin
+			mont_finished_m_w = 1;
+		end
+		if(mont_finished_t) begin
+			mont_finished_t_w = 1;
+		end
 		if(mont_finished_m_r && mont_finished_t_r) begin
 			state_w = S_CALC;
 			t_w = t2;
