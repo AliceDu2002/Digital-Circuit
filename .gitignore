@@ -32,3 +32,13 @@ dse1_base.qsf
 *.archive.rpt
 
 /out
+
+*.log
+*.rc
+*.conf
+*.history
+*.cmd
+*.bak
+*.pak
+*.var
+*.args
