@@ -76,7 +76,7 @@ always_comb begin
 end
 
 always_ff @(posedge i_clk or negedge i_rst) begin
-    if (!i_rst) begin
+    if (i_rst) begin
         m_r <= 0;
         state_r <= S_IDLE;
         counter_r <= 0;
