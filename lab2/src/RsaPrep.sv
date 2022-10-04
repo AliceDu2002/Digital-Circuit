@@ -43,11 +43,11 @@ always_comb begin
     S_IDLE: begin
         o_output_ready_w = 0;
         count_w = 0;
-	if (i_input_ready) begin
-            N = i_N;
-            A = i_a;
-            t_w = i_b;
-            state_w = S_PROC;
+        if (i_input_ready) begin
+                N = i_N;
+                A = i_a;
+                t_w = i_b;
+                state_w = S_PROC;
         end
     end
 
@@ -81,7 +81,7 @@ end
 // ===== Sequential Circuits =====
 always_ff @(posedge i_clk or negedge i_rst) begin
     // reset
-    if (!i_rst) begin
+    if (i_rst) begin
         o_m_r            <= 256'd0;
         o_output_ready_r <= 1'd0;
         count_r          <= 8'd0;
