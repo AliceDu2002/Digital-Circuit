@@ -32,6 +32,9 @@ logic prep_finished, prep_finished_r, prep_finished_w;
 logic mont_finished_m, mont_finished_m_r, mont_finished_m_w;
 logic mont_finished_t, mont_finished_t_r, mont_finished_t_w;
 logic [7:0] count_r, count_w;
+logic [255:0] a;
+logic [255:0] d;
+logic [255:0] n;
 
 // ===== output assignment =====
 assign o_a_pow_d = o_a_pow_r;
@@ -40,9 +43,9 @@ assign o_finished = o_a_pow_r;
 RsaPrep Prep (
 	.i_clk(i_clk),
 	.i_rst(i_rst),
-	.i_N(i_n),
+	.i_N(n),
 	.i_a(const_a),
-	.i_b(i_a),
+	.i_b(a),
 	.i_input_ready(prep_ready_r),
 	.i_k(const_k),
 	.o_m(t1),
@@ -52,7 +55,7 @@ RsaPrep Prep (
 RsaMont Montm (
 	.i_clk(i_clk),
 	.i_rst(i_rst),
-	.i_N(i_n),
+	.i_N(n),
 	.i_a(o_a_pow_r),
 	.i_b(t_r),
 	.i_input_ready(mont_ready_m_r),
@@ -63,7 +66,7 @@ RsaMont Montm (
 RsaMont Montt (
 	.i_clk(i_clk),
 	.i_rst(i_rst),
-	.i_N(i_n),
+	.i_N(n),
 	.i_a(t_r),
 	.i_b(t_r),
 	.i_input_ready(mont_ready_t_r),
@@ -94,6 +97,9 @@ always_comb begin
 		if(i_start) begin
 			state_w = S_PREP;
 			prep_ready_w = 1;
+			a = i_a;
+			d = i_d;
+			n = i_n;
 		end
 	end
 	S_PREP: begin
@@ -108,7 +114,7 @@ always_comb begin
 	S_MONT: begin
 		prep_ready_w = 0;
 		count_w = count_r + 1;
-		if(i_d[count_r] == 1) begin
+		if(d[count_r] == 1) begin
 			mont_ready_m_w = 1;
 		end
 		mont_ready_t_w = 1;
