@@ -31,6 +31,7 @@ def mont_preprocess(a, n):
             a -= n
     # or, equivalent to this
     # return (a<<256)%n\
+    print(a)
     return a
 
 def mul_mont(a, b, n, flag, j):

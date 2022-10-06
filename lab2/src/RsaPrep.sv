@@ -43,6 +43,7 @@ always_comb begin
     S_IDLE: begin
         o_output_ready_w = 0;
         count_w = 0;
+        o_m_w = 0;
         if (i_input_ready) begin
                 N = i_N;
                 A = i_a;
@@ -82,9 +83,9 @@ end
 always_ff @(posedge i_clk or negedge i_rst) begin
     // reset
     if (i_rst) begin
-        o_m_r            <= 260'd0;
-        o_output_ready_r <= 1'd0;
-        count_r          <= 8'd0;
+        o_m_r            <= 0;
+        o_output_ready_r <= 0;
+        count_r          <= 0;
         state_r          <= S_IDLE;
     end
     else begin
