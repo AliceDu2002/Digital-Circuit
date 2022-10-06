@@ -16,7 +16,7 @@ localparam TX_OK_BIT   = 6;
 localparam RX_OK_BIT   = 7;
 
 // Feel free to design your own FSM!
-localparam S_GET_KEY = 0;
+localparam S_GET_KEY = 0; // Query
 localparam S_GET_DATA = 1;
 localparam S_WAIT_CALCULATE = 2;
 localparam S_SEND_DATA = 3;
@@ -63,9 +63,67 @@ task StartWrite;
         avm_address_w = addr;
     end
 endtask
+task GoQuery;
+    begin
+        bytes_counter_w += 1;
+        StartRead(STATUS_BASE);
+        state_w = S_GET_KEY;
+    end
+endtask
 
 always_comb begin
     // TODO
+    case(state_r) 
+    S_GET_KEY: begin
+        if(!avm_waitrequest) begin
+            if(avm_readdata[RX_OK_BIT]) begin
+                StartRead(RX_BASE);
+                state_w = S_GET_DATA;
+            end
+            else if(avm_readdata[TX_OK_BIT]) begin
+                StartWrite(TX_BASE);
+                state_w = S_SEND_DATA;
+            end
+        end
+    end
+    S_GET_DATA: begin
+        if(bytes_counter_r <= 31) begin
+            n_w[(8*bytes_counter_r + 7)-:8] = avm_readdata[7:0];
+            GoQuery();
+        end
+        else if(bytes_counter_r <= 63) begin
+            d_w[(8*(bytes_counter_r - 32) + 7)-:8] = avm_readdata[7:0];
+            GoQuery();
+        end
+        else if(bytes_counter_r <= 95) begin
+            enc_w[8*((bytes_counter_r - 64) + 7)-:8] = avm_readdata[7:0];
+            GoQuery();
+        end    
+        else begin
+            bytes_counter_r = 64;
+            state_w = S_WAIT_CALCULATE;
+            rsa_start_w = 1;
+        end
+    end
+    S_WAIT_CALCULATE: begin
+        rsa_start_w = 0;
+        if(rsa_finished) begin
+            dec_w = rsa_dec;
+            state_w = S_GET_KEY;
+        end
+    end
+    S_SEND_DATA: begin
+        if(bytes_counter_r <= 95) begin
+            avm_write_w = dec_r[8*((bytes_counter_r - 64) + 7)-:8];
+            GoQuery();
+        end
+        else begin
+            bytes_counter_w = 64;
+            state_w = S_GET_KEY;
+            avm_read_w = 1;
+        end
+    end
+    endcase
 end
 
 always_ff @(posedge avm_clk or posedge avm_rst) begin
@@ -78,7 +136,7 @@ always_ff @(posedge avm_clk or posedge avm_rst) begin
         avm_read_r <= 1;
         avm_write_r <= 0;
         state_r <= S_GET_KEY;
-        bytes_counter_r <= 63;
+        bytes_counter_r <= 0;
         rsa_start_r <= 0;
     end else begin
         n_r <= n_w;

@@ -1,9 +1,9 @@
 module RsaPrep(
     input i_clk,
 	input i_rst,
-    input [255:0] i_N,
+    input [256:0] i_N,
     input [256:0] i_a,
-    input [255:0] i_b,
+    input [256:0] i_b,
     input [8:0] i_k,
     input i_input_ready,
     output [255:0] o_m,
@@ -67,7 +67,7 @@ always_comb begin
             else begin
                 t_w = t_r + t_r;
             end
-        count_w = count_r + 1;
+            count_w = count_r + 1;
         end
         else begin
             o_output_ready_w = 1;

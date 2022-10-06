@@ -19,7 +19,7 @@ parameter [256:0] const_a = {1'd1, 256'd0};
 parameter [8:0] const_k = {1'd1, 8'd0};
 
 // ===== output buffers =====
-logic [255:0] o_a_pow, o_a_pow_d, o_a_pow_r, o_a_pow_w;
+logic [255:0] o_a_pow, o_a_pow_r, o_a_pow_w;
 logic o_finished_r, o_finished_w;
 
 // ===== registers & wires =====
