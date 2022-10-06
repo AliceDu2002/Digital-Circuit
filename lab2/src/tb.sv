@@ -31,7 +31,7 @@ module tb;
 		#(2*CLK)
 		rst = 0;
 		for (int i = 0; i < 5; i++) begin
-			for (int j = 0; j < 10; j++) begin
+			for (int j = 0; j < 5; j++) begin
 				@(posedge clk);
 			end
 			$fread(encrypted_data, fp_e);
