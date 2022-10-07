@@ -83,12 +83,13 @@ always_comb begin
     d_w = d_r;
     enc_w = enc_r;
     dec_w = dec_r;
-    rsa_start_w = rsa_start_r;
     case(state_r) 
     S_GET_KEY: begin
         if(!avm_waitrequest) begin
             if(avm_readdata[RX_OK_BIT]) begin
-                StartRead(RX_BASE);
+                avm_read_w = 1;
+                avm_write_w = 0;
+                avm_address_w = RX_BASE;
                 state_w = S_GET_DATA;
             end
         end
