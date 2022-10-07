@@ -102,22 +102,24 @@ always_comb begin
         end
     end
     S_GET_DATA: begin
-        if(bytes_counter_r <= 31) begin
-            enc_w[8*(bytes_counter_r)+:8] = avm_readdata[7:0];
-            GoQuery();
-        end
-        else if(bytes_counter_r <= 63) begin
-            d_w[(8*(bytes_counter_r - 32))+:8] = avm_readdata[7:0];
-            GoQuery();
-        end
-        else if(bytes_counter_r <= 95) begin
-            n_w[(8*(bytes_counter_r - 64))+:8] = avm_readdata[7:0];
-            GoQuery();
-        end    
-        else begin
-            bytes_counter_w = 31;
-            state_w = S_WAIT_CALCULATE;
-            rsa_start_w = 1;
+        if(!avm_waitrequest) begin
+            if(bytes_counter_r <= 31) begin
+                enc_w[8*(31 - bytes_counter_r)-:8] = avm_readdata[7:0];
+                GoQuery();
+            end
+            else if(bytes_counter_r <= 63) begin
+                d_w[(8*(63 - bytes_counter_r))-:8] = avm_readdata[7:0];
+                GoQuery();
+            end
+            else if(bytes_counter_r <= 95) begin
+                n_w[(8*(95 - bytes_counter_r))-:8] = avm_readdata[7:0];
+                GoQuery();
+            end    
+            else begin
+                bytes_counter_w = 31;
+                state_w = S_WAIT_CALCULATE;
+                rsa_start_w = 1;
+            end
         end
     end
     S_WAIT_CALCULATE: begin

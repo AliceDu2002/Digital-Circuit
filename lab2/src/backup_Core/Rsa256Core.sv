@@ -1,5 +1,3 @@
-`include "RsaPrep.sv"
-`include "RsaMont.sv"
 module Rsa256Core (
 	input          i_clk,
 	input          i_rst,

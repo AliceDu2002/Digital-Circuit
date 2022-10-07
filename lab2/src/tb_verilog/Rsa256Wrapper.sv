@@ -83,42 +83,41 @@ always_comb begin
     d_w = d_r;
     enc_w = enc_r;
     dec_w = dec_r;
+    rsa_start_w = rsa_start_r;
     case(state_r) 
     S_GET_KEY: begin
-        if(!avm_waitrequest) begin
-            if(avm_readdata[RX_OK_BIT]) begin
-                avm_read_w = 1;
-                avm_write_w = 0;
-                avm_address_w = RX_BASE;
-                state_w = S_GET_DATA;
-            end
+        StartRead(STATUS_BASE);
+        if(!avm_waitrequest && avm_readdata[RX_OK_BIT]) begin
+            StartRead(RX_BASE);
+            state_w = S_GET_DATA;
         end
     end
     S_GET_TX: begin
-        if(!avm_waitrequest) begin
-            if(avm_readdata[TX_OK_BIT]) begin
-                StartWrite(TX_BASE);
-                state_w = S_SEND_DATA;
-            end
+        StartRead(STATUS_BASE);
+        if(!avm_waitrequest && avm_readdata[TX_OK_BIT]) begin
+            StartWrite(TX_BASE);
+            state_w = S_SEND_DATA;
         end
     end
     S_GET_DATA: begin
-        if(bytes_counter_r <= 31) begin
-            enc_w[8*(bytes_counter_r)+:8] = avm_readdata[7:0];
-            GoQuery();
-        end
-        else if(bytes_counter_r <= 63) begin
-            d_w[(8*(bytes_counter_r - 32))+:8] = avm_readdata[7:0];
-            GoQuery();
-        end
-        else if(bytes_counter_r <= 95) begin
-            n_w[(8*(bytes_counter_r - 64))+:8] = avm_readdata[7:0];
-            GoQuery();
-        end    
-        else begin
-            bytes_counter_w = 31;
-            state_w = S_WAIT_CALCULATE;
-            rsa_start_w = 1;
+        if(!avm_waitrequest) begin
+            if(bytes_counter_r <= 31) begin
+                enc_w[8*(bytes_counter_r)+:8] = avm_readdata[7:0];
+                GoQuery();
+            end
+            else if(bytes_counter_r <= 63) begin
+                d_w[(8*(bytes_counter_r - 32))+:8] = avm_readdata[7:0];
+                GoQuery();
+            end
+            else if(bytes_counter_r <= 95) begin
+                n_w[(8*(bytes_counter_r - 64))+:8] = avm_readdata[7:0];
+                GoQuery();
+            end    
+            else begin
+                bytes_counter_w = 31;
+                state_w = S_WAIT_CALCULATE;
+                rsa_start_w = 1;
+            end
         end
     end
     S_WAIT_CALCULATE: begin
@@ -126,19 +125,22 @@ always_comb begin
         if(rsa_finished) begin
             dec_w = rsa_dec;
             state_w = S_GET_TX;
+            StartRead(STATUS_BASE);
         end
     end
     S_SEND_DATA: begin
-        if(bytes_counter_r <= 31) begin
-            avm_write_w = dec_r[8*(bytes_counter_r)+:8];
-            bytes_counter_w -= 1;
-            StartRead(STATUS_BASE);
-            state_w = S_GET_TX;
-        end
-        else begin
-            bytes_counter_w = 31;
-            state_w = S_GET_KEY;
-            avm_read_w = 1;
+        if(!avm_waitrequest) begin
+            if(bytes_counter_r <= 31) begin
+                avm_write_w = dec_r[8*(bytes_counter_r)+:8];
+                bytes_counter_w -= 1;
+                StartRead(STATUS_BASE);
+                state_w = S_GET_TX;
+            end
+            else begin
+                bytes_counter_w = 31;
+                state_w = S_GET_KEY;
+                avm_read_w = 1;
+            end
         end
     end
     endcase
