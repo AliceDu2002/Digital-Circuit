@@ -66,9 +66,9 @@ task StartWrite;
 endtask
 task GoQuery;
     begin
-        bytes_counter_w -= 1;
         StartRead(STATUS_BASE);
         state_w = S_GET_KEY;
+        bytes_counter_w = bytes_counter_r - 1;
     end
 endtask
 
@@ -91,17 +91,37 @@ always_comb begin
             StartRead(RX_BASE);
             state_w = S_GET_DATA;
         end
+        // else if(!avm_waitrequest && avm_readdata[TX_OK_BIT]) begin
+        //     StartRead(TX_BASE);
+        //     state_w = S_SEND_DATA;
+        // end
+        else begin
+            StartRead(STATUS_BASE);
+            state_w = S_GET_KEY;
+        end
     end
     S_GET_TX: begin
         StartRead(STATUS_BASE);
         if(!avm_waitrequest && avm_readdata[TX_OK_BIT]) begin
+            bytes_counter_w = bytes_counter_r - 1;
             StartWrite(TX_BASE);
             state_w = S_SEND_DATA;
+        end
+        else begin
+            StartRead(STATUS_BASE);
+            state_w = S_GET_TX;
         end
     end
     S_GET_DATA: begin
         if(!avm_waitrequest) begin
-            if(bytes_counter_r <= 31) begin
+            if(bytes_counter_r == 0) begin
+                enc_w[8*(bytes_counter_r)+:8] = avm_readdata[7:0];
+                bytes_counter_w = 31;
+                state_w = S_WAIT_CALCULATE;
+                rsa_start_w = 1;
+                StartRead(STATUS_BASE);
+            end
+            else if(bytes_counter_r <= 31) begin
                 enc_w[8*(bytes_counter_r)+:8] = avm_readdata[7:0];
                 GoQuery();
             end
@@ -113,11 +133,6 @@ always_comb begin
                 n_w[(8*(bytes_counter_r - 64))+:8] = avm_readdata[7:0];
                 GoQuery();
             end    
-            else begin
-                bytes_counter_w = 31;
-                state_w = S_WAIT_CALCULATE;
-                rsa_start_w = 1;
-            end
         end
     end
     S_WAIT_CALCULATE: begin
@@ -127,19 +142,23 @@ always_comb begin
             state_w = S_GET_TX;
             StartRead(STATUS_BASE);
         end
+        else begin
+            state_w = S_WAIT_CALCULATE;
+            StartRead(STATUS_BASE);
+        end
     end
     S_SEND_DATA: begin
         if(!avm_waitrequest) begin
-            if(bytes_counter_r <= 31) begin
-                avm_write_w = dec_r[8*(bytes_counter_r)+:8];
-                bytes_counter_w -= 1;
-                StartRead(STATUS_BASE);
-                state_w = S_GET_TX;
-            end
-            else begin
+            if(bytes_counter_r == 0) begin
                 bytes_counter_w = 31;
                 state_w = S_GET_KEY;
-                avm_read_w = 1;
+                StartRead(STATUS_BASE);
+                dec_w = dec_r << 8;
+            end
+            else if(bytes_counter_r <= 31) begin
+                dec_w = dec_r << 8;
+                StartRead(STATUS_BASE);
+                state_w = S_GET_TX;
             end
         end
     end
