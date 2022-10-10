@@ -28,7 +28,6 @@ assign o_m = m_r[255:0];
 assign o_output_ready = o_ready_r;
 
 always_comb begin
-    
     state_w = state_r;
     o_ready_w = o_ready_r;
     m_w = m_r;
@@ -38,6 +37,7 @@ always_comb begin
     a_w = a_r;
     b_w = b_r;
     m_w_2 = m_r;
+    m_w_1 = m_r;
 
     case(state_r)
     
@@ -61,7 +61,8 @@ always_comb begin
         end
     end
     S_PROC: begin 
-        counter_w = counter_r + 1;
+        state_w = S_PROC;
+        counter_w = counter_r + 8'd1;
         if(a_r[counter_r] == 1) begin
             m_w = m_r + b_r;
         end
@@ -93,6 +94,7 @@ always_comb begin
     S_DONE: begin
         if (o_ready_r == 0) begin
             o_ready_w = 1;
+            state_w = S_DONE;
         end
         else begin
             o_ready_w = 0;
@@ -103,16 +105,7 @@ always_comb begin
 end
 
 always_ff @(posedge i_clk or negedge i_rst) begin
-    if (i_rst) begin
-        m_r <= 0;
-        state_r <= S_IDLE;
-        counter_r <= 0;
-        o_ready_r <= 0;
-        N_r <= 0;
-        a_r <= 0;
-        b_r <= 0;
-    end
-    else begin
+    if (!i_rst) begin
         m_r <= m_w_2;
         state_r <= state_w;
         counter_r <= counter_w;
@@ -120,6 +113,15 @@ always_ff @(posedge i_clk or negedge i_rst) begin
         N_r <= N_w;
         a_r <= a_w;
         b_r <= b_w;
+    end
+    else begin
+	    m_r <= 0;
+        state_r <= S_IDLE;
+        counter_r <= 0;
+        o_ready_r <= 0;
+        N_r <= 0;
+        a_r <= 0;
+        b_r <= 0;
     end
 end
 
@@ -173,31 +175,37 @@ always_comb begin
         o_output_ready_w = 0;
         count_w = 0;
         o_m_w = 0;
+        t_w = t_r;
+        N_w = N_r;
+        A_w = A_r;
+        state_w = S_IDLE;
         if (i_input_ready) begin
                 N_w = i_N;
                 A_w = i_a;
-                t_w = i_b;
+                t_w = {4'd0, i_b};
                 state_w = S_PROC;
         end
     end
 
     S_PROC: begin
         if (count_r <= 256) begin
+            o_output_ready_w = o_output_ready_r;
+            state_w = S_PROC;
             if (A_r[count_r] == 1) begin
-                if (o_m_r + t_r >= {5'd0, N_r}) begin
-                    o_m_w = o_m_r + t_r - {5'd0, N_r};
+                if (o_m_r + t_r >=  N_r) begin
+                    o_m_w = o_m_r + t_r - N_r;
                 end
                 else begin
                     o_m_w = o_m_r + t_r;
                 end
             end
             if (t_r + t_r > N_r) begin
-                t_w = t_r + t_r - {5'd0, N_r};
+                t_w = t_r + t_r - N_r;
             end
             else begin
                 t_w = t_r + t_r;
             end
-            count_w = count_r + 1;
+            count_w = count_r + 9'd1;
         end
         else begin
             o_output_ready_w = 1;
@@ -211,13 +219,7 @@ end
 // ===== Sequential Circuits =====
 always_ff @(posedge i_clk or negedge i_rst) begin
     // reset
-    if (i_rst) begin
-        o_m_r            <= 0;
-        o_output_ready_r <= 0;
-        count_r          <= 0;
-        state_r          <= S_IDLE;
-    end
-    else begin
+    if (!i_rst) begin
         t_r              <= t_w;
         o_m_r            <= o_m_w;
         o_output_ready_r <= o_output_ready_w;
@@ -225,6 +227,15 @@ always_ff @(posedge i_clk or negedge i_rst) begin
         state_r          <= state_w;
         N_r              <= N_w;
         A_r              <= A_w;
+    end
+    else begin
+        o_m_r            <= 0;
+        o_output_ready_r <= 0;
+        count_r          <= 0;
+        state_r          <= S_IDLE;
+        t_r              <= 0;
+        N_r              <= 0;
+        A_r              <= 0;
     end
 end
 
@@ -330,6 +341,10 @@ always_comb begin
 	case(state_r)
 	S_IDLE: begin
 		o_finished_w = 0;
+        a_w = a_r;
+        d_w = d_r;
+        n_w = n_r;
+        state_w = S_IDLE;
 		if(i_start) begin
 			t_w = 0;
 			count_w = 0;
@@ -349,7 +364,7 @@ always_comb begin
 		end
 	end
 	S_MONT: begin
-		count_w = count_r + 1;
+		count_w = count_r + 9'd1;
 		if(d_r[count_r] == 1) begin
 			mont_ready_m_w = 1;
 		end
@@ -389,23 +404,7 @@ always_comb begin
 end
 
 always_ff @(posedge i_clk or negedge i_rst) begin
-	if (i_rst) begin
-		state_r <= 0;
-		o_a_pow_r <= 1;
-		o_finished_r <= 0;
-		t_r <= 0;
-		count_r <= 0;
-		prep_ready_r <= 0;
-		prep_finished_r <= 0;
-		mont_ready_m_r <= 0;
-		mont_ready_t_r <= 0;
-		mont_finished_m_r <= 0;
-		mont_finished_t_r <= 0;
-		a_r <= 0;
-		d_r <= 0;
-		n_r <= 0;
-	end
-	else begin
+	if (!i_rst) begin
 		a_r <= a_w;
 		n_r <= n_w;
 		d_r <= d_w;
@@ -420,6 +419,23 @@ always_ff @(posedge i_clk or negedge i_rst) begin
 		mont_ready_t_r <= mont_ready_t_w;
 		mont_finished_m_r <= mont_finished_m_w;
 		mont_finished_t_r <= mont_finished_t_w;
+	end
+	else begin
+		state_r <= 0;
+		o_a_pow_r <= 1;
+		o_finished_r <= 0;
+		t_r <= 0;
+		count_r <= 0;
+		prep_ready_r <= 0;
+		prep_finished_r <= 0;
+		mont_ready_m_r <= 0;
+		mont_ready_t_r <= 0;
+		mont_finished_m_r <= 0;
+		mont_finished_t_r <= 0;
+		a_r <= 0;
+		d_r <= 0;
+		n_r <= 0;
+
 	end
 end
 endmodule
