@@ -104,24 +104,24 @@ always_comb begin
     endcase
 end
 
-always_ff @(posedge i_clk or negedge i_rst) begin
-    if (!i_rst) begin
-        m_r <= m_w_2;
-        state_r <= state_w;
-        counter_r <= counter_w;
-        o_ready_r <= o_ready_w;
-        N_r <= N_w;
-        a_r <= a_w;
-        b_r <= b_w;
-    end
-    else begin
-	    m_r <= 0;
+always_ff @(posedge i_clk or posedge i_rst) begin
+    if (i_rst) begin
+		  m_r <= 0;
         state_r <= S_IDLE;
         counter_r <= 0;
         o_ready_r <= 0;
         N_r <= 0;
         a_r <= 0;
         b_r <= 0;
+    end
+    else begin
+	     m_r <= m_w_2;
+        state_r <= state_w;
+        counter_r <= counter_w;
+        o_ready_r <= o_ready_w;
+        N_r <= N_w;
+        a_r <= a_w;
+        b_r <= b_w;  
     end
 end
 
@@ -217,18 +217,9 @@ always_comb begin
 end
 
 // ===== Sequential Circuits =====
-always_ff @(posedge i_clk or negedge i_rst) begin
+always_ff @(posedge i_clk or posedge i_rst) begin
     // reset
-    if (!i_rst) begin
-        t_r              <= t_w;
-        o_m_r            <= o_m_w;
-        o_output_ready_r <= o_output_ready_w;
-        count_r          <= count_w;
-        state_r          <= state_w;
-        N_r              <= N_w;
-        A_r              <= A_w;
-    end
-    else begin
+    if (i_rst) begin
         o_m_r            <= 0;
         o_output_ready_r <= 0;
         count_r          <= 0;
@@ -236,6 +227,15 @@ always_ff @(posedge i_clk or negedge i_rst) begin
         t_r              <= 0;
         N_r              <= 0;
         A_r              <= 0;
+    end
+    else begin
+	     t_r              <= t_w;
+        o_m_r            <= o_m_w;
+        o_output_ready_r <= o_output_ready_w;
+        count_r          <= count_w;
+        state_r          <= state_w;
+        N_r              <= N_w;
+        A_r              <= A_w;
     end
 end
 
@@ -403,24 +403,8 @@ always_comb begin
 	endcase
 end
 
-always_ff @(posedge i_clk or negedge i_rst) begin
-	if (!i_rst) begin
-		a_r <= a_w;
-		n_r <= n_w;
-		d_r <= d_w;
-		state_r <= state_w;
-		o_a_pow_r <= o_a_pow_w;
-		o_finished_r <= o_finished_w;
-		t_r <= t_w;
-		count_r <= count_w;
-		prep_ready_r <= prep_ready_w;
-		prep_finished_r <= prep_finished_w;
-		mont_ready_m_r <= mont_ready_m_w;
-		mont_ready_t_r <= mont_ready_t_w;
-		mont_finished_m_r <= mont_finished_m_w;
-		mont_finished_t_r <= mont_finished_t_w;
-	end
-	else begin
+always_ff @(posedge i_clk or posedge i_rst) begin
+	if (i_rst) begin
 		state_r <= 0;
 		o_a_pow_r <= 1;
 		o_finished_r <= 0;
@@ -435,7 +419,22 @@ always_ff @(posedge i_clk or negedge i_rst) begin
 		a_r <= 0;
 		d_r <= 0;
 		n_r <= 0;
-
+	end
+	else begin
+	   a_r <= a_w;
+		n_r <= n_w;
+		d_r <= d_w;
+		state_r <= state_w;
+		o_a_pow_r <= o_a_pow_w;
+		o_finished_r <= o_finished_w;
+		t_r <= t_w;
+		count_r <= count_w;
+		prep_ready_r <= prep_ready_w;
+		prep_finished_r <= prep_finished_w;
+		mont_ready_m_r <= mont_ready_m_w;
+		mont_ready_t_r <= mont_ready_t_w;
+		mont_finished_m_r <= mont_finished_m_w;
+		mont_finished_t_r <= mont_finished_t_w;
 	end
 end
 endmodule

@@ -165,8 +165,19 @@ always_comb begin
     endcase
 end
 
-always_ff @(posedge avm_clk or negedge avm_rst) begin
-    if (!avm_rst) begin
+always_ff @(posedge avm_clk or posedge avm_rst) begin
+    if (avm_rst) begin
+	     n_r <= 0;
+        d_r <= 0;
+        enc_r <= 0;
+        dec_r <= 0;
+        avm_address_r <= STATUS_BASE;
+        avm_read_r <= 1;
+        avm_write_r <= 0;
+        state_r <= S_GET_KEY;
+        bytes_counter_r <= 95;
+        rsa_start_r <= 0;
+    end else begin
 		  n_r <= n_w;
         d_r <= d_w;
         enc_r <= enc_w;
@@ -177,17 +188,6 @@ always_ff @(posedge avm_clk or negedge avm_rst) begin
         state_r <= state_w;
         bytes_counter_r <= bytes_counter_w;
         rsa_start_r <= rsa_start_w;
-    end else begin
-        n_r <= 0;
-        d_r <= 0;
-        enc_r <= 0;
-        dec_r <= 0;
-        avm_address_r <= STATUS_BASE;
-        avm_read_r <= 1;
-        avm_write_r <= 0;
-        state_r <= S_GET_KEY;
-        bytes_counter_r <= 95;
-        rsa_start_r <= 0;
     end
 end
 
