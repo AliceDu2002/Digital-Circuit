@@ -37,7 +37,11 @@ always_comb begin
     a_w = a_r;
     b_w = b_r;
     m_w_2 = m_r;
+<<<<<<< HEAD
 	m_w_1 = m_r;
+=======
+    m_w_1 = m_r;
+>>>>>>> a877feac77220a897f756c0c7025572ccdb705c2
 
     case(state_r)
     
@@ -61,6 +65,7 @@ always_comb begin
         end
     end
     S_PROC: begin 
+        state_w = S_PROC;
         counter_w = counter_r + 1;
         if(a_r[counter_r] == 1) begin
             m_w = m_r + b_r;
@@ -93,6 +98,7 @@ always_comb begin
     S_DONE: begin
         if (o_ready_r == 0) begin
             o_ready_w = 1;
+            state_w = S_DONE;
         end
         else begin
             o_ready_w = 0;
@@ -113,7 +119,7 @@ always_ff @(posedge i_clk or negedge i_rst) begin
         b_r <= b_w;
     end
     else begin
-	     m_r <= 0;
+	    m_r <= 0;
         state_r <= S_IDLE;
         counter_r <= 0;
         o_ready_r <= 0;
@@ -173,6 +179,10 @@ always_comb begin
         o_output_ready_w = 0;
         count_w = 0;
         o_m_w = 0;
+        t_w = t_r;
+        N_w = N_r;
+        A_w = A_r;
+        state_w = S_IDLE;
         if (i_input_ready) begin
                 N_w = i_N;
                 A_w = i_a;
@@ -183,6 +193,8 @@ always_comb begin
 
     S_PROC: begin
         if (count_r <= 256) begin
+            o_output_ready_w = o_output_ready_r;
+            state_w = S_PROC;
             if (A_r[count_r] == 1) begin
                 if (o_m_r + t_r >= {5'd0, N_r}) begin
                     o_m_w = o_m_r + t_r - {5'd0, N_r};
@@ -225,6 +237,9 @@ always_ff @(posedge i_clk or negedge i_rst) begin
         o_output_ready_r <= 0;
         count_r          <= 0;
         state_r          <= S_IDLE;
+        t_r              <= 0;
+        N_r              <= 0;
+        A_r              <= 0;
     end
 end
 
@@ -330,6 +345,10 @@ always_comb begin
 	case(state_r)
 	S_IDLE: begin
 		o_finished_w = 0;
+        a_w = a_r;
+        d_w = d_r;
+        n_w = n_r;
+        state_w = S_IDLE;
 		if(i_start) begin
 			t_w = 0;
 			count_w = 0;
