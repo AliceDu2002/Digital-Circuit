@@ -30,10 +30,11 @@ def mont_preprocess(a, n):
         if a >= n:
             a -= n
     # or, equivalent to this
-    # return (a<<256)%n
+    # return (a<<256)%n\
+    print(a)
     return a
 
-def mul_mont(a, b, n):
+def mul_mont(a, b, n, flag, j):
     """return a*b*2^(-256) % n"""
     ret = 0 # Note: ret must has 257b [0,2n)
     for i in range(256):
@@ -42,16 +43,26 @@ def mul_mont(a, b, n):
         if ret & 1:
             ret += n
         ret >>= 1
-    return ret if ret<n else ret-n # [0,n) now
+        #if(j == 0):
+        #     print("{}, {}, {}".format(flag, i, ret))
+        # 
+    if(ret>n):
+        ret = ret - n
+    return ret
 
 def power_mont(a, b, n):
     a2 = mont_preprocess(a+0, n)
+    print("a: {}".format(a))
+    print("b: {}".format(b))
+    print("n: {}".format(n))
+    print("prepare result: {}".format(a2))
     ret = 1
     # print hex(ret)
     for i in range(256):
         if b & (1<<i):
-            ret = mul_mont(ret, a2, n)
-        a2 = mul_mont(a2, a2, n)
+            ret = mul_mont(ret, a2, n, "ret", i)
+        a2 = mul_mont(a2, a2, n, "t2", i)
+        # print("a2: {}".format(a2))
     return ret
 
 if __name__ == '__main__':
@@ -84,4 +95,4 @@ if __name__ == '__main__':
             msg_new = power_mont(msg, exponentiation, val_n)
             vals_new = map(lambda shamt: (msg_new>>shamt)&255, range((w_chunk_size-1)*8, -8, -8))
             vals_new = pack("{}B".format(w_chunk_size), *vals_new)
-            stdout.write(vals_new)
+            # stdout.write(vals_new)

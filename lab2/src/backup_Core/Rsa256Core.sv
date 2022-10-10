@@ -32,9 +32,9 @@ logic prep_finished, prep_finished_r, prep_finished_w;
 logic mont_finished_m, mont_finished_m_r, mont_finished_m_w;
 logic mont_finished_t, mont_finished_t_r, mont_finished_t_w;
 logic [8:0] count_r, count_w;
-logic [256:0] a;
+logic [255:0] a;
 logic [255:0] d;
-logic [256:0] n;
+logic [255:0] n;
 
 // ===== output assignment =====
 assign o_a_pow_d = o_a_pow_r;
