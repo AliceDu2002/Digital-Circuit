@@ -42,6 +42,7 @@ always_comb begin
     case(state_r)
     S_IDLE: begin
         o_output_ready_w = 0;
+        count_w = 0;
         if (i_input_ready) begin
             N = i_N;
             A = i_a;
@@ -51,7 +52,7 @@ always_comb begin
     end
 
     S_PROC: begin
-        if (count_r <= 255) begin
+        if (count_r <= 256) begin
             if (A[count_r]) begin
                 if (o_m_r + t_r >= N) begin
                     o_m_w = o_m_r + t_r - N;
