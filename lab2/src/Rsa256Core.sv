@@ -62,7 +62,7 @@ always_comb begin
     end
     S_PROC: begin 
         state_w = S_PROC;
-        counter_w = counter_r + 1;
+        counter_w = counter_r + 8'd1;
         if(a_r[counter_r] == 1) begin
             m_w = m_r + b_r;
         end
@@ -182,7 +182,7 @@ always_comb begin
         if (i_input_ready) begin
                 N_w = i_N;
                 A_w = i_a;
-                t_w = i_b;
+                t_w = {4'd0, i_b};
                 state_w = S_PROC;
         end
     end
@@ -192,20 +192,20 @@ always_comb begin
             o_output_ready_w = o_output_ready_r;
             state_w = S_PROC;
             if (A_r[count_r] == 1) begin
-                if (o_m_r + t_r >= {5'd0, N_r}) begin
-                    o_m_w = o_m_r + t_r - {5'd0, N_r};
+                if (o_m_r + t_r >=  N_r) begin
+                    o_m_w = o_m_r + t_r - N_r;
                 end
                 else begin
                     o_m_w = o_m_r + t_r;
                 end
             end
             if (t_r + t_r > N_r) begin
-                t_w = t_r + t_r - {5'd0, N_r};
+                t_w = t_r + t_r - N_r;
             end
             else begin
                 t_w = t_r + t_r;
             end
-            count_w = count_r + 1;
+            count_w = count_r + 9'd1;
         end
         else begin
             o_output_ready_w = 1;
@@ -364,7 +364,7 @@ always_comb begin
 		end
 	end
 	S_MONT: begin
-		count_w = count_r + 1;
+		count_w = count_r + 9'd1;
 		if(d_r[count_r] == 1) begin
 			mont_ready_m_w = 1;
 		end
