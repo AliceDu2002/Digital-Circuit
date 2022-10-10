@@ -37,11 +37,7 @@ always_comb begin
     a_w = a_r;
     b_w = b_r;
     m_w_2 = m_r;
-<<<<<<< HEAD
-	m_w_1 = m_r;
-=======
     m_w_1 = m_r;
->>>>>>> a877feac77220a897f756c0c7025572ccdb705c2
 
     case(state_r)
     
