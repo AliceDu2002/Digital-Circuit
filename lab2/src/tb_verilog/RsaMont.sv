@@ -34,7 +34,7 @@ always_comb begin
     N_w = N_r;
     a_w = a_r;
     b_w = b_r;
-    m_w_2 = 0;
+    m_w_2 = m_r;
 
     case(state_r)
     

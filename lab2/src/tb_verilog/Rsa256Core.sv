@@ -120,7 +120,7 @@ always_comb begin
 	end
 	S_MONT: begin
 		count_w = count_r + 1;
-		if(d[count_r] == 1) begin
+		if(d_r[count_r] == 1) begin
 			mont_ready_m_w = 1;
 		end
 		else begin
