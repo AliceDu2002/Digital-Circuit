@@ -22,8 +22,8 @@ logic o_output_ready_r, o_output_ready_w;
 logic [1:0] state_r, state_w;
 logic [8:0] count_r, count_w;
 logic [260:0] t_r, t_w;
-logic [260:0] N;
-logic [256:0] A;
+logic [260:0] N_r, N_w;
+logic [256:0] A_r, A_w;
 
 // ===== Output Assignments =====
 assign o_m = o_m_r[255:0];
@@ -37,6 +37,8 @@ always_comb begin
     state_w = state_r;
     count_w = count_r;
     t_w = t_r;
+    N_w = N_r;
+    A_w = A_r;
 
     // FSM
     case(state_r)
@@ -45,8 +47,8 @@ always_comb begin
         count_w = 0;
         o_m_w = 0;
         if (i_input_ready) begin
-                N = i_N;
-                A = i_a;
+                N_w = i_N;
+                A_w = i_a;
                 t_w = i_b;
                 state_w = S_PROC;
         end
@@ -54,16 +56,16 @@ always_comb begin
 
     S_PROC: begin
         if (count_r <= 256) begin
-            if (A[count_r] == 1) begin
-                if (o_m_r + t_r >= {5'd0, N}) begin
-                    o_m_w = o_m_r + t_r - {5'd0, N};
+            if (A_r[count_r] == 1) begin
+                if (o_m_r + t_r >= {5'd0, N_r}) begin
+                    o_m_w = o_m_r + t_r - {5'd0, N_r};
                 end
                 else begin
                     o_m_w = o_m_r + t_r;
                 end
             end
-            if (t_r + t_r > N) begin
-                t_w = t_r + t_r - {5'd0, N};
+            if (t_r + t_r > N_r) begin
+                t_w = t_r + t_r - {5'd0, N_r};
             end
             else begin
                 t_w = t_r + t_r;
@@ -94,6 +96,8 @@ always_ff @(posedge i_clk or negedge i_rst) begin
         o_output_ready_r <= o_output_ready_w;
         count_r          <= count_w;
         state_r          <= state_w;
+        N_r              <= N_w;
+        A_r              <= A_w;
     end
 end
 
