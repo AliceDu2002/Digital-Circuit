@@ -9,9 +9,9 @@ module Rsa256Wrapper (
     input         avm_waitrequest
 );
 
-localparam RX_BASE     = 0*4;
-localparam TX_BASE     = 1*4;
-localparam STATUS_BASE = 2*4;
+localparam RX_BASE     = 5'd0;
+localparam TX_BASE     = 5'd4;
+localparam STATUS_BASE = 5'd8;
 localparam TX_OK_BIT   = 6;
 localparam RX_OK_BIT   = 7;
 
@@ -68,7 +68,7 @@ task GoQuery;
     begin
         StartRead(STATUS_BASE);
         state_w = S_GET_KEY;
-        bytes_counter_w = bytes_counter_r - 1;
+        bytes_counter_w = bytes_counter_r - 7'd1;
     end
 endtask
 
@@ -103,7 +103,7 @@ always_comb begin
     S_GET_TX: begin
         StartRead(STATUS_BASE);
         if(!avm_waitrequest && avm_readdata[TX_OK_BIT]) begin
-            bytes_counter_w = bytes_counter_r - 1;
+            bytes_counter_w = bytes_counter_r - 7'd1;
             StartWrite(TX_BASE);
             state_w = S_SEND_DATA;
         end
@@ -165,9 +165,9 @@ always_comb begin
     endcase
 end
 
-always_ff @(posedge avm_clk or negedge avm_rst) begin
+always_ff @(posedge avm_clk or posedge avm_rst) begin
     if (avm_rst) begin
-        n_r <= 0;
+	     n_r <= 0;
         d_r <= 0;
         enc_r <= 0;
         dec_r <= 0;
@@ -178,7 +178,7 @@ always_ff @(posedge avm_clk or negedge avm_rst) begin
         bytes_counter_r <= 95;
         rsa_start_r <= 0;
     end else begin
-        n_r <= n_w;
+		  n_r <= n_w;
         d_r <= d_w;
         enc_r <= enc_w;
         dec_r <= dec_w;
