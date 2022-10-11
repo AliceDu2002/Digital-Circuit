@@ -46,3 +46,7 @@ dse1_base.qsf
 BSSLib.lib++/
 INCA_libs/
 nWaveLog/
+db/
+incremental_db/
+vfastLog/
+*.swp
