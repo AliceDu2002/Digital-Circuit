@@ -27,6 +27,8 @@ logic [2:0] state_r, state_w;
 logic [6:0] bytes_counter_r, bytes_counter_w;
 logic [4:0] avm_address_r, avm_address_w;
 logic avm_read_r, avm_read_w, avm_write_r, avm_write_w;
+logic [20:0] count_r, count_w;
+logic read_key_r, read_key_w;
 
 logic rsa_start_r, rsa_start_w;
 logic rsa_finished;
@@ -84,9 +86,12 @@ always_comb begin
     enc_w = enc_r;
     dec_w = dec_r;
     rsa_start_w = rsa_start_r;
+    count_w = count_r;
+    read_key_w = read_key_r;
     case(state_r) 
     S_GET_KEY: begin
         StartRead(STATUS_BASE);
+        count_w = count_r + 11'd1;
         if(!avm_waitrequest && avm_readdata[RX_OK_BIT]) begin
             StartRead(RX_BASE);
             state_w = S_GET_DATA;
@@ -98,6 +103,10 @@ always_comb begin
         else begin
             StartRead(STATUS_BASE);
             state_w = S_GET_KEY;
+            if(count_r >= 50000 && !read_key_r) begin
+                read_key_w = 1;
+                bytes_counter_w = 95;
+            end
         end
     end
     S_GET_TX: begin
@@ -113,6 +122,8 @@ always_comb begin
         end
     end
     S_GET_DATA: begin
+        count_w = 0;
+        read_key_w = 1;
         if(!avm_waitrequest) begin
             if(bytes_counter_r == 0) begin
                 enc_w[8*(bytes_counter_r)+:8] = avm_readdata[7:0];
@@ -154,6 +165,8 @@ always_comb begin
                 state_w = S_GET_KEY;
                 StartRead(STATUS_BASE);
                 dec_w = dec_r << 8;
+                count_w = 0;
+                read_key_w = 0;
             end
             else if(bytes_counter_r <= 31) begin
                 dec_w = dec_r << 8;
@@ -177,6 +190,8 @@ always_ff @(posedge avm_clk or posedge avm_rst) begin
         state_r <= S_GET_KEY;
         bytes_counter_r <= 95;
         rsa_start_r <= 0;
+        count_r <= 0;
+        read_key_r <= 1;
     end else begin
 		  n_r <= n_w;
         d_r <= d_w;
@@ -188,6 +203,8 @@ always_ff @(posedge avm_clk or posedge avm_rst) begin
         state_r <= state_w;
         bytes_counter_r <= bytes_counter_w;
         rsa_start_r <= rsa_start_w;
+        count_r <= count_w;
+        read_key_r <= read_key_w;
     end
 end
 
