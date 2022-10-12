@@ -50,3 +50,4 @@ db/
 incremental_db/
 vfastLog/
 *.swp
+.nfs*
