@@ -13,8 +13,8 @@ s = Serial(
     rtscts=False
 )
 fp_key = open('key.bin', 'rb')
-fp_enc = open('enc3.bin', 'rb')
-fp_dec = open('dec3.bin', 'wb')
+fp_enc = open('cipher_20221013.bin', 'rb')
+fp_dec = open('dec_hidden.bin', 'wb')
 assert fp_key and fp_enc and fp_dec
 
 key = fp_key.read(64)

@@ -49,5 +49,6 @@ nWaveLog/
 db/
 incremental_db/
 vfastLog/
+output_files/
 *.swp
 .nfs*
