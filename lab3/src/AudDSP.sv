@@ -4,7 +4,7 @@ module AudDSP(
 	input i_start, // start signal 
 	input i_pause, // pause signal
 	input i_stop, // stop signal 
-	input [4:0] i_speed, // 4 bit
+	input [2:0] i_speed, // 4 bit
 	input i_fast, // (y/n?)
 	input i_slow_0, // constant interpolation
 	input i_slow_1, // linear interpolation
@@ -41,7 +41,7 @@ logic [3:0] state_r, state_w;
 logic [19:0] sram_addr_r, sram_addr_w;
 logic [15:0] dac_data_r, dac_data_w;
 logic [3:0] counter_r, counter_w; // count for slow playing mode
-logic [20:0] tmp1_w, tmp1_r, tmp2_w, tmp2_r; // register to hold value 
+logic signed [20:0] tmp1_w, tmp1_r, tmp2_w, tmp2_r; // register to hold value 
 assign o_dac_data = dac_data_r;
 assign o_sram_addr = sram_addr_r;
 
@@ -50,6 +50,8 @@ always_comb begin
     counter_w = counter_r;
     tmp1_w = tmp1_r;
     tmp2_w = tmp2_r;
+    sram_addr_w = sram_addr_r;
+    dac_data_w = dac_data_r;
     case(state_r)
     S_IDLE: begin
         if(i_start) begin
@@ -135,6 +137,8 @@ always_ff @(posedge i_daclrck or negedge i_rst_n) begin
         dac_data_r <= 0;
         sram_addr_r <= 0;
         counter_r <= 0;
+        tmp1_r <= 0;
+        tmp2_r <= 0;
 	end
 	else begin
         tmp1_r <= tmp1_w;
