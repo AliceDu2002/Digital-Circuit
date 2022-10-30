@@ -73,7 +73,6 @@ always_comb begin
         end
         else if (i_pause) begin
             state_w = S_PAUSE;
-            sram_addr_w = sram_addr_r;
         end
     end
     S_WAIT_L: begin
@@ -85,7 +84,6 @@ always_comb begin
         end
         else if (i_pause) begin
             state_w = S_PAUSE;
-            sram_addr_w = sram_addr_r;
         end
     end
     S_START: begin
@@ -95,7 +93,6 @@ always_comb begin
         end
         else if (i_pause) begin
             state_w = S_PAUSE;
-            sram_addr_w = sram_addr_r;
         end
         else if(i_fast) begin
             state_w = S_WAIT;
@@ -146,7 +143,7 @@ always_comb begin
     S_PAUSE: begin
         dac_data_w = 0;
         if(i_start) begin
-            state_w = S_WAIT;
+            state_w = i_daclrck? S_WAIT : S_WAIT_L;
         end
         else begin
             state_w = S_PAUSE;
