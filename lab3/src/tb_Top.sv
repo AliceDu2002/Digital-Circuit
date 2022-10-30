@@ -98,11 +98,18 @@ module tb;
         #(1*BCLK)
         key_0 = 0;
         #(1*HBCLK)
-        #(300*BCLK) // stop
+        #(3000*BCLK) // stop
 
         speed = 0;
         fast = 0;
         interpolation = 0;
+        #(1*HBCLK)
+        key_1 = 1;
+        #(1*BCLK)
+        key_1 = 0; // play
+        #(1*HBCLK)
+        #(60000*BCLK)
+
         #(1*HBCLK)
         key_1 = 1;
         #(1*BCLK)

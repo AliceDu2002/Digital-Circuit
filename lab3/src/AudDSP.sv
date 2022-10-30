@@ -68,10 +68,30 @@ always_comb begin
         if(!i_daclrck) begin
             state_w = S_WAIT_L;
         end
+        if(i_stop) begin
+            state_w = S_IDLE;
+            sram_addr_w = 0;
+            dac_data_w = 0;
+        end
+        else if (i_pause) begin
+            state_w = S_PAUSE;
+            dac_data_w = 0;
+            sram_addr_w = sram_addr_r;
+        end
     end
     S_WAIT_L: begin
         if(i_daclrck) begin
             state_w = S_START;
+        end
+        if(i_stop) begin
+            state_w = S_IDLE;
+            sram_addr_w = 0;
+            dac_data_w = 0;
+        end
+        else if (i_pause) begin
+            state_w = S_PAUSE;
+            dac_data_w = 0;
+            sram_addr_w = sram_addr_r;
         end
     end
     S_START: begin
@@ -121,13 +141,13 @@ always_comb begin
             else begin
                 tmp1_w = i_sram_data;
                 tmp2_w = tmp1_r; // tmp2 is the past two datas retrieved
-                sram_addr_w = sram_addr_r + 16;
+                sram_addr_w = sram_addr_r + 1;
                 dac_data_w = (tmp1_r*(counter_r) + tmp2_r*(i_speed-counter_r))/(i_speed);
             end
         end
         else begin
             //nothing is indicated... play as normal
-            state_w = S_WAIT;
+            state_w = i_daclrck? S_WAIT : S_WAIT_L;
             sram_addr_w = sram_addr_r + 1;
             dac_data_w = i_sram_data;
         end
@@ -138,6 +158,11 @@ always_comb begin
         end
         else begin
             state_w = S_PAUSE;
+        end
+        if(i_stop) begin
+            state_w = S_IDLE;
+            sram_addr_w = 0;
+            dac_data_w = 0;
         end
     end
     endcase

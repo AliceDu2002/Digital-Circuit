@@ -136,7 +136,7 @@ AudRecorder recorder0(
 	.i_lrc(i_AUD_ADCLRCK),
 	.i_start(rec_start_r),
 	.i_pause(rec_pause_r),
-	.i_stop(i_key_0),
+	.i_stop(i_key_0 || (addr_record > 20'b11111111111111111100)),
 	.i_data(i_AUD_ADCDAT),
 	.o_address(addr_record),
 	.o_data(data_record)
@@ -212,7 +212,7 @@ always_comb begin
 			rec_pause_w = 1;
 			state_w = S_RECD_PAUSE;
 		end
-		if(addr_record > 20'b11111111111111111111) begin
+		if(addr_record > 20'b11111111111111111100) begin
 			state_w = S_IDLE;
 		end
 		if(i_key_0) begin
