@@ -70,13 +70,10 @@ always_comb begin
         end
         if(i_stop) begin
             state_w = S_IDLE;
-            sram_addr_w = 0;
-            dac_data_w = 0;
         end
         else if (i_pause) begin
             state_w = S_PAUSE;
-            dac_data_w = 0;
-            // sram_addr_w = sram_addr_r;
+            sram_addr_w = sram_addr_r;
         end
     end
     S_WAIT_L: begin
@@ -85,26 +82,20 @@ always_comb begin
         end
         if(i_stop) begin
             state_w = S_IDLE;
-            sram_addr_w = 0;
-            dac_data_w = 0;
         end
         else if (i_pause) begin
             state_w = S_PAUSE;
-            dac_data_w = 0;
-            // sram_addr_w = sram_addr_r;
+            sram_addr_w = sram_addr_r;
         end
     end
     S_START: begin
         counter_w = 0;
         if(i_stop) begin
             state_w = S_IDLE;
-            sram_addr_w = 0;
-            dac_data_w = 0;
         end
         else if (i_pause) begin
             state_w = S_PAUSE;
-            dac_data_w = 0;
-            // sram_addr_w = sram_addr_r;
+            sram_addr_w = sram_addr_r;
         end
         else if(i_fast) begin
             state_w = S_WAIT;
@@ -153,6 +144,7 @@ always_comb begin
         end
     end
     S_PAUSE: begin
+        dac_data_w = 0;
         if(i_start) begin
             state_w = S_WAIT;
         end
@@ -161,8 +153,6 @@ always_comb begin
         end
         if(i_stop) begin
             state_w = S_IDLE;
-            sram_addr_w = 0;
-            dac_data_w = 0;
         end
     end
     endcase
