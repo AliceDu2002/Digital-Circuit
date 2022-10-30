@@ -33,6 +33,9 @@ module tb;
         addr = 5;
         #(2*BCLK)
         addr = 3;
+        #(1*BCLK)
+        wr_enable = 1;
+        #(20*BCLK)
         $finish;
     end
     

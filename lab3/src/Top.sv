@@ -215,7 +215,7 @@ always_comb begin
 	endcase
 end
 
-always_ff @(posedge i_AUD_BCLK or negedge i_rst_n) begin
+always_ff @(negedge i_AUD_BCLK or negedge i_rst_n) begin
 	if (!i_rst_n) begin
 		state_r <= 3'd0;
 		rec_start_r <= 0;
