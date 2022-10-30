@@ -10,15 +10,15 @@ module I2cInitializer(
 
 // ===== WM8731 Register Map =====
 parameter LLI = 24'b00110100_00000000_10010111;
-parameter RLI = 24'b00110100_00000001_10010111;
-parameter LHO = 24'b00110100_00000010_01111001;
-parameter RHO = 24'b00110100_00000011_01111001;
-parameter AAPC = 24'b00110100_00000100_00010101;
-parameter DAPC = 24'b00110100_00000101_00000000;
-parameter PDC = 24'b00110100_00000110_00000000;
-parameter DAIF = 24'b00110100_00000111_01000010;
-parameter SC = 24'b00110100_00001000_00011001;
-parameter AC = 24'b00110100_00001001_00000001;
+parameter RLI = 24'b00110100_00000010_10010111;
+parameter LHO = 24'b00110100_00000100_01111001;
+parameter RHO = 24'b00110100_00000110_01111001;
+parameter AAPC = 24'b00110100_00001000_00010101;
+parameter DAPC = 24'b00110100_00001010_00000000;
+parameter PDC = 24'b00110100_00001100_00000000;
+parameter DAIF = 24'b00110100_00001110_01000010;
+parameter SC = 24'b00110100_00010000_00011001;
+parameter AC = 24'b00110100_00010010_00000001;
 
 // ===== States =====
 parameter S_IDLE = 3'd0;
@@ -35,7 +35,7 @@ logic o_oen_r, o_oen_w;
 
 // ===== Registers & Wires =====
 logic [2:0] state_r, state_w;
-logic [2:0] count_r, count_w;
+logic [3:0] count_r, count_w;
 logic [3:0] wmindex_r, wmindex_w;
 logic [4:0] bitindex_r, bitindex_w;
 
@@ -46,19 +46,19 @@ logic [0:23] WMarray [9:0];
 assign o_finished = o_finished_r;
 assign o_sclk = o_sclk_r;
 assign o_sdat = o_sdat_r;
-assign o_oen = o_sdat_r;
+assign o_oen = o_oen_r;
 
 // ===== Array Assignments =====
-assign WMarray[0] = LLI;
-assign WMarray[1] = RLI;
-assign WMarray[2] = LHO;
-assign WMarray[3] = RHO;
-assign WMarray[4] = AAPC;
-assign WMarray[5] = DAPC;
-assign WMarray[6] = PDC;
-assign WMarray[7] = DAIF;
-assign WMarray[8] = SC;
-assign WMarray[9] = AC;
+assign WMarray[9] = LLI;
+assign WMarray[8] = RLI;
+assign WMarray[7] = LHO;
+assign WMarray[6] = RHO;
+assign WMarray[5] = AAPC;
+assign WMarray[4] = DAPC;
+assign WMarray[3] = PDC;
+assign WMarray[2] = DAIF;
+assign WMarray[1] = SC;
+assign WMarray[0] = AC;
 
 // ===== Combinantial Circuit =====
 always_comb begin
@@ -82,13 +82,24 @@ always_comb begin
         end
 
         S_TRANSFER: begin
-            if (o_sclk_r == 1) begin
+            if (o_sclk_r) begin
                 o_sclk_w = 0;                   // pull down SCL to set the transferred bit
             end
             else begin
-                o_oen_w = 1;
-                o_sdat_w = WMarray[wmindex_r][bitindex_r];
-                state_w = S_OUTPUT;
+                if (!count_r && bitindex_r == 24) begin
+                    o_oen_w = 1;
+                    state_w = S_STOP;
+                end
+                else if (count_r != 8) begin
+                    o_oen_w = 1;
+                    o_sdat_w = WMarray[wmindex_r][bitindex_r];
+                    state_w = S_OUTPUT;
+                end
+                else begin                      // every 8 bits, acknoledge bit is transmitted
+                    o_oen_w = 0;
+                    o_sdat_w = 0;
+                    state_w = S_ACK;
+                end
             end
         end
 
@@ -97,36 +108,27 @@ always_comb begin
             count_w = count_r + 1;
             bitindex_w = bitindex_r + 1;
             state_w = S_TRANSFER;
-            if(count_r == 7) begin              // every 8 bits, acknoledge bit is transmitted
-                o_oen_w = 0;
-                o_sdat_w = 0;
-                state_w = S_ACK;
-            end
         end
 
         S_ACK: begin
             o_sclk_w = 1;
             count_w = 0;
-            if (bitindex_r != 24) begin 
-                state_w = S_TRANSFER;
-            end
-            else begin
-                state_w = S_STOP;               // if 24-bit data are all transferred, check stop
-            end
+            state_w = S_TRANSFER;
         end
 
         S_STOP: begin
-            if (o_sclk_r == 0) begin
+            if (!o_sclk_r) begin
                 o_sclk_w = 1;
             end
             else begin
                 o_sdat_w = 1;
                 if (wmindex_r != 9) begin
-                    wmindex_w = wmindex_r + 1;
-                    o_sclk_w = 0;
-                    o_sdat_w = 0;
-                    bitindex_w = 0;
-                    state_w = S_TRANSFER;
+                    if (o_sdat_r) begin
+                        wmindex_w = wmindex_r + 1;
+                        o_sdat_w = 0;
+                        bitindex_w = 0;
+                        state_w = S_TRANSFER;
+                    end
                 end
                 else begin
                     o_finished_w = 1;           // if all 10 24-bit data in the register map are sent, finish the process
