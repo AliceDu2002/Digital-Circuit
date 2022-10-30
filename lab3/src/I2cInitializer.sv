@@ -97,7 +97,7 @@ always_comb begin
             count_w = count_r + 1;
             bitindex_w = bitindex_r + 1;
             state_w = S_TRANSFER;
-            if(count_r == 7) begin                      // every 8 bits, acknoledge bit is transmitted
+            if(count_r == 7) begin              // every 8 bits, acknoledge bit is transmitted
                 o_oen_w = 0;
                 o_sdat_w = 0;
                 state_w = S_ACK;
