@@ -20,6 +20,7 @@ module tb;
     logic sram_we_n;
     logic output_data;
     logic input_data; // random sequence
+    logic [2:0] state;
     always #BCLK input_data = $random%2;
     
     initial adclrck_r = 1;
@@ -29,8 +30,6 @@ module tb;
 
     always #HDACLRCK adclrck_r = ~adclrck_r;
     always #HBCLK bclk_r = ~bclk_r;
-
-    logic [2:0] state;
 
     Memory mem(
         .addr(sram_ADDR),
@@ -71,14 +70,13 @@ module tb;
         .o_AUD_DACDAT(output_data),
         .o_state(state)
     );
-    always_comb begin
+    assign sram_dq = (state == 2)? 16'dz: sram_dq_out;
+    always @(*) begin
         if(state == 2) begin
             sram_dq_in = sram_dq;
         end
-        else begin
-            sram_dq = sram_dq_out;
-        end
     end
+
     initial begin
         $fsdbDumpfile("Top.fsdb");
 		$fsdbDumpvars;

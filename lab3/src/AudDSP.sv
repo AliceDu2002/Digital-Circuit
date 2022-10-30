@@ -37,7 +37,10 @@ module AudDSP(
 parameter S_IDLE = 0;
 parameter S_START = 1;
 parameter S_PAUSE = 2;
-logic [3:0] state_r, state_w;
+parameter S_WAIT = 3;
+parameter S_WAIT_L = 4;
+
+logic [2:0] state_r, state_w;
 logic [19:0] sram_addr_r, sram_addr_w;
 logic [15:0] dac_data_r, dac_data_w;
 logic [3:0] counter_r, counter_w; // count for slow playing mode
@@ -55,11 +58,21 @@ always_comb begin
     case(state_r)
     S_IDLE: begin
         if(i_start) begin
-            state_w = S_START;
+            state_w = i_daclrck? S_WAIT:S_WAIT_L;
         end
         sram_addr_w = 0;
         dac_data_w = 0;
         counter_w = 0;
+    end
+    S_WAIT: begin
+        if(!i_daclrck) begin
+            state_w = S_WAIT_L;
+        end
+    end
+    S_WAIT_L: begin
+        if(i_daclrck) begin
+            state_w = S_START;
+        end
     end
     S_START: begin
         counter_w = 0;
@@ -74,7 +87,7 @@ always_comb begin
             sram_addr_w = sram_addr_r;
         end
         else if(i_fast) begin
-            state_w = S_START;
+            state_w = S_WAIT;
             sram_addr_w = sram_addr_r + i_speed;
             dac_data_w = i_sram_data;
         end
@@ -114,14 +127,14 @@ always_comb begin
         end
         else begin
             //nothing is indicated... play as normal
-            state_w = S_START;
+            state_w = S_WAIT;
             sram_addr_w = sram_addr_r + 1;
             dac_data_w = i_sram_data;
         end
     end
     S_PAUSE: begin
         if(i_start) begin
-            state_w = S_START;
+            state_w = S_WAIT;
         end
         else begin
             state_w = S_PAUSE;
@@ -132,12 +145,11 @@ end
 
 always_ff @(negedge i_clk or negedge i_rst_n) begin
 	if (!i_rst_n) begin
-		// put 0
-        state_r <= S_IDLE;
         dac_data_r <= 0;
         sram_addr_r <= 0;
         counter_r <= 0;
         tmp1_r <= 0;
+        state_r <= S_IDLE;
         tmp2_r <= 0;
 	end
 	else begin
@@ -149,5 +161,4 @@ always_ff @(negedge i_clk or negedge i_rst_n) begin
         counter_r <= counter_w;
 	end
 end
-
 endmodule

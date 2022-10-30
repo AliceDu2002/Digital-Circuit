@@ -68,10 +68,10 @@ logic [2:0] state_r, state_w;
 logic [19:0] addr_record, addr_play;
 logic [15:0] data_record, data_play, dac_data;
 
-assign io_I2C_SDAT = (i2c_oen) ? i2c_sdat : 1'bz;
-// debug
 assign o_state = state_r;
 assign o_addr_record = addr_record[5:0];
+
+assign io_I2C_SDAT = (i2c_oen) ? i2c_sdat : 1'bz;
 
 assign o_SRAM_ADDR = (state_r == S_RECD) ? addr_record : addr_play[19:0];
 assign io_SRAM_DQ  = (state_r == S_RECD) ? data_record : 16'dz; // sram_dq as output

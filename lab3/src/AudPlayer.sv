@@ -12,6 +12,7 @@ parameter S_IDLE = 3'd0;    // wait for i_en
 parameter S_WAIT = 3'd1;  // wait for left channel signal and one clock
 parameter S_SEND = 3'd2;  // send 16 bits 
 parameter S_WAIT_L = 3'd3;
+parameter S_WAIT_F = 3'd4;
 
 // -----logic-----
 logic [2:0] state_r, state_w;
@@ -31,7 +32,7 @@ always_comb begin
 
     case(state_r) 
         S_IDLE: begin
-            if(i_en) begin
+            if(i_en && !i_daclrck) begin
                 state_w = S_WAIT;
                 i_dac_dat_w = i_dac_data;
                 count_w = 15;
@@ -55,7 +56,7 @@ always_comb begin
             end
         end
         S_WAIT_L: begin
-             o_dac_dat_w = 0;
+            o_dac_dat_w = 0;
             if(!i_daclrck) begin
                 state_w = S_IDLE;
             end
