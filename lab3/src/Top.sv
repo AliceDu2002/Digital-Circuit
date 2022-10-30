@@ -67,8 +67,9 @@ logic [2:0] state_r, state_w;
 logic [19:0] addr_record, addr_play;
 logic [15:0] data_record, data_play, dac_data;
 
-assign io_I2C_SDAT = (i2c_oen) ? i2c_sdat : 1'bz;
 assign o_state = state_r;
+
+assign io_I2C_SDAT = (i2c_oen) ? i2c_sdat : 1'bz;
 
 assign o_SRAM_ADDR = (state_r == S_RECD) ? addr_record : addr_play[19:0];
 assign io_SRAM_DQ  = (state_r == S_RECD) ? data_record : 16'dz; // sram_dq as output
@@ -153,6 +154,7 @@ always_comb begin
 	play_pause_w = play_pause_r;
 	rec_pause_w = rec_pause_r;
 	state_w = state_r;
+	i2c_start_w = i2c_start_r;
 	case(state_r)
 	S_I2C: begin
 		if(i_rst_n) begin
