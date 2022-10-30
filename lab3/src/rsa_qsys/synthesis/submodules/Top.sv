@@ -1,9 +1,9 @@
 module Top (
 	input i_rst_n,
 	input i_clk,
-	input i_key_0, // stop
-	input i_key_1, // play
-	input i_key_2, // recd
+	input i_key_0,
+	input i_key_1,
+	input i_key_2,
 	 // key 3 is reset
 	input [2:0] i_speed, // design how user can decide mode on your own
 
@@ -29,9 +29,7 @@ module Top (
 	inout  i_AUD_ADCLRCK,
 	inout  i_AUD_BCLK,
 	inout  i_AUD_DACLRCK,
-	output o_AUD_DACDAT,
-	output [2:0] o_state,
-	output [5:0] o_addr_record
+	output o_AUD_DACDAT
 
 	// SEVENDECODER (optional display)
 	// output [5:0] o_record_time,
@@ -52,7 +50,6 @@ module Top (
 );
 
 // design the FSM and states as you like
-
 parameter S_I2C	       = 0;
 parameter S_IDLE       = 1;
 parameter S_RECD       = 2;
@@ -67,9 +64,6 @@ logic rec_start_r, rec_start_w, rec_pause_r, rec_pause_w;
 logic [2:0] state_r, state_w;
 logic [19:0] addr_record, addr_play;
 logic [15:0] data_record, data_play, dac_data;
-
-assign o_state = state_r;
-assign o_addr_record = addr_record[5:0];
 
 assign io_I2C_SDAT = (i2c_oen) ? i2c_sdat : 1'bz;
 
@@ -106,11 +100,11 @@ AudDSP dsp0(
 	.i_clk(i_AUD_BCLK),
 	.i_start(play_start_r),
 	.i_pause(play_pause_r),
-	.i_stop(i_key_0 || (addr_play > addr_record)),
+	.i_stop(i_key_0),
 	.i_speed(i_speed),
-	.i_fast(i_fast && i_speed),
-	.i_slow_0(!i_fast & !i_interpolation && i_speed), // constant interpolation
-	.i_slow_1(!i_fast & i_interpolation && i_speed), // linear interpolation
+	.i_fast(i_fast),
+	.i_slow_0(!i_fast & !i_interpolation), // constant interpolation
+	.i_slow_1(!i_fast & i_interpolation), // linear interpolation
 	.i_daclrck(i_AUD_DACLRCK),
 	.i_sram_data(data_play),
 	.o_dac_data(dac_data),
@@ -141,14 +135,7 @@ AudRecorder recorder0(
 	.o_address(addr_record),
 	.o_data(data_record)
 );
-/*
-parameter S_I2C	       = 0;
-parameter S_IDLE       = 1;
-parameter S_RECD       = 2;
-parameter S_RECD_PAUSE = 3;
-parameter S_PLAY       = 4;
-parameter S_PLAY_PAUSE = 5;
-*/
+
 always_comb begin
 	// design your control here
 	play_start_w = play_start_r;
@@ -156,7 +143,6 @@ always_comb begin
 	play_pause_w = play_pause_r;
 	rec_pause_w = rec_pause_r;
 	state_w = state_r;
-	i2c_start_w = i2c_start_r;
 	case(state_r)
 	S_I2C: begin
 		if(i_rst_n) begin
@@ -186,14 +172,11 @@ always_comb begin
 			play_pause_w = 1;
 			state_w = S_PLAY_PAUSE;
 		end
-		else if(i_key_0) begin
+		if(i_key_0) begin
 			state_w = S_IDLE;
 		end
-		else if(addr_play > addr_record) begin
+		if(addr_play > addr_record) begin
 			state_w = S_IDLE;
-		end
-		else begin 
-			state_w = S_PLAY;
 		end
 	end
 	S_PLAY_PAUSE: begin
@@ -232,13 +215,14 @@ always_comb begin
 	endcase
 end
 
-always_ff @(negedge i_AUD_BCLK or negedge i_rst_n) begin
+always_ff @(posedge i_AUD_BCLK or negedge i_rst_n) begin
 	if (!i_rst_n) begin
 		state_r <= 3'd0;
 		rec_start_r <= 0;
 		rec_pause_r <= 0;
 		play_pause_r <= 0;
 		play_start_r <= 0;
+		i2c_finished_r <= 0;
 	end
 	else begin
 		state_r <= state_w;
@@ -246,17 +230,7 @@ always_ff @(negedge i_AUD_BCLK or negedge i_rst_n) begin
 		rec_pause_r <= rec_pause_w;
 		play_pause_r <= play_pause_w;
 		play_start_r <= play_start_w;
-	end
-end
-
-always @(posedge i_clk_100k or negedge i_rst_n) begin
-	if (!i_rst_n) begin
-		i2c_finished_r <= 0;
-		i2c_start_r <= 0;
-	end
-	else begin
 		i2c_finished_r <= i2c_finished_w;
-		i2c_start_r <= i2c_start_w;
 	end
 end
 
