@@ -26,7 +26,7 @@ module tb;
     );
 
     initial begin
-        $fsdbDumpfile("I2cInit_ans.fsdb");
+        $fsdbDumpfile("I2cInit.fsdb");
 		$fsdbDumpvars;
 		rst_n = 0;
 		#(2*CLK)
