@@ -1,6 +1,6 @@
 module AudDSP(
 	input i_rst_n, //reset_n
-	input i_clk, // DACLRC clock
+	input i_clk, // bclk clock
 	input i_start, // start signal 
 	input i_pause, // pause signal
 	input i_stop, // stop signal 
@@ -8,7 +8,7 @@ module AudDSP(
 	input i_fast, // (y/n?)
 	input i_slow_0, // constant interpolation
 	input i_slow_1, // linear interpolation
-	input i_daclrck, // BCLK clock
+	input i_daclrck, // daclrck clock
 	input [15:0] i_sram_data, // data to play from Top (signed)
 	output [15:0] o_dac_data, // data to send to I2S, then to WM8731 (signed)
 	output [19:0] o_sram_addr // next reading SRAM addr
@@ -75,7 +75,7 @@ always_comb begin
         end
         else if(i_fast) begin
             state_w = S_START;
-            sram_addr_w = sram_addr_r + 16*i_speed;
+            sram_addr_w = sram_addr_r + i_speed;
             dac_data_w = i_sram_data;
         end
         else if(i_slow_0) begin
@@ -91,7 +91,7 @@ always_comb begin
             end
             else begin
                 tmp1_w = i_sram_data;
-                sram_addr_w = sram_addr_r + 16;
+                sram_addr_w = sram_addr_r + 1;
                 dac_data_w = tmp1_r;
             end
         end
@@ -115,7 +115,7 @@ always_comb begin
         else begin
             //nothing is indicated... play as normal
             state_w = S_START;
-            sram_addr_w = sram_addr_r + 16;
+            sram_addr_w = sram_addr_r + 1;
             dac_data_w = i_sram_data;
         end
     end
@@ -130,7 +130,7 @@ always_comb begin
     endcase
 end
 
-always_ff @(posedge i_daclrck or negedge i_rst_n) begin
+always_ff @(negedge i_clk or negedge i_rst_n) begin
 	if (!i_rst_n) begin
 		// put 0
         state_r <= S_IDLE;

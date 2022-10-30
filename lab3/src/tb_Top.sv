@@ -16,6 +16,7 @@ module tb;
 
     logic [19:0] sram_ADDR;
     wire [15:0] sram_dq;
+    logic [15:0] sram_dq_in, sram_dq_out;
     logic sram_we_n;
     logic output_data;
     logic input_data; // random sequence
@@ -29,17 +30,19 @@ module tb;
     always #HDACLRCK adclrck_r = ~adclrck_r;
     always #HBCLK bclk_r = ~bclk_r;
 
+    logic [2:0] state;
+
     Memory mem(
         .addr(sram_ADDR),
-        .data(sram_dq),
+        .data(sram_dq_in),
         .wr_enable(sram_we_n),
-        .data_o(sram_dq)
+        .data_o(sram_dq_out)
     );
     Top top(
         .i_rst_n(rst_n),
         .i_clk(bclk),
         .i_key_0(key_0),
-        .i_key_1(key_1),
+        .i_key_1(key_1), 
         .i_key_2(key_2),
         .i_speed(speed), // design how user can decide mode on your own
 
@@ -65,16 +68,52 @@ module tb;
         .i_AUD_ADCLRCK(adclrck),
         .i_AUD_BCLK(bclk),
         .i_AUD_DACLRCK(adclrck),
-        .o_AUD_DACDAT(output_data)
+        .o_AUD_DACDAT(output_data),
+        .o_state(state)
     );
+    always_comb begin
+        if(state == 2) begin
+            sram_dq_in = sram_dq;
+        end
+        else begin
+            sram_dq = sram_dq_out;
+        end
+    end
     initial begin
         $fsdbDumpfile("Top.fsdb");
 		$fsdbDumpvars;
+        
         rst_n = 0;
-        #(2*BCLK)
+        #(2*DACLRCK)
         rst_n = 1;
-        #(2500*BCLK)
+        #(50000*BCLK)
+
+        #(1*HBCLK)
+        key_2 = 1;
+        #(1*BCLK)
+        key_2 = 0;
+        #(1*HBCLK)
+        #(50000*BCLK)
+
+        #(1*HBCLK)
+        key_0 = 1;
+        #(1*BCLK)
+        key_0 = 0;
+        #(1*HBCLK)
+        #(300*BCLK) // stop
+
+        speed = 0;
+        fast = 0;
+        interpolation = 0;
+        #(1*HBCLK)
+        key_1 = 1;
+        #(1*BCLK)
+        key_1 = 0; // play
+        #(1*HBCLK)
+        #(50000*BCLK)
+        
         $finish;
+
     end
 
 

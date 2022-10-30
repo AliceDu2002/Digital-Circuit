@@ -5,7 +5,7 @@ module Memory(
     output [15:0] data_o
 );
 
-logic [1048575:0] mem [15:0];
+logic [15:0] mem [1048575:0];
 assign data_o = mem[addr];
 always @(*) begin
     if(!wr_enable) begin
