@@ -8,40 +8,62 @@ module tb;
 	localparam HBCLK = BCLK/2;
     
     logic rst_n;
-    logic en;
-    logic [15:0] input_data;
-    logic data;
+    logic input_data;
+    logic [15:0]data;
     logic adclrck, bclk;
+	logic [19:0] addr;
+	logic start, pause, stop;
 	
-    initial adclrck = 0;
+    initial adclrck = 1;
 	initial bclk = 0;
     always #HDACLRCK adclrck = ~adclrck;
-    always #HDACLRCK input_data = $random%10000;
+    always #BCLK input_data = $random%2;
     always #HBCLK bclk = ~bclk;
 
     AudRecorder recorder(
-    .i_rst_n, 
-	.i_clk,
-    .i_lrc,   // 1 start recording
-	.i_start, // from Top, size not determined
-	.i_pause, // from Top, size not determined
-	.i_stop,  // from Top, size not determined
-	.i_data,  // ADCDAT, data to store
-	.o_address, // to where in SRAM
-	.o_data // to SRAM
-);
+		.i_rst_n(rst_n), 
+		.i_clk(bclk),
+		.i_lrc(adclrck),   // 1 start recording
+		.i_start(start), // from Top, size not determined
+		.i_pause(pause), // from Top, size not determined
+		.i_stop(stop),  // from Top, size not determined
+		.i_data(input_data),  // ADCDAT, data to store
+		.o_address(addr), // to where in SRAM
+		.o_data(data) // to SRAM
+	);
 
 	initial begin
-		$fsdbDumpfile("AudPlayer.fsdb");
+		$fsdbDumpfile("AudRecorder.fsdb");
 		$fsdbDumpvars;
+		start = 0;
+		pause = 0;
+		stop = 0;
 		rst_n = 0;
 		#(2*BCLK)
 		rst_n = 1;
 
-        #(10*BCLK)
-        en = 1;
-        #(2500*BCLK)
-        en = 0;
+		#(3*BCLK)
+		start = 1;
+		#(1*BCLK)
+		start = 0;
+
+        #(400*BCLK)
+		pause = 1;
+		#(1*BCLK)
+		pause = 0;
+		#(500*BCLK)
+		start = 1;
+		#(1*BCLK)
+		start = 0;
+		#(400*BCLK)
+		stop = 1;
+		#(3*BCLK)
+		stop = 0;
+		#(500*BCLK)
+		start = 1;
+		#(1*BCLK)
+		start = 0;
+		#(400*BCLK)
 		$finish;
 	end
 

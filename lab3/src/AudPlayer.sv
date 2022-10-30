@@ -34,16 +34,16 @@ always_comb begin
             if(i_en) begin
                 state_w = S_WAIT;
                 i_dac_dat_w = i_dac_data;
+                count_w = 15;
+                // when to grab data?
             end
         end
         S_WAIT: begin 
             // extra wait might cause noise
-            if(i_daclrck && !count_r) begin
-                count_w = count_r + 1;
-            end
-            else if(i_daclrck && count_r) begin
+            if(i_daclrck) begin
                 state_w = S_SEND;
-                count_w = 15;
+                o_dac_dat_w = i_dac_dat_r[count_r];
+                count_w = 14;
             end
         end
         S_SEND: begin
@@ -63,7 +63,7 @@ always_comb begin
     endcase
 end
 
-always_ff @(posedge i_bclk or negedge i_rst_n) begin
+always_ff @(negedge i_bclk or negedge i_rst_n) begin
 	if (!i_rst_n) begin
 		state_r <= 2'd0;
         count_r <= 6'd0;

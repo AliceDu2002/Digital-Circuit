@@ -86,16 +86,9 @@ always_comb begin
                 o_sclk_w = 0;                   // pull down SCL to set the transferred bit
             end
             else begin
-                if (count_r != 8) begin
-                    o_oen_w = 1;
-                    o_sdat_w = WMarray[wmindex_r][bitindex_r];
-                    state_w = S_OUTPUT;
-                end
-                else begin                      // every 8 bits, acknoledge bit is transmitted
-                    o_oen_w = 0;
-                    o_sdat_w = 0;
-                    state_w = S_ACK;
-                end
+                o_oen_w = 1;
+                o_sdat_w = WMarray[wmindex_r][bitindex_r];
+                state_w = S_OUTPUT;
             end
         end
 
@@ -104,6 +97,11 @@ always_comb begin
             count_w = count_r + 1;
             bitindex_w = bitindex_r + 1;
             state_w = S_TRANSFER;
+            if(count_r == 7) begin                      // every 8 bits, acknoledge bit is transmitted
+                o_oen_w = 0;
+                o_sdat_w = 0;
+                state_w = S_ACK;
+            end
         end
 
         S_ACK: begin

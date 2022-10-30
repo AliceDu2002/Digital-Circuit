@@ -4,7 +4,7 @@ module tb;
     localparam CLK = 100;
     localparam HCLK = 50;
     
-    logic ret_n;
+    logic rst_n;
     logic start;
     logic finished;
     logic sclk;
@@ -36,6 +36,7 @@ module tb;
         start = 1;
         #(1*CLK)
         start = 0;
+        #(100000*CLK)
         $finish;
     end
 endmodule

@@ -13,7 +13,7 @@ module tb;
     logic data;
     logic adclrck, bclk;
 	
-    initial adclrck = 0;
+    initial adclrck = 1;
 	initial bclk = 0;
     always #HDACLRCK adclrck = ~adclrck;
     always #HDACLRCK input_data = $random%10000;
@@ -32,6 +32,15 @@ module tb;
 		$fsdbDumpfile("AudPlayer.fsdb");
 		$fsdbDumpvars;
 		rst_n = 0;
+		#(2*BCLK)
+		rst_n = 1;
+
+        #(10*BCLK)
+        en = 1;
+        #(2500*BCLK)
+        en = 0;
+
+        rst_n = 0;
 		#(2*BCLK)
 		rst_n = 1;
 
