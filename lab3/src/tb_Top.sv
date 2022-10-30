@@ -108,7 +108,7 @@ module tb;
         #(1*BCLK)
         key_1 = 0; // play
         #(1*HBCLK)
-        #(50000*BCLK)
+        #(60000*BCLK)
         
         $finish;
 

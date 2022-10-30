@@ -104,7 +104,7 @@ AudDSP dsp0(
 	.i_clk(i_AUD_BCLK),
 	.i_start(play_start_r),
 	.i_pause(play_pause_r),
-	.i_stop(i_key_0),
+	.i_stop(i_key_0 || (addr_play > addr_record)),
 	.i_speed(i_speed),
 	.i_fast(i_fast && i_speed),
 	.i_slow_0(!i_fast & !i_interpolation && i_speed), // constant interpolation
