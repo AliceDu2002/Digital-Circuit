@@ -30,8 +30,6 @@ module Top (
 	inout  i_AUD_BCLK,
 	inout  i_AUD_DACLRCK,
 	output o_AUD_DACDAT,
-	output [2:0] o_state,
-	output [5:0] o_addr_record
 
 	// SEVENDECODER (optional display)
 	// output [5:0] o_record_time,
@@ -67,9 +65,6 @@ logic rec_start_r, rec_start_w, rec_pause_r, rec_pause_w;
 logic [2:0] state_r, state_w;
 logic [19:0] addr_record, addr_play;
 logic [15:0] data_record, data_play, dac_data;
-
-assign o_state = state_r;
-assign o_addr_record = addr_record[5:0];
 
 assign io_I2C_SDAT = (i2c_oen) ? i2c_sdat : 1'bz;
 

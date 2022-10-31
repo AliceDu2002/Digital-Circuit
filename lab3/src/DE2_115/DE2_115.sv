@@ -138,8 +138,6 @@ module DE2_115 (
 
 logic key0down, key1down, key2down, key3down;
 logic CLK_12M, CLK_100K, CLK_800K;
-logic [2:0] state;
-logic [5:0] length;
 
 assign AUD_XCK = CLK_12M;
 
@@ -202,10 +200,6 @@ Top top0(
 	.i_AUD_BCLK(AUD_BCLK),
 	.i_AUD_DACLRCK(AUD_DACLRCK),
 	.o_AUD_DACDAT(AUD_DACDAT),
-
-	// debug
-	.o_state(state),
-	.o_addr_record(length)
 
 	// SEVENDECODER (optional display)
 	// .o_record_time(recd_time),

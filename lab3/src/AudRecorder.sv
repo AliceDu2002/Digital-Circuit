@@ -25,6 +25,7 @@ logic[19:0] addr_w, addr_r; // address to store
 logic[15:0] final_data_w, final_data_r; // data connect to output
 logic stop_r, stop_w;
 logic pause_r, pause_w;
+logic[30:0] length_r, length_w;
 
 assign o_data = final_data_r;
 assign o_address = addr_r;
@@ -132,6 +133,7 @@ always_ff @(negedge i_clk or negedge i_rst_n) begin
 		state_r <= 0;
 		stop_r <= 0;
 		pause_r <= 0;
+		length_r <= 0;
 	end
 	else begin
 		count_r <= count_w;
@@ -141,6 +143,7 @@ always_ff @(negedge i_clk or negedge i_rst_n) begin
 		state_r <= state_w;
 		stop_r <= stop_w;
 		pause_r <= pause_w;
+		length_r <= length_w;
 	end
 end
 
