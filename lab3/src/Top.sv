@@ -32,8 +32,8 @@ module Top (
 	output o_AUD_DACDAT,
 
 	// SEVENDECODER (optional display)
-	// output [5:0] o_record_time,
-	// output [5:0] o_play_time,
+	output [5:0] o_record_time,
+	output [5:0] o_play_time,
 
 	// LCD (optional display)
 	// input        i_clk_800k,
@@ -65,6 +65,7 @@ logic rec_start_r, rec_start_w, rec_pause_r, rec_pause_w;
 logic [2:0] state_r, state_w;
 logic [19:0] addr_record, addr_play;
 logic [15:0] data_record, data_play, dac_data;
+logic [5:0] play_time, record_time;
 
 assign io_I2C_SDAT = (i2c_oen) ? i2c_sdat : 1'bz;
 
@@ -77,6 +78,9 @@ assign o_SRAM_CE_N = 1'b0;
 assign o_SRAM_OE_N = 1'b0;
 assign o_SRAM_LB_N = 1'b0;
 assign o_SRAM_UB_N = 1'b0;
+
+assign o_record_time = record_time;
+assign o_play_time = play_time;
 
 // below is a simple example for module division
 // you can design these as you like
@@ -109,7 +113,8 @@ AudDSP dsp0(
 	.i_daclrck(i_AUD_DACLRCK),
 	.i_sram_data(data_play),
 	.o_dac_data(dac_data),
-	.o_sram_addr(addr_play)
+	.o_sram_addr(addr_play),
+	.o_second(play_time);
 );
 
 // === AudPlayer ===
@@ -134,7 +139,8 @@ AudRecorder recorder0(
 	.i_stop(i_key_0 || (addr_record > 20'b11111111111111111100)),
 	.i_data(i_AUD_ADCDAT),
 	.o_address(addr_record),
-	.o_data(data_record)
+	.o_data(data_record),
+	.o_second(record_time)
 );
 /*
 parameter S_I2C	       = 0;
