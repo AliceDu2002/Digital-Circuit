@@ -33,7 +33,7 @@ module Top (
 
 	// SEVENDECODER (optional display)
 	output [5:0] o_record_time,
-	output [5:0] o_play_time,
+	output [5:0] o_play_time
 
 	// LCD (optional display)
 	// input        i_clk_800k,
@@ -65,7 +65,8 @@ logic rec_start_r, rec_start_w, rec_pause_r, rec_pause_w;
 logic [2:0] state_r, state_w;
 logic [19:0] addr_record, addr_play;
 logic [15:0] data_record, data_play, dac_data;
-logic [5:0] play_time, record_time;
+logic [25:0] length_r, length_w;
+logic [5:0] second_r, second_w;
 
 assign io_I2C_SDAT = (i2c_oen) ? i2c_sdat : 1'bz;
 
@@ -79,8 +80,8 @@ assign o_SRAM_OE_N = 1'b0;
 assign o_SRAM_LB_N = 1'b0;
 assign o_SRAM_UB_N = 1'b0;
 
-assign o_record_time = record_time;
-assign o_play_time = play_time;
+assign o_record_time = (state_r == S_RECD || state_r == S_RECD_PAUSE) ? second_r : 0;
+assign o_play_time = (state_r == S_PLAY || state_r == S_PLAY_PAUSE) ? 0 : second_r;
 
 // below is a simple example for module division
 // you can design these as you like
@@ -113,8 +114,7 @@ AudDSP dsp0(
 	.i_daclrck(i_AUD_DACLRCK),
 	.i_sram_data(data_play),
 	.o_dac_data(dac_data),
-	.o_sram_addr(addr_play),
-	.o_second(play_time);
+	.o_sram_addr(addr_play)
 );
 
 // === AudPlayer ===
@@ -139,8 +139,7 @@ AudRecorder recorder0(
 	.i_stop(i_key_0 || (addr_record > 20'b11111111111111111100)),
 	.i_data(i_AUD_ADCDAT),
 	.o_address(addr_record),
-	.o_data(data_record),
-	.o_second(record_time)
+	.o_data(data_record)
 );
 /*
 parameter S_I2C	       = 0;
@@ -158,6 +157,14 @@ always_comb begin
 	rec_pause_w = rec_pause_r;
 	state_w = state_r;
 	i2c_start_w = i2c_start_r;
+	length_w = length_r + 1;
+	second_w = second_r;
+
+	if(length_r > 26'd120000) begin
+		second_w = second_r + 1;
+		length_w = 0;
+	end
+
 	case(state_r)
 	S_I2C: begin
 		if(i_rst_n) begin
@@ -167,21 +174,31 @@ always_comb begin
 		if(i2c_finished_r) begin
 			state_w = S_IDLE;
 		end
+		length_w = 0;
+		second_w = 0;
 	end
 	S_IDLE: begin
 		if(i_key_1) begin
 			state_w = S_PLAY;
 			play_start_w = 1;
+			length_w = 0;
+			second_w = 0;
 		end
 		if(i_key_2) begin
 			state_w = S_RECD;
 			rec_start_w = 1;
+			length_w = 0;
+			second_w = 0;
 		end
 		if(i_key_0) begin
 			state_w = S_IDLE;
 		end
+		length_w = 0;
+		second_w = 0;
 	end
 	S_PLAY: begin
+		length_w = length_r + 1;
+		second_w = second_r;
 		play_start_w = 0;
 		if(i_key_1) begin
 			play_pause_w = 1;
@@ -198,6 +215,8 @@ always_comb begin
 		end
 	end
 	S_PLAY_PAUSE: begin
+		length_w = length_r;
+		second_w = second_r;
 		play_pause_w = 0;
 		if(i_key_1) begin
 			play_start_w = 1;
@@ -208,6 +227,8 @@ always_comb begin
 		end
 	end
 	S_RECD: begin
+		length_w = length_r + 1;
+		second_w = second_r;
 		rec_start_w = 0;
 		if(i_key_2) begin
 			rec_pause_w = 1;
@@ -221,6 +242,8 @@ always_comb begin
 		end
 	end
 	S_RECD_PAUSE: begin
+		length_w = length_r;
+		second_w = second_r;
 		rec_pause_w = 0;
 		if(i_key_2) begin
 			rec_start_w = 1;
@@ -240,6 +263,8 @@ always_ff @(negedge i_AUD_BCLK or negedge i_rst_n) begin
 		rec_pause_r <= 0;
 		play_pause_r <= 0;
 		play_start_r <= 0;
+		length_r <= 0;
+		second_r <= 0;
 	end
 	else begin
 		state_r <= state_w;
@@ -247,6 +272,8 @@ always_ff @(negedge i_AUD_BCLK or negedge i_rst_n) begin
 		rec_pause_r <= rec_pause_w;
 		play_pause_r <= play_pause_w;
 		play_start_r <= play_start_w;
+		length_r <= length_w;
+		second_r <= second_w;
 	end
 end
 

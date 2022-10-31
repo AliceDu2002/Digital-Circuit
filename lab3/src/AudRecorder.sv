@@ -7,8 +7,7 @@ module AudRecorder (
 	input i_stop,  // from Top, size not determined
 	input i_data,  // ADCDAT, data to store
 	output[19:0] o_address, // to where in SRAM
-	output[15:0] o_data, // to SRAM
-	output[5:0] o_second
+	output[15:0] o_data // to SRAM
 );
 
 parameter S_IDLE = 3'd0;
@@ -26,12 +25,9 @@ logic[19:0] addr_w, addr_r; // address to store
 logic[15:0] final_data_w, final_data_r; // data connect to output
 logic stop_r, stop_w;
 logic pause_r, pause_w;
-logic[25:0] length_r, length_w;
-logic[5:0] second_r, second_w;
 
 assign o_data = final_data_r;
 assign o_address = addr_r;
-assign o_second = second_r;
 
 always_comb begin
 	// design your control here
@@ -42,23 +38,13 @@ always_comb begin
 	state_w = state_r;
 	stop_w = stop_r;
 	pause_w = pause_r;
-	length_w = length_r + 1;
-	second_w = second_r;
-
-	if(length_r > 26'd120000) begin
-		second_w = second_r + 1;
-		length_w = 0;
-	end
 
 	case(state_r)
 		S_IDLE: begin
 			if(i_start) begin
 				addr_w = 0;
 				state_w = S_WAIT_L;
-				length_w = 0;
-				second_w = 0;
 			end
-			length_w = length_r;
 		end
 		S_RECD: begin
 			if(i_stop || stop_r) begin
@@ -124,7 +110,6 @@ always_comb begin
 			end
 		end
 		S_PAUSE: begin
-			length_w = length_r;
 			if(i_start) begin
 				state_w = S_WAIT_L;
 			end
@@ -147,8 +132,6 @@ always_ff @(negedge i_clk or negedge i_rst_n) begin
 		state_r <= 0;
 		stop_r <= 0;
 		pause_r <= 0;
-		length_r <= 0;
-		second_r <= 0;
 	end
 	else begin
 		count_r <= count_w;
@@ -158,8 +141,6 @@ always_ff @(negedge i_clk or negedge i_rst_n) begin
 		state_r <= state_w;
 		stop_r <= stop_w;
 		pause_r <= pause_w;
-		length_r <= length_w;
-		second_r <= second_w;
 	end
 end
 

@@ -11,8 +11,7 @@ module AudDSP(
 	input i_daclrck, // daclrck clock
 	input [15:0] i_sram_data, // data to play from Top (signed)
 	output [15:0] o_dac_data, // data to send to I2S, then to WM8731 (signed)
-	output [19:0] o_sram_addr, // next reading SRAM addr
-	output[5:0] o_second
+	output [19:0] o_sram_addr // next reading SRAM addr
 );
 /*
     questions:
@@ -47,14 +46,11 @@ logic [15:0] dac_data_r, dac_data_w;
 logic [3:0] counter_r, counter_w; // count for slow playing mode
 logic signed [20:0] tmp1_w, tmp1_r, tmp2_w, tmp2_r; // register to hold value 
 
-logic [25:0] length_r, length_w;
-logic [5:0] second_r, second_w;
 logic [3:0] speed;
 assign speed = i_speed + 1;
 
 assign o_dac_data = dac_data_r;
 assign o_sram_addr = sram_addr_r;
-assign o_second = second_r;
 
 always_comb begin
     state_w = state_r;
@@ -63,25 +59,15 @@ always_comb begin
     tmp2_w = tmp2_r;
     sram_addr_w = sram_addr_r;
     dac_data_w = dac_data_r;
-    length_w = length_r + 1;
-	second_w = second_r;
-
-	if(length_r > 26'd120000) begin
-		second_w = second_r + 1;
-		length_w = 0;
-	end
 
     case(state_r)
     S_IDLE: begin
         if(i_start) begin
             state_w = i_daclrck? S_WAIT:S_WAIT_L;
-            length_w = 0;
-			second_w = 0;
         end
         sram_addr_w = 0;
         dac_data_w = 0;
         counter_w = 0;
-		length_w = length_r;
     end
     S_WAIT: begin
         if(!i_daclrck) begin
@@ -163,7 +149,6 @@ always_comb begin
     end
     S_PAUSE: begin
         dac_data_w = 0;
-        length_w = length_r;
         if(i_start) begin
             state_w = i_daclrck? S_WAIT : S_WAIT_L;
         end
@@ -184,9 +169,7 @@ always_ff @(negedge i_clk or negedge i_rst_n) begin
         counter_r <= 0;
         tmp1_r <= 0;
         state_r <= S_IDLE;
-        tmp2_r <= 0;
-		length_r <= 0;
-		second_r <= 0;        
+        tmp2_r <= 0;    
 	end
 	else begin
         tmp1_r <= tmp1_w;
@@ -195,8 +178,6 @@ always_ff @(negedge i_clk or negedge i_rst_n) begin
         dac_data_r <= dac_data_w;
         sram_addr_r <= sram_addr_w;
         counter_r <= counter_w;
-		length_r <= length_w;
-		second_r <= second_w;
 	end
 end
 endmodule
