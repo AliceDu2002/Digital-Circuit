@@ -65,7 +65,7 @@ logic rec_start_r, rec_start_w, rec_pause_r, rec_pause_w;
 logic [2:0] state_r, state_w;
 logic [19:0] addr_record, addr_play;
 logic [15:0] data_record, data_play, dac_data;
-logic [25:0] length_r, length_w;
+logic [50:0] length_r, length_w;
 logic [5:0] second_r, second_w;
 
 assign io_I2C_SDAT = (i2c_oen) ? i2c_sdat : 1'bz;
@@ -160,11 +160,6 @@ always_comb begin
 	length_w = length_r + 1;
 	second_w = second_r;
 
-	if(length_r > 26'd120000) begin
-		second_w = second_r + 1;
-		length_w = 0;
-	end
-
 	case(state_r)
 	S_I2C: begin
 		if(i_rst_n) begin
@@ -197,8 +192,14 @@ always_comb begin
 		second_w = 0;
 	end
 	S_PLAY: begin
-		length_w = length_r + 1;
-		second_w = second_r;
+		if(length_r > 51'd12000000) begin
+			second_w = second_r + 1;
+			length_w = 0;
+		end
+		else begin
+			length_w = length_r + 1;
+			second_w = second_r;
+		end
 		play_start_w = 0;
 		if(i_key_1) begin
 			play_pause_w = 1;
@@ -227,8 +228,14 @@ always_comb begin
 		end
 	end
 	S_RECD: begin
-		length_w = length_r + 1;
-		second_w = second_r;
+		if(length_r > 51'd12000000) begin
+			second_w = second_r + 1;
+			length_w = 0;
+		end
+		else begin
+			length_w = length_r + 1;
+			second_w = second_r;
+		end
 		rec_start_w = 0;
 		if(i_key_2) begin
 			rec_pause_w = 1;
