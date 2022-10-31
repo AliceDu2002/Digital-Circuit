@@ -93,12 +93,13 @@ module tb;
         #(1*HBCLK)
         #(50000*BCLK)
 
-        #(1*HBCLK)
         key_0 = 1;
         #(1*BCLK)
         key_0 = 0;
         #(1*HBCLK)
         #(3000*BCLK) // stop
+        #(1*HBCLK)
+        
 
         speed = 0;
         fast = 0;
@@ -116,6 +117,21 @@ module tb;
         key_1 = 0; // play
         #(1*HBCLK)
         #(60000*BCLK)
+
+        key_0 = 1;
+        #(1*BCLK)
+        key_0 = 0;
+        #(1*HBCLK)
+        #(3000*BCLK) // stop
+        #(1*HBCLK)
+        speed = 2;
+        fast = 0;
+        interpolation = 1;
+        #(1*HBCLK)
+        key_1 = 1;
+        #(1*BCLK)
+        key_1 = 0; // play
+        #(140000*BCLK)
         
         $finish;
 

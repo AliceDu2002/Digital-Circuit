@@ -45,6 +45,10 @@ logic [19:0] sram_addr_r, sram_addr_w;
 logic [15:0] dac_data_r, dac_data_w;
 logic [3:0] counter_r, counter_w; // count for slow playing mode
 logic signed [20:0] tmp1_w, tmp1_r, tmp2_w, tmp2_r; // register to hold value 
+
+logic [3:0] speed;
+assign speed = i_speed + 1;
+
 assign o_dac_data = dac_data_r;
 assign o_sram_addr = sram_addr_r;
 
@@ -95,8 +99,8 @@ always_comb begin
             state_w = S_PAUSE;
         end
         else if(i_fast) begin
-            state_w = S_WAIT;
-            sram_addr_w = sram_addr_r + i_speed;
+            state_w = i_daclrck? S_WAIT : S_WAIT_L;
+            sram_addr_w = sram_addr_r + speed;
             dac_data_w = i_sram_data;
         end
         else if(i_slow_0) begin
@@ -106,7 +110,8 @@ always_comb begin
                 and return when the count is over.
                 a register is used to store the holded value.
             */
-            if(counter_r < i_speed-1) begin
+            state_w = i_daclrck? S_WAIT : S_WAIT_L;
+            if(counter_r < speed -1) begin // i_speed is actually i_speed+1, given by the three input
                 dac_data_w = tmp1_r;
                 counter_w = counter_r + 1;
             end
@@ -122,15 +127,16 @@ always_comb begin
                 use a counter to count the time and propagate output value
                 and return when the count is over.
             */
-            if(counter_r < i_speed-1) begin
-                dac_data_w = (tmp1_r*(counter_r) + tmp2_r*(i_speed-counter_r))/(i_speed);
+            state_w = i_daclrck? S_WAIT : S_WAIT_L;
+            if(counter_r < speed-1) begin
+                dac_data_w = (tmp1_r*(counter_r) + tmp2_r*(speed-counter_r))/(speed);
                 counter_w = counter_r + 1;
             end
             else begin
                 tmp1_w = i_sram_data;
                 tmp2_w = tmp1_r; // tmp2 is the past two datas retrieved
                 sram_addr_w = sram_addr_r + 1;
-                dac_data_w = (tmp1_r*(counter_r) + tmp2_r*(i_speed-counter_r))/(i_speed);
+                dac_data_w = (tmp1_r*(counter_r) + tmp2_r*(speed-counter_r))/(speed);
             end
         end
         else begin
