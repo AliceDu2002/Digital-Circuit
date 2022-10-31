@@ -81,7 +81,7 @@ assign o_SRAM_LB_N = 1'b0;
 assign o_SRAM_UB_N = 1'b0;
 
 assign o_record_time = (state_r == S_RECD || state_r == S_RECD_PAUSE) ? second_r : 0;
-assign o_play_time = (state_r == S_PLAY || state_r == S_PLAY_PAUSE) ? 0 : second_r;
+assign o_play_time = (state_r == S_PLAY || state_r == S_PLAY_PAUSE) ? second_r : 0;
 
 // below is a simple example for module division
 // you can design these as you like
