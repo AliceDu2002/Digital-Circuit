@@ -67,6 +67,7 @@ logic [19:0] addr_record, addr_play;
 logic [15:0] data_record, data_play, dac_data;
 logic [50:0] length_r, length_w;
 logic [5:0] second_r, second_w;
+logic [5:0] recd_length_r, recd_length_w;
 
 assign io_I2C_SDAT = (i2c_oen) ? i2c_sdat : 1'bz;
 
@@ -80,7 +81,7 @@ assign o_SRAM_OE_N = 1'b0;
 assign o_SRAM_LB_N = 1'b0;
 assign o_SRAM_UB_N = 1'b0;
 
-assign o_record_time = (state_r == S_RECD || state_r == S_RECD_PAUSE) ? second_r : 0;
+assign o_record_time = (state_r == S_RECD || state_r == S_RECD_PAUSE) ? second_r : recd_length_r;
 assign o_play_time = (state_r == S_PLAY || state_r == S_PLAY_PAUSE) ? second_r : 0;
 
 // below is a simple example for module division
@@ -159,6 +160,7 @@ always_comb begin
 	i2c_start_w = i2c_start_r;
 	length_w = length_r + 1;
 	second_w = second_r;
+	recd_length_w = recd_length_r;
 
 	case(state_r)
 	S_I2C: begin
@@ -171,25 +173,23 @@ always_comb begin
 		end
 		length_w = 0;
 		second_w = 0;
+		recd_length_w = 0;
 	end
 	S_IDLE: begin
 		if(i_key_1) begin
 			state_w = S_PLAY;
 			play_start_w = 1;
-			length_w = 0;
-			second_w = 0;
 		end
 		if(i_key_2) begin
 			state_w = S_RECD;
 			rec_start_w = 1;
-			length_w = 0;
-			second_w = 0;
 		end
 		if(i_key_0) begin
 			state_w = S_IDLE;
 		end
 		length_w = 0;
 		second_w = 0;
+		recd_length_w = 0;
 	end
 	S_PLAY: begin
 		if(length_r > 51'd12000000) begin
@@ -228,6 +228,7 @@ always_comb begin
 		end
 	end
 	S_RECD: begin
+		recd_length_w = second_r;
 		if(length_r > 51'd12000000) begin
 			second_w = second_r + 1;
 			length_w = 0;
@@ -272,6 +273,7 @@ always_ff @(negedge i_AUD_BCLK or negedge i_rst_n) begin
 		play_start_r <= 0;
 		length_r <= 0;
 		second_r <= 0;
+		recd_length_r <= 0;
 	end
 	else begin
 		state_r <= state_w;
@@ -281,6 +283,7 @@ always_ff @(negedge i_AUD_BCLK or negedge i_rst_n) begin
 		play_start_r <= play_start_w;
 		length_r <= length_w;
 		second_r <= second_w;
+		recd_length_r <= recd_length_w;
 	end
 end
 
