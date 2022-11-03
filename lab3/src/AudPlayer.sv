@@ -4,6 +4,7 @@ module AudPlayer (
 	input i_daclrck,
 	input i_en, // enable AudPlayer only when playing audio, work with AudDSP
 	input[15:0] i_dac_data, //dac_data
+    input[2:0] i_volume,
 	output o_aud_dacdat
 );
 
@@ -19,6 +20,7 @@ logic [2:0] state_r, state_w;
 logic [4:0] count_r, count_w;
 logic o_dac_dat_r, o_dac_dat_w;
 logic [15:0] i_dac_dat_r, i_dac_dat_w;
+logic signed [5:0] shift_r, shift_w;
 
 // -----output-----
 assign o_aud_dacdat = o_dac_dat_r;
@@ -29,12 +31,29 @@ always_comb begin
     count_w = count_r;
     i_dac_dat_w = i_dac_dat_r;
     o_dac_dat_w = o_dac_dat_r;
+    shift_w = shift_r;
+
+    case(i_volume)
+        3'b000: shift_w = -3;
+        3'b001: shift_w = -2;
+        3'b010: shift_w = -1;
+        3'b011: shift_w = 0;
+        3'b100: shift_w = 1;
+        3'b101: shift_w = 2;
+        3'b110: shift_w = 3;
+        3'b111: shift_w = 4;
+    endcase
 
     case(state_r) 
         S_IDLE: begin
             if(i_en && !i_daclrck) begin
                 state_w = S_WAIT;
-                i_dac_dat_w = i_dac_data;
+                if(shift_w >= 0) begin
+                    i_dac_dat_w = (i_dac_data <<< shift_r);
+                end
+                else begin
+                    i_dac_dat_w = (i_dac_data >>> (-1 * shift_r));
+                end
                 count_w = 15;
                 // when to grab data?
             end
@@ -70,12 +89,14 @@ always_ff @(negedge i_bclk or negedge i_rst_n) begin
         count_r <= 6'd0;
         i_dac_dat_r <= 16'd0;
         o_dac_dat_r <= 1'd0;
+        shift_r <= 3'd0;
 	end
 	else begin
 		state_r <= state_w;
         count_r <= count_w;
         i_dac_dat_r <= i_dac_dat_w;
         o_dac_dat_r <= o_dac_dat_w;
+        shift_r <= shift_w;
 	end
 end
 

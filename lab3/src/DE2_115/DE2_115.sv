@@ -180,6 +180,7 @@ Top top0(
 	.i_speed(SW[4:2]), // design how user can decide mode on your own
 	.i_fast(SW[1]),
 	.i_interpolation(SW[0]),
+	.i_volume(SW[7:5]),
 	
 	// AudDSP and SRAM
 	.o_SRAM_ADDR(SRAM_ADDR), // [19:0]

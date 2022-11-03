@@ -9,6 +9,7 @@ module Top (
 
 	input i_fast,
 	input i_interpolation,
+	input [2:0] i_volume,
 	
 	// AudDSP and SRAM
 	output [19:0] o_SRAM_ADDR,
@@ -126,6 +127,7 @@ AudPlayer player0(
 	.i_daclrck(i_AUD_DACLRCK),
 	.i_en(state_r == S_PLAY), // enable AudPlayer only when playing audio, work with AudDSP
 	.i_dac_data(dac_data), //dac_data
+	.i_volume(i_volume),
 	.o_aud_dacdat(o_AUD_DACDAT)
 );
 
