@@ -33,27 +33,28 @@ always_comb begin
     o_dac_dat_w = o_dac_dat_r;
     shift_w = shift_r;
 
-    case(i_volume)
-        3'b000: shift_w = -3;
-        3'b001: shift_w = -2;
-        3'b010: shift_w = -1;
-        3'b011: shift_w = 0;
-        3'b100: shift_w = 1;
-        3'b101: shift_w = 2;
-        3'b110: shift_w = 3;
-        3'b111: shift_w = 4;
-    endcase
+    // case(i_volume)
+    //     3'b000: shift_w = -3;
+    //     3'b001: shift_w = -2;
+    //     3'b010: shift_w = -1;
+    //     3'b011: shift_w = 0;
+    //     3'b100: shift_w = 1;
+    //     3'b101: shift_w = 2;
+    //     3'b110: shift_w = 3;
+    //     3'b111: shift_w = 4;
+    // endcase
 
     case(state_r) 
         S_IDLE: begin
             if(i_en && !i_daclrck) begin
                 state_w = S_WAIT;
-                if(shift_w >= 0) begin
-                    i_dac_dat_w = (i_dac_data <<< shift_r);
-                end
-                else begin
-                    i_dac_dat_w = (i_dac_data >>> (-1 * shift_r));
-                end
+                i_dac_dat_w = i_dac_data;
+                // if(shift_w >= 0) begin
+                //     i_dac_dat_w = (i_dac_data <<< shift_r);
+                // end
+                // else begin
+                //     i_dac_dat_w = (i_dac_data >>> (-1 * shift_r));
+                // end
                 count_w = 15;
                 // when to grab data?
             end
