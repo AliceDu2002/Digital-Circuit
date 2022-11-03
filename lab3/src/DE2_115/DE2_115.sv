@@ -206,7 +206,7 @@ Top top0(
 	// SEVENDECODER (optional display)
 	.o_record_time(recd_time),
 	.o_play_time(play_time),
-
+	.o_state()
 	// LCD (optional display)
 	// .i_clk_800k(CLK_800K),
 	// .o_LCD_DATA(LCD_DATA), // [7:0]
