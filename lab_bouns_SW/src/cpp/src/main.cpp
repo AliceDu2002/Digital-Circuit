@@ -74,7 +74,11 @@ int main(int argc, char** argv)
 		std::cout << "Read seq: \n" << read_seq << "\n";
 
 		// Execute Smith-Waterman
-		auto [highest_score, row_end, column_end, alignment_result] = smith_waterman(reference_seq, read_seq, match_score, mismatch_score, gap_open_score, gap_extend_score);
+		std::tuple<int, int, int, std::string> result = smith_waterman(reference_seq, read_seq, match_score, mismatch_score, gap_open_score, gap_extend_score);
+		int highest_score = std::get<0>(result);
+		int row_end = std::get<1>(result);
+		int column_end = std::get<2>(result);
+		std::string alignment_result = std::get<3>(result);
 		std::cout << "Highest score: " << std::dec << highest_score << "\n";
 		std::cout << "Row end: " << std::dec << row_end << "\n";
 		std::cout << "Column end: " << std::dec << column_end << "\n";
