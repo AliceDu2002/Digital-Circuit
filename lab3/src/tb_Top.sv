@@ -124,7 +124,7 @@ module tb;
         #(1*HBCLK)
         #(3000*BCLK) // stop
         #(1*HBCLK)
-        speed = 2;
+        speed = 3;
         fast = 0;
         interpolation = 1;
         #(1*HBCLK)

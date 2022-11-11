@@ -63,34 +63,34 @@ always_comb begin
     case(state_r)
     S_IDLE: begin
         if(i_start) begin
-            state_w = i_daclrck? S_WAIT:S_WAIT_L;
+            state_w = S_START; //i_daclrck? S_WAIT:S_WAIT_L;
         end
         sram_addr_w = 0;
         dac_data_w = 0;
         counter_w = 0;
     end
-    S_WAIT: begin
-        if(!i_daclrck) begin
-            state_w = S_WAIT_L;
-        end
-        if(i_stop) begin
-            state_w = S_IDLE;
-        end
-        else if (i_pause) begin
-            state_w = S_PAUSE;
-        end
-    end
-    S_WAIT_L: begin
-        if(i_daclrck) begin
-            state_w = S_START;
-        end
-        if(i_stop) begin
-            state_w = S_IDLE;
-        end
-        else if (i_pause) begin
-            state_w = S_PAUSE;
-        end
-    end
+    // S_WAIT: begin
+    //     if(!i_daclrck) begin
+    //         state_w = S_WAIT_L;
+    //     end
+    //     if(i_stop) begin
+    //         state_w = S_IDLE;
+    //     end
+    //     else if (i_pause) begin
+    //         state_w = S_PAUSE;
+    //     end
+    // end
+    // S_WAIT_L: begin
+    //     if(i_daclrck) begin
+    //         state_w = S_START;
+    //     end
+    //     if(i_stop) begin
+    //         state_w = S_IDLE;
+    //     end
+    //     else if (i_pause) begin
+    //         state_w = S_PAUSE;
+    //     end
+    // end
     S_START: begin
         counter_w = 0;
         if(i_stop) begin
@@ -100,7 +100,7 @@ always_comb begin
             state_w = S_PAUSE;
         end
         else if(i_fast) begin
-            state_w = i_daclrck? S_WAIT : S_WAIT_L;
+            state_w = S_START; //i_daclrck? S_WAIT : S_WAIT_L;
             sram_addr_w = sram_addr_r + speed;
             dac_data_w = i_sram_data;
         end
@@ -111,7 +111,7 @@ always_comb begin
                 and return when the count is over.
                 a register is used to store the holded value.
             */
-            state_w = i_daclrck? S_WAIT : S_WAIT_L;
+            state_w = S_START; // state_w = i_daclrck? S_WAIT : S_WAIT_L;
             if(counter_r < speed -1) begin // i_speed is actually i_speed+1, given by the three input
                 dac_data_w = tmp1_r;
                 counter_w = counter_r + 1;
@@ -128,7 +128,7 @@ always_comb begin
                 use a counter to count the time and propagate output value
                 and return when the count is over.
             */
-            state_w = i_daclrck? S_WAIT : S_WAIT_L;
+            state_w = S_START;// state_w = i_daclrck? S_WAIT : S_WAIT_L;
             if(counter_r < speed-1) begin
                 dac_data_w = (tmp1_r*(counter_r) + tmp2_r*(speed-counter_r))/(speed);
                 counter_w = counter_r + 1;
@@ -142,7 +142,8 @@ always_comb begin
         end
         else begin
             //nothing is indicated... play as normal
-            state_w = i_daclrck? S_WAIT : S_WAIT_L;
+            state_w = S_START;
+            // state_w = i_daclrck? S_WAIT : S_WAIT_L;
             sram_addr_w = sram_addr_r + 1;
             dac_data_w = i_sram_data;
         end
@@ -150,7 +151,8 @@ always_comb begin
     S_PAUSE: begin
         dac_data_w = 0;
         if(i_start) begin
-            state_w = i_daclrck? S_WAIT : S_WAIT_L;
+            state_w = S_START;
+            // state_w = i_daclrck? S_WAIT : S_WAIT_L;
         end
         else begin
             state_w = S_PAUSE;
@@ -164,17 +166,24 @@ end
 
 always_ff @(negedge i_clk or negedge i_rst_n) begin
 	if (!i_rst_n) begin
+        state_r <= S_IDLE;
+	end
+	else begin
+		state_r <= state_w;
+    end
+end
+
+always_ff @(posedge i_daclrck or negedge i_rst_n) begin
+	if (!i_rst_n) begin
         dac_data_r <= 0;
         sram_addr_r <= 0;
         counter_r <= 0;
         tmp1_r <= 0;
-        state_r <= S_IDLE;
         tmp2_r <= 0;    
 	end
 	else begin
         tmp1_r <= tmp1_w;
         tmp2_r <= tmp2_w;
-		state_r <= state_w;
         dac_data_r <= dac_data_w;
         sram_addr_r <= sram_addr_w;
         counter_r <= counter_w;
