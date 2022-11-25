@@ -3,11 +3,12 @@
  <debug showDebugMenu="0" />
  <systemtable filter="All Interfaces">
   <columns>
-   <connections preferredWidth="47" />
+   <connections preferredWidth="95" />
    <irq preferredWidth="34" />
   </columns>
  </systemtable>
- <library expandedCategories="Library,Project" />
+ <library
+   expandedCategories="Library/University Program,Library,Project,Library/Basic Functions/Clocks; PLLs and Resets/PLL,Library/University Program/Clock,Library/Interface Protocols/Transceiver PLL,Library/Interface Protocols,Library/Basic Functions,Library/Basic Functions/Clocks; PLLs and Resets" />
  <window width="1286" height="642" x="404" y="291" />
  <generation path="rsa_qsys" />
 </preferences>
