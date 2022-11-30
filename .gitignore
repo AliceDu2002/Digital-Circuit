@@ -42,6 +42,7 @@ dse1_base.qsf
 *.pak
 *.var
 *.args
+*.out
 
 BSSLib.lib++/
 INCA_libs/
