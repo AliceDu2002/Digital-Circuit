@@ -48,7 +48,6 @@ logic [63:0] score, column, row; // get from Core
 logic [247:0] writedata_r, writedata_w; // output sequence
 logic [20:0] count_r, count_w; // automatically read next sequences
 logic i_valid_r, i_valid_w, i_ready_r, i_ready_w;
-logic o_valid, o_ready;
 logic [6:0] bytes_counter_r, bytes_counter_w;
 logic read_key_r, read_key_w;
 
@@ -63,15 +62,15 @@ SW_core sw_core(
     .clk				(avm_clk),
     .rst				(avm_rst),
 
-	.o_ready			(o_ready),
+	.o_ready			(out_ready),
     .i_valid			(i_valid_r),
     .i_sequence_ref		(sref_r),
     .i_sequence_read	(sread_r),
-    .i_seq_ref_length	(REF_LENGTH),
-    .i_seq_read_length	(READ_LENGTH),
+    .i_seq_ref_length	(8'd128),
+    .i_seq_read_length	(8'd128),
     
     .i_ready			(i_ready_r),
-    .o_valid			(o_valid),
+    .o_valid			(out_valid),
     .o_alignment_score	(score),
     .o_column			(column),
     .o_row				(row)
@@ -155,17 +154,16 @@ always_comb begin
         end
         S_CALC: begin
             i_valid_w = 0;
-            i_ready_w = 0;
             state_w = S_CALC;
             StartRead(STATUS_BASE);
-            if(o_ready & o_valid) begin
+            if(out_valid) begin
                 writedata_w[63:0] = score;
                 writedata_w[127:64] = row;
                 writedata_w[191:128] = column;
                 writedata_w[247:192] = 0; // NULL???
                 state_w = S_TX;
                 StartRead(STATUS_BASE);
-                bytes_counter_w = 31;
+                bytes_counter_w = 30;
             end
 
             // test
@@ -191,6 +189,7 @@ always_comb begin
                 state_w = S_TX;
                 bytes_counter_w = bytes_counter_r - 1;
                 if(bytes_counter_r == 0) begin
+                    i_ready_w = 0;
                     state_w = S_RX;
                     StartRead(STATUS_BASE);
                     count_w = 0;

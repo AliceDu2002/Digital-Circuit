@@ -6,13 +6,13 @@ smith_waterman(
     int &match_score, int &mismatch_score, int &gap_open, int &gap_extend) {
     // std::cout << reference << std::endl;
     // std::cout << haplotype << std::endl;
-    int align_scores[haplotype.length()+1][reference.length()+1];
-    int insert_scores[haplotype.length()+1][reference.length()+1];
-    int delete_scores[haplotype.length()+1][reference.length()+1];
+    int align_scores[haplotype.length()+1][reference.length()+1] = {};
+    int insert_scores[haplotype.length()+1][reference.length()+1] = {};
+    int delete_scores[haplotype.length()+1][reference.length()+1] = {};
     
-    int align_directions[haplotype.length()][reference.length()];
-    int insert_directions[haplotype.length()][reference.length()];
-    int delete_directions[haplotype.length()][reference.length()];
+    int align_directions[haplotype.length()][reference.length()] = {};
+    int insert_directions[haplotype.length()][reference.length()] = {};
+    int delete_directions[haplotype.length()][reference.length()] = {};
 
     int weight = 0;
     int temp_align_score = 0;
