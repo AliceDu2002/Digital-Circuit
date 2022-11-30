@@ -183,9 +183,8 @@ module SW_core(
         case(state)
             S_idle: begin
                 if(i_valid) begin
-                    o_ready = 0;
-                    for (i=0;i<`READ_MAX_LENGTH; i++) sequence_A_n[i] = i_sequence_ref[i];
-                    for (i=0;i<`READ_MAX_LENGTH; i++) sequence_B_n[i] = i_sequence_read[i];
+                    sequence_A_n = i_sequence_ref;
+                    sequence_B_n = i_sequence_read;
                     seq_A_length_n = i_seq_ref_length;
                     seq_B_length_n = i_seq_read_length;
                 end
@@ -193,6 +192,8 @@ module SW_core(
                     //not ready for calc
                     o_ready = 1; // tell Wrapper ready? ...tell tb ready
                     o_valid_n = 0;
+                    seq_A_length_n = 0;
+                    seq_B_length_n = 0;
                     counter_n = 0;
                     highest_score_n = 0;
                     column_n = 0;
@@ -239,7 +240,7 @@ module SW_core(
 
             S_select_highest: begin // entered when finished calculating
                 counter_n = counter + 1;
-                if(counter == seq_B_length-1) begin
+                if(counter == seq_A_length-1) begin
                     counter_n = 0;
                 end
                 // by row

@@ -400,116 +400,117 @@ module DP_PE_single(
 );
 
 // *** TODO
-wire signed [`DP_SW_SCORE_BITWIDTH:0] align_diagonal_A_extended = i_align_diagonal_score;
-wire signed [`DP_SW_SCORE_BITWIDTH:0] insert_diagonal_A_extended = i_insert_diagonal_score;
-wire signed [`DP_SW_SCORE_BITWIDTH:0] delete_diagonal_A_extended = i_delete_diagonal_score;
 
-wire signed [`DP_SW_SCORE_BITWIDTH:0] align_left_A_extended = i_align_left_score;
-wire signed [`DP_SW_SCORE_BITWIDTH:0] insert_left_A_extended = i_insert_left_score;
-wire signed [`DP_SW_SCORE_BITWIDTH:0] delete_left_A_extended = i_delete_left_score;
+// Affine Gap Penalty Matrix H I D
+wire signed [`DP_SW_SCORE_BITWIDTH-1:0] align_diagonal_A_cur = i_align_diagonal_score;
+wire signed [`DP_SW_SCORE_BITWIDTH-1:0] align_left_A_cur = i_align_left_score;
+wire signed [`DP_SW_SCORE_BITWIDTH-1:0] align_top_A_cur = i_align_top_score;
 
-wire signed [`DP_SW_SCORE_BITWIDTH:0] align_top_A_extended = i_align_top_score;
-wire signed [`DP_SW_SCORE_BITWIDTH:0] insert_top_A_extended = i_insert_top_score;
+wire signed [`DP_SW_SCORE_BITWIDTH-1:0] insert_diagonal_A_cur = i_insert_diagonal_score;
+wire signed [`DP_SW_SCORE_BITWIDTH-1:0] insert_left_A_cur = i_insert_left_score;
+wire signed [`DP_SW_SCORE_BITWIDTH-1:0] insert_top_A_cur = i_insert_top_score;
 
-logic signed [`DP_SW_SCORE_BITWIDTH-1:0] a1_r, a1_w, i1_r, i1_w, a2_r, a2_w, d2_r, d2_w, a3_r, a3_w, i3_r, i3_w, d3_r, d3_w;
-logic signed [`DP_SW_SCORE_BITWIDTH-1:0] weight_r, weight_w;
+wire signed [`DP_SW_SCORE_BITWIDTH-1:0] delete_diagonal_A_cur = i_delete_diagonal_score;
+wire signed [`DP_SW_SCORE_BITWIDTH-1:0] delete_left_A_cur = i_delete_left_score;
 
-logic signed [`DP_SW_SCORE_BITWIDTH-1:0] align_score_r, align_score_w, insert_score_r, insert_score_w, delete_score_r, delete_score_w, the_score_r, the_score_w;
+// outputs
+logic signed [`DP_SW_SCORE_BITWIDTH-1:0] align_score_w, align_score_r;
+logic signed [`DP_SW_SCORE_BITWIDTH-1:0] insert_score_w, insert_score_r;
+logic signed [`DP_SW_SCORE_BITWIDTH-1:0] delete_score_w, delete_score_r;
+logic signed [`DP_SW_SCORE_BITWIDTH-1:0] the_score_w, the_score_r;
+
+// some parameters
+logic signed [`DP_SW_SCORE_BITWIDTH-1:0] S_w, S_r;
+logic signed [`DP_SW_SCORE_BITWIDTH-1:0] HH_w, HH_r, IH_w, IH_r, II_w, II_r, DH_w, DH_r, DD_w, DD_r;
 
 assign o_align_score = align_score_w;
 assign o_insert_score = insert_score_w;
 assign o_delete_score = delete_score_w;
 assign o_the_score = the_score_w;
 
-// *** TODO
 always_comb begin
     align_score_w = align_score_r;
     insert_score_w = insert_score_r;
     delete_score_w = delete_score_r;
     the_score_w = the_score_r;
-    a1_w = a1_r;
-    i1_w = i1_r;
-    a2_w = a2_r;
-    d2_w = d2_r;
-    a3_w = a3_r;
-    i3_w = i3_r;
-    d3_w = d3_r;
-    weight_w = weight_r;
-    if(!(i_A_base_valid && i_B_base_valid))begin
+    S_w = S_r;
+    HH_w = HH_r;
+    IH_w = IH_r;
+    II_w = II_r;
+    DH_w = DH_r;
+    DD_w = DD_r;
+
+    // either A or B not valid
+    if (!(i_A_base_valid && i_B_base_valid)) begin
         align_score_w = i_align_left_score;
         insert_score_w = i_insert_left_score;
         delete_score_w = i_delete_left_score;
-        if(o_align_score > o_insert_score && o_align_score > o_delete_score && o_align_score > 0) the_score_w = align_score_w;
-        else if(insert_score_w > delete_score_w && insert_score_w > 0) the_score_w = insert_score_w;
-        else if(delete_score_w > 0) the_score_w = delete_score_w;
+        if (o_align_score > o_insert_score && o_align_score > o_delete_score && o_align_score > 0) the_score_w = align_score_w;
+        else if (insert_score_w > delete_score_w && insert_score_w > 0) the_score_w = insert_score_w;
+        else if (delete_score_w > 0) the_score_w = delete_score_w;
         else the_score_w = 0;
     end
     else begin
-        // insert score operation
-        a1_w = $signed(align_top_A_extended) + $signed(`CONST_GAP_OPEN);
-        i1_w = $signed(insert_top_A_extended) + $signed(`CONST_GAP_EXTEND);
-        if(i1_w > a1_w && i1_w > 0) insert_score_w = i1_w;
-        else if(a1_w > 0) insert_score_w = a1_w;
+        // insert matrix
+        IH_w = $signed(align_top_A_cur) + $signed(`CONST_GAP_OPEN);
+        II_w = $signed(insert_top_A_cur) + $signed(`CONST_GAP_EXTEND);
+        if (IH_w > II_w && IH_w > 0) insert_score_w = IH_w;
+        else if (II_w > 0) insert_score_w = II_w;
         else insert_score_w = 0;
 
-        // delete score operation
-        a2_w = $signed(align_left_A_extended) + $signed(`CONST_GAP_OPEN);
-        d2_w = $signed(delete_left_A_extended) + $signed(`CONST_GAP_EXTEND);
-        if(d2_w > a2_w && d2_w > 0) delete_score_w = d2_w;
-        else if(a2_w > 0) delete_score_w = a2_w;
+        // delete matrix
+        DH_w = $signed(align_left_A_cur) + $signed(`CONST_GAP_OPEN);
+        DD_w = $signed(delete_left_A_cur) + $signed(`CONST_GAP_EXTEND);
+        if (DH_w > DD_w && DH_w > 0) delete_score_w = DH_w;
+        else if (DD_w > 0) delete_score_w = DD_w;
         else delete_score_w = 0;
 
-        // align score operation
-        if(i_A_base == i_B_base) weight_w = $signed(`CONST_MATCH_SCORE);
-        else weight_w = $signed(`CONST_MISMATCH_SCORE);
-        a3_w = $signed(align_diagonal_A_extended) + $signed(weight_w);
-        i3_w = $signed(insert_diagonal_A_extended) + $signed(weight_w);
-        d3_w = $signed(delete_diagonal_A_extended) + $signed(weight_w);
-        if(d3_w > a3_w && d3_w > i3_w && d3_w > 0) align_score_w = d3_w;
-        else if(i3_w > a3_w && i3_w > 0) align_score_w = i3_w;
-        else if (a3_w > 0) align_score_w = a3_w;
+        // align matrix
+        if (i_A_base == i_B_base) S_w = $signed(`CONST_MATCH_SCORE);
+        else S_w = $signed(`CONST_MISMATCH_SCORE);
+        HH_w = $signed(align_diagonal_A_cur) + $signed(S_w);
+        if (HH_w > insert_score_w && HH_w > delete_score_w && HH_w > 0) align_score_w = HH_w;
+        else if (insert_score_w > delete_score_w && insert_score_w > 0) align_score_w = insert_score_w;
+        else if (delete_score_w > 0) align_score_w = delete_score_w;
         else align_score_w = 0;
 
-        // score opetaion
-        if(align_score_w > insert_score_w && align_score_w > delete_score_w && align_score_w > 0) the_score_w = align_score_w;
-        else if(insert_score_w > delete_score_w && insert_score_w > 0) the_score_w = insert_score_w;
-        else if(delete_score_w > 0) the_score_w = delete_score_w;
+        // score
+        if (align_score_w > insert_score_w && align_score_w > delete_score_w && align_score_w > 0) the_score_w = align_score_w;
+        else if (insert_score_w > delete_score_w && insert_score_w > 0) the_score_w = insert_score_w;
+        else if (delete_score_w > 0) the_score_w = delete_score_w;
         else the_score_w = 0;
     end
-
 end
+
+
 
 always@(posedge clk or posedge rst) begin
     if (rst) begin
         o_last_A_base_valid <= 0;
         o_last_A_base       <= 0;
-        align_score_r <= 0;
-        insert_score_r <= 0;
-        delete_score_r <= 0;
-        the_score_r <= 0;
-        a1_r <= 0;
-        i1_r <= 0;
-        a2_r <= 0;
-        d2_r <= 0;
-        a3_r <= 0;
-        i3_r <= 0;
-        d3_r <= 0;
-        weight_r <= 0;
+        align_score_r       <= 0;
+        insert_score_r      <= 0;
+        delete_score_r      <= 0;
+        the_score_r         <= 0;
+        HH_r                <= 0;
+        IH_r                <= 0;
+        II_r                <= 0;
+        DH_r                <= 0;
+        DD_r                <= 0;
+        S_r                 <= 0;
     end else begin
         o_last_A_base_valid <= i_A_base_valid;
         o_last_A_base       <= i_A_base;
-        align_score_r <= align_score_w;
-        insert_score_r <= insert_score_w;
-        delete_score_r <= delete_score_w;
-        the_score_r <= the_score_w;
-        a1_r <= a1_w;
-        i1_r <= i1_w;
-        a2_r <= a2_w;
-        d2_r <= d2_w;
-        a3_r <= a3_w;
-        i3_r <= i3_w;
-        d3_r <= d3_w;
-        weight_r <= weight_w;
+        align_score_r       <= align_score_w;
+        insert_score_r      <= insert_score_w;
+        delete_score_r      <= delete_score_w;
+        the_score_r         <= the_score_w;
+        HH_r                <= HH_w;
+        IH_r                <= IH_w;
+        II_r                <= II_w;
+        DH_r                <= DH_w;
+        DD_r                <= DD_w;
+        S_r                 <= S_w;
     end
 end
 
