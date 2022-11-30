@@ -357,7 +357,7 @@ module DP_PE_single(
 
 wire signed [`DP_SW_SCORE_BITWIDTH:0] align_diagonal_A_extended = i_align_diagonal_score;
 wire signed [`DP_SW_SCORE_BITWIDTH:0] insert_diagonal_A_extended = i_insert_diagonal_score;
-wire signed [`DP_SW_SCORE_BITWIDTH:0] i_delete_diagonal_extended = i_delete_diagonal_score;
+wire signed [`DP_SW_SCORE_BITWIDTH:0] delete_diagonal_A_extended = i_delete_diagonal_score;
 
 wire signed [`DP_SW_SCORE_BITWIDTH:0] align_left_A_extended = i_align_left_score;
 wire signed [`DP_SW_SCORE_BITWIDTH:0] insert_left_A_extended = i_insert_left_score;
