@@ -196,8 +196,8 @@ module SW_core(
         case(state)
             S_idle: begin
                 if(i_valid) begin
-                    for (i=0;i<`READ_MAX_LENGTH*2;i=i+1) sequence_A_n[i] = i_sequence_ref[i];
-                    for (i=0;i<`READ_MAX_LENGTH*2;i=i+1) sequence_B_n[i] = i_sequence_read[i];
+                    sequence_A_n = i_sequence_ref;
+                    sequence_B_n = i_sequence_read;
                     seq_A_length_n = i_seq_ref_length;
                     seq_B_length_n = i_seq_read_length;
                 end
