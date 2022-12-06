@@ -195,7 +195,7 @@ always_comb begin
 		end
 		length_w = 0;
 		second_w = 0;
-		recd_length_w = 0;
+		// recd_length_w = 0;
 	end
 	S_PLAY: begin
 		if(length_r > 51'd12000000) begin

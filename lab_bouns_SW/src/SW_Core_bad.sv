@@ -184,8 +184,10 @@ module SW_core(
             S_idle: begin
                 if(i_valid) begin
                     o_ready = 0;
-                    for (i=0;i<`READ_MAX_LENGTH; i++) sequence_A_n[i] = i_sequence_ref[i];
+                    for (i=0;i<`REF_MAX_LENGTH; i++) sequence_A_n[i] = i_sequence_ref[i];
                     for (i=0;i<`READ_MAX_LENGTH; i++) sequence_B_n[i] = i_sequence_read[i];
+                    // sequence_A_n = i_sequence_ref;
+                    // sequence_B_n = i_sequence_read; // differ only in this??
                     seq_A_length_n = i_seq_ref_length;
                     seq_B_length_n = i_seq_read_length;
                 end

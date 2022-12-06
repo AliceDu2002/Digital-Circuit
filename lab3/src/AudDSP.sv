@@ -63,34 +63,12 @@ always_comb begin
     case(state_r)
     S_IDLE: begin
         if(i_start) begin
-            state_w = S_START; //i_daclrck? S_WAIT:S_WAIT_L;
+            state_w = S_START;
         end
         sram_addr_w = 0;
         dac_data_w = 0;
         counter_w = 0;
     end
-    // S_WAIT: begin
-    //     if(!i_daclrck) begin
-    //         state_w = S_WAIT_L;
-    //     end
-    //     if(i_stop) begin
-    //         state_w = S_IDLE;
-    //     end
-    //     else if (i_pause) begin
-    //         state_w = S_PAUSE;
-    //     end
-    // end
-    // S_WAIT_L: begin
-    //     if(i_daclrck) begin
-    //         state_w = S_START;
-    //     end
-    //     if(i_stop) begin
-    //         state_w = S_IDLE;
-    //     end
-    //     else if (i_pause) begin
-    //         state_w = S_PAUSE;
-    //     end
-    // end
     S_START: begin
         counter_w = 0;
         if(i_stop) begin
@@ -100,7 +78,7 @@ always_comb begin
             state_w = S_PAUSE;
         end
         else if(i_fast) begin
-            state_w = S_START; //i_daclrck? S_WAIT : S_WAIT_L;
+            state_w = S_START;
             sram_addr_w = sram_addr_r + speed;
             dac_data_w = i_sram_data;
         end
@@ -143,7 +121,6 @@ always_comb begin
         else begin
             //nothing is indicated... play as normal
             state_w = S_START;
-            // state_w = i_daclrck? S_WAIT : S_WAIT_L;
             sram_addr_w = sram_addr_r + 1;
             dac_data_w = i_sram_data;
         end
@@ -152,7 +129,6 @@ always_comb begin
         dac_data_w = 0;
         if(i_start) begin
             state_w = S_START;
-            // state_w = i_daclrck? S_WAIT : S_WAIT_L;
         end
         else begin
             state_w = S_PAUSE;

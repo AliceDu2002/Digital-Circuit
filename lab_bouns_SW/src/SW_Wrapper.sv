@@ -92,13 +92,6 @@ task StartWrite;
         avm_address_w = addr;
     end
 endtask
-task GoQuery;
-    begin
-        StartRead(STATUS_BASE);
-        state_w = S_RX;
-        bytes_counter_w = bytes_counter_r - 7'd1;
-    end
-endtask
 
 // TODO
 always_comb begin
@@ -204,32 +197,12 @@ end
 // TODO
 always_ff @(posedge avm_clk or posedge avm_rst) begin
     if (avm_rst) begin
-    	state_r <= S_RX;
-        sref_r <= 256'd0;
-        sread_r <= 256'd0;
-        avm_address_r <= STATUS_BASE;
-        avm_read_r <= 1;
-        avm_write_r <= 0;
-        writedata_r <= 248'd0;
-        count_r <= 21'd0;
-        i_ready_r <= 0;
-        i_valid_r <= 0;
-        bytes_counter_r <= 63;
-        read_key_r <= 1;
+    	
+
     end
 	else begin
-    	state_r <= state_w;
-        sref_r <= sref_w;
-        sread_r <= sread_w;
-        avm_address_r <= avm_address_w;
-        avm_read_r <= avm_read_w;
-        avm_write_r <= avm_write_w;
-        writedata_r <= writedata_w;
-        count_r <= count_w;
-        i_ready_r <= i_ready_w;
-        i_valid_r <= i_valid_w;
-        bytes_counter_r <= bytes_counter_w;
-        read_key_r <= read_key_w;
+    	
+
     end
 end
 
