@@ -18,6 +18,20 @@ module VGA(
     output vga_CLK;
 );
 
+// === states ===
+
+// === parameter ===
+logic hs_r, hs_w; // end of a row
+logic vs_r, vs_w; // end of a frame
+logic blank_n_r, blank_n_w;
+logic sync_n_r, sync_n_w;
+logic vclk_r, vcli=k_w;
+
+// === outputs ===
+assign vga_r = red;
+assign vga_g = green;
+assign vga_b = blue;
+
 always_comb begin
 
 end

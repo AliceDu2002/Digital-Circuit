@@ -136,7 +136,73 @@ module DE2_115 (
 	inout [6:0] EX_IO
 );
 
-Camera camera();
-VGA vga();
+logic capture; // for camera, from debounce
+logic nios_finish; // for camera, from NIOS
+logic[7:0] vga_red; // for vga, from camera
+logic[7:0] vga_blue; // for vga, from camera
+logic[7:0] vga_green; // for vga, from camera
+logic address; // for memory, from camera
+logic[23:0] data; // for memory, from camera
+
+
+Camera camera(
+	.i_clk_50(CLOCK_50); // controller
+    .i_rst_n(key[0]); // key[0]
+
+    // for initializer
+    output ov7670_xclk;
+    output ov7670_sioc;
+    inout ov7670_siod;
+    output ov7670_pwdn;
+    output ov7670_reset;
+
+    // for capture (no module -> faster?)
+    .ov7670_pclk(CLOCK_50);
+    input ov7670_vsync;
+    input ov7670_href;
+    input[7:0] ov7670_data; // get RGB data
+
+    // to SDRAM
+    .address(address); // length?
+    .data(data); // a pixel
+
+    // to VGA
+    .vga_red(vga_red);
+    .vga_green(vga_green);
+    .vga_blue(vga_blue);
+
+    // communication with NIOS
+    .capture(capture);
+    .nios_finish(nios_finish);
+);
+
+VGA vga(
+	.i_clk(CLOCK_25); // 25k
+    .i_rst_n(key[0]);
+
+    // from Camera
+    .red(vga_red);
+    .green(vga_green);
+    .blue(vga_blue);
+
+    // to DE2_115 VGA Port
+    .vga_hsync(VGA_HS);
+    .vga_vsync(VGA_VS);
+    .vga_r(VGA_R);
+    .vga_g(VGA_G);
+    .vga_b(VGA_B);
+    .vga_blank_N(VGA_BLANK_N);
+    .vga_sync_N(VGA_SYNC_N);
+    .vga_CLK(VGA_CLK);
+);
+
+Memory memory();
+
+Debounce deb1(
+	.i_in(KEY[1]),
+	.i_rst_n(KEY[0]),
+	.i_clk(CLOCK_50),
+	.o_neg(capture)
+);
 
 endmodule
