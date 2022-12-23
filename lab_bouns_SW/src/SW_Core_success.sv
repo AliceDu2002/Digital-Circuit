@@ -7,7 +7,7 @@ module SW_core(
     output reg                                  o_ready,
     input                                       i_valid,
     input [2*`REF_MAX_LENGTH-1:0]               i_sequence_ref,     // reference seq
-    input [2*`READ_MAX_LENGTH-1:0]              i_sequence_read,    // read seq
+    input [2*`READ_MAX_LENGTH-1:0]              i_sequence_read,    // read seq (*2 for 2 bit per data)
     input [$clog2(`REF_MAX_LENGTH):0]           i_seq_ref_length,   // (1-based)
     input [$clog2(`READ_MAX_LENGTH):0]          i_seq_read_length,  // (1-based)
 
@@ -182,11 +182,12 @@ module SW_core(
         // *** TODO
         case(state)
             S_idle: begin
-                if(i_valid) begin
+                if(i_valid) begin // input data is ready
                     sequence_A_n = i_sequence_ref;
                     sequence_B_n = i_sequence_read;
                     seq_A_length_n = i_seq_ref_length;
                     seq_B_length_n = i_seq_read_length;
+                    for (i=0;i<`READ_MAX_LENGTH;i=i+1) sequence_B_valid_n[i] = 1;
                 end
                 else begin
                     //not ready for calc
@@ -211,9 +212,8 @@ module SW_core(
             end
 
             S_input: begin
-               o_ready = 0;
-               for (i=0;i<`READ_MAX_LENGTH;i=i+1) sequence_B_valid_n[i] = 1;
-               sequence_A_shifter_n = sequence_A;
+                sequence_A_shifter_n = sequence_A;
+                o_ready = 0;
             end
 
             S_calculate: begin
