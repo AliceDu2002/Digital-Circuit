@@ -17,7 +17,7 @@ module SW_core(
     input                                       clk,
     input                                       rst,   
    
-    output reg                                  o_ready,
+    output                                  o_ready,
     input                                       i_valid,
     input [255:0]                               i_sequence_ref,     // reference seq
     input [255:0]                               i_sequence_read,    // read seq
@@ -25,10 +25,10 @@ module SW_core(
     input [7:0]                                 i_seq_read_length,  // (1-based)
 
     input                                       i_ready,
-    output reg                                  o_valid,
+    output                                  o_valid,
     output signed [9:0]                         o_alignment_score,
-    output reg [6:0]                            o_column,
-    output reg [6:0]                            o_row
+    output [6:0]                            o_column,
+    output [6:0]                            o_row
 );
     integer i, j, k, l;
     
@@ -52,8 +52,8 @@ module SW_core(
     reg [255:0]                                         sequence_A_shifter, sequence_A_shifter_n;
 
     reg signed [`DP_SW_SCORE_BITWIDTH-1:0]              highest_score, highest_score_n;
-    reg [6:0]                                           column, column_n;
-    reg [6:0]                                           row, row_n;
+    reg [6:0]                                           column, column_n, o_column_r;
+    reg [6:0]                                           row, row_n, o_row_r;
 
     reg signed [`DP_SW_SCORE_BITWIDTH-1:0]              row_highest_scores[0:127], row_highest_scores_n[0:127];
     reg [6:0]                                           row_highest_columns[0:127], row_highest_columns_n [0:127];
@@ -68,7 +68,8 @@ module SW_core(
     reg signed [`DP_SW_SCORE_BITWIDTH-1:0]              PE_delete_score_dd[0:127], PE_delete_score_dd_n [0:127];
 
     // output reg
-    reg                                                 o_valid_n;
+    reg                                                 o_valid_n, o_valid_r;
+    reg o_ready_r;
     reg [6:0]                                           o_column_n;
     reg [6:0]                                           o_row_n;
 
@@ -97,6 +98,10 @@ module SW_core(
     reg [6:0]                                           o_row_nf;
 
     assign o_alignment_score = highest_score;
+    assign o_ready = o_ready_r;
+    assign o_column = o_column_r;
+    assign o_row = o_row_r;
+    assign o_valid = o_valid_r;
 
     //----------------------------------------------------------------------------------------
     wire signed [9:0] PE_align_score          [128:0];
@@ -175,7 +180,7 @@ module SW_core(
     endgenerate
 
     //////////////////////////// state control ////////////////////////////
-    always@(*) begin
+    always @(*) begin
         state_n = state;
         case(state)
             S_idle:             state_n = (i_valid) ? S_input : state;
@@ -187,7 +192,7 @@ module SW_core(
     end
 
     ///////////////////// main design ///////////////////
-    always@(*) begin
+    always @(*) begin
         sequence_A_n                                                            = sequence_A;
         sequence_B_n                                                            = sequence_B;
         seq_A_length_n                                                          = seq_A_length;
@@ -211,10 +216,10 @@ module SW_core(
         for (i=0;i<`READ_MAX_LENGTH;i=i+1) PE_delete_score_dd_n[i]              = PE_delete_score_dd [i];
 
         //////////////////////////////////////////// output ports ////////////////////////////////////////////
-        o_ready                 = 0;        
-        o_valid_n               = 0;
-        o_column_n              = 0;
-        o_row_n                 = 0;
+        o_ready_r                 = 0;        
+        o_valid_n               = o_valid_r;
+        o_column_n              = o_column_r;
+        o_row_n                 = o_row_r;
 
         // *** TODO
         case(state)
@@ -247,19 +252,19 @@ module SW_core(
                     highest_score_n = 0;
                     column_n = 0;
                     row_n = 0;
-                    o_ready = 1;
+                    o_ready_r = 1;
                     o_valid_n = 0;
                 end
             end
 
             S_input: begin
-               o_ready = 0;
+               o_ready_r = 0;
                for (i=0;i<`READ_MAX_LENGTH;i=i+1) sequence_B_valid_n[i] = 1;
                sequence_A_shifter_n = sequence_A;
             end
 
             S_calculate: begin
-                o_ready = 0;
+                o_ready_r = 0;
                 counter_n = counter + 1;
                 if(counter == `READ_MAX_LENGTH + `REF_MAX_LENGTH - 1) counter_n = 0;
                 for(int i = 0; i < `READ_MAX_LENGTH; i = i + 1)begin
@@ -283,7 +288,7 @@ module SW_core(
             end
 
             S_select_highest: begin
-                o_ready = 0;
+                o_ready_r = 0;
                 counter_n = counter + 1;
                 if(counter == `REF_MAX_LENGTH - 1) counter_n = 0;
 
@@ -295,7 +300,7 @@ module SW_core(
             end
 
             S_done: begin
-                o_ready = 0;
+                o_ready_r = 0;
                 o_column_n = column;
                 o_row_n = row;
                 o_valid_n = 1;
@@ -330,9 +335,9 @@ module SW_core(
             for (i=0;i<`READ_MAX_LENGTH;i=i+1) PE_insert_score_dd[i]    <= 0;
             for (i=0;i<`READ_MAX_LENGTH;i=i+1) PE_delete_score_dd[i]    <= 0;
 
-            o_valid                     <= 0;
-            o_column                    <= 0;
-            o_row                       <= 0;
+            o_valid_r                     <= 0;
+            o_column_r                    <= 0;
+            o_row_r                       <= 0;
         end 
         else begin
             state                                                       <= state_n;
@@ -359,9 +364,9 @@ module SW_core(
             for (i=0;i<`READ_MAX_LENGTH;i=i+1) PE_insert_score_dd[i]    <= PE_insert_score_dd_n [i];
             for (i=0;i<`READ_MAX_LENGTH;i=i+1) PE_delete_score_dd[i]    <= PE_delete_score_dd_n [i];            
 
-            o_valid                     <= o_valid_n;
-            o_column                    <= o_column_n;
-            o_row                       <= o_row_n;
+            o_valid_r                     <= o_valid_n;
+            o_column_r                    <= o_column_n;
+            o_row_r                       <= o_row_n;
         end
     end
 

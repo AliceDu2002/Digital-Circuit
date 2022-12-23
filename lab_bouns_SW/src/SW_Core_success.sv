@@ -1,4 +1,17 @@
 
+`define REF_MAX_LENGTH              128
+`define READ_MAX_LENGTH             128
+
+`define REF_LENGTH                  128
+`define READ_LENGTH                 128
+
+//* Score parameters
+`define DP_SW_SCORE_BITWIDTH        10
+
+`define CONST_MATCH_SCORE           1
+`define CONST_MISMATCH_SCORE        -4
+`define CONST_GAP_OPEN              -6
+`define CONST_GAP_EXTEND            -1
 // SW Core --------------------------------------------
 module SW_core(
     input                                       clk,
@@ -182,9 +195,9 @@ module SW_core(
         // *** TODO
         case(state)
             S_idle: begin
-                if(i_valid) begin // input data is ready
-                    sequence_A_n = i_sequence_ref;
-                    sequence_B_n = i_sequence_read;
+                if(i_valid) begin
+                    for (i=0;i<`READ_MAX_LENGTH*2;i=i+1) sequence_A_n[i] = i_sequence_ref[i];
+                    for (i=0;i<`READ_MAX_LENGTH*2;i=i+1) sequence_B_n[i] = i_sequence_read[i];
                     seq_A_length_n = i_seq_ref_length;
                     seq_B_length_n = i_seq_read_length;
                     for (i=0;i<`READ_MAX_LENGTH;i=i+1) sequence_B_valid_n[i] = 1;
