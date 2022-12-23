@@ -174,7 +174,7 @@ always_ff @(posedge i_clk or negedge i_rst_n) begin
         count_byte_r <= count_byte_w;
         count_row_r <= count_row_w;
         count_col_r <= count_col_w;
-        capture_w <= 0;
+        capture_r <= capture_w;
     end
 end
 
