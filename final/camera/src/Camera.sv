@@ -54,7 +54,8 @@ logic capture_r, capture_w;
 assign vga_red = rgb8_r[23:16];
 assign vga_green = rgb8_r[15:8];
 assign vga_blue = rgb8_r[7:0];
-assign data = rgb8_r;
+assign data[15:4] = rgb4_r;
+assign data[3:0] = 0;
 assign address = address_r;
 
 //=== submodule ===
@@ -111,6 +112,7 @@ always_comb begin
                     count_byte_w = count_byte_r + 1;  
                 end
                 else if(count_byte_r)    begin 
+                    rgb4_w[7:0] = ov7670_data;
                     count_byte_w = count_byte_r + 1;
                     count_col_w = count_col_r + 1;
                     address_w = address_r + 1;
