@@ -1,7 +1,7 @@
 import cv2
 import numpy as np;
 
-img = cv2.imread('img/rings.jpg') #read image
+img = cv2.imread('Sobel.jpg') #read image
 hsv_img = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)  #convert to hsv
 
 # Range for lower red
@@ -22,7 +22,6 @@ blured = cv2.GaussianBlur(gray,(5,5),0)
 
 
 # Read image
-# im = cv2.imread(blured, cv2.IMREAD_GRAYSCALE)
 
 # Setup SimpleBlobDetector parameters.
 params = cv2.SimpleBlobDetector_Params()
@@ -55,7 +54,7 @@ else:
     detector = cv2.SimpleBlobDetector_create(params)
 
 # Detect blobs.
-keypoints = detector.detect(blured)
+keypoints = detector.detect(img)
 
 # Draw detected blobs as red circles.
 # cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS ensures
