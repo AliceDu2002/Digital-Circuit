@@ -1,5 +1,6 @@
 module Initializer(
-    
+    input
+    output
 );
 
 always_comb begin
