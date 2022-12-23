@@ -8,16 +8,19 @@ module Camera (
     inout ov7670_siod;
     output ov7670_pwdn;
     output ov7670_reset;
+    output [19:0] o_SRAM_ADDR,
+	inout  [15:0] io_SRAM_DQ,
+	output        o_SRAM_WE_N,
+	output        o_SRAM_CE_N,
+	output        o_SRAM_OE_N,
+	output        o_SRAM_LB_N,
+	output        o_SRAM_UB_N,
 
     // for capture (no module -> faster?)
     input ov7670_pclk;
     input ov7670_vsync;
     input ov7670_href;
     input[7:0] ov7670_data; // get RGB data
-
-    // to SDRAM
-    output[19:0] address; // length?
-    inout[23:0] data; // a pixel
 
     // to VGA
     output[7:0] vga_red;
@@ -58,12 +61,20 @@ logic start_frame_r, start_frame_w;
 assign vga_red = rgb8_r[23:16];
 assign vga_green = rgb8_r[15:8];
 assign vga_blue = rgb8_r[7:0];
-assign data[15:4] = rgb4_r;
-assign data[3:0] = 0;
 assign address = address_r;
 assign column = count_col_r;
 assign row = count_row_r;
 assign start_frame = start_frame_r;
+
+// memory related
+assign o_SRAM_ADDR = (state_r == S_PIXEL && !count_byte_r) ? address_r : 20'd0;
+assign io_SRAM_DQ  = (state_r == S_PIXEL && !count_byte_r) ? {rgb4_r, 4'd0} : 16'dz; // sram_dq as output
+
+assign o_SRAM_WE_N = (state_r == S_PIXEL && !count_byte_r) ? 1'b0 : 1'b1;
+assign o_SRAM_CE_N = 1'b0;
+assign o_SRAM_OE_N = 1'b0;
+assign o_SRAM_LB_N = 1'b0;
+assign o_SRAM_UB_N = 1'b0;
 
 //=== submodule ===
 Intializer initializer();
@@ -140,7 +151,8 @@ always_comb begin
                     rgb4_w[11:8] = ov7670_data[3:0];
                     count_byte_w = count_byte_r + 1;
                 end
-                if(count_byte_r)    begin 
+                if(count_byte_r)    begin
+                    rgb4_w[7:0] = ov7670_data;
                     count_byte_w = count_byte_r + 1;
                     count_col_w = count_col_r + 1;
                     address_w = address_r + 1;
