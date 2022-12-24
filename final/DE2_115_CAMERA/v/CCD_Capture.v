@@ -51,7 +51,8 @@ module CCD_Capture(	oDATA,
 					iSTART,
 					iEND,
 					iCLK,
-					iRST
+					iRST,
+					oPROC
 					);
 					
 input	[11:0]	iDATA;
@@ -74,6 +75,7 @@ reg		[15:0]	X_Cont;
 reg		[15:0]	Y_Cont;
 reg		[31:0]	Frame_Cont;
 reg				mSTART;
+reg				oProcess;
 
 `ifdef VGA_640x480p60
 parameter COLUMN_WIDTH = 1280;
@@ -86,6 +88,7 @@ assign	oY_Cont		=	Y_Cont;
 assign	oFrame_Cont	=	Frame_Cont;
 assign	oDATA		=	mCCD_DATA;
 assign	oDVAL		=	mCCD_FVAL&mCCD_LVAL;
+assign 	oPROC		= 	oProcess;
 
 always@(posedge iCLK or negedge iRST)
 begin
@@ -95,8 +98,25 @@ begin
 	begin
 		if(iSTART)
 		mSTART	<=	1;
-		if(iEND)
-		mSTART	<=	0;		
+		if(iEND) begin
+		mSTART	<=	0;	
+		
+		end	
+	end
+end
+
+always@(posedge iCLK or negedge iRST)
+begin
+	if(!iRST)
+	oProcess	<=	0;
+	else
+	begin
+		if(iSTART)
+		oProcess	<=	0;
+		if(iEND) begin
+		oProcess	<=	1;	
+		
+		end	
 	end
 end
 

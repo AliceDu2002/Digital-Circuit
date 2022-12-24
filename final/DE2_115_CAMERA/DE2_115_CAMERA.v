@@ -463,6 +463,11 @@ wire			sdram_ctrl_clk;
 wire	[9:0]	oVGA_R;   				//	VGA Red[9:0]
 wire	[9:0]	oVGA_G;	 				//	VGA Green[9:0]
 wire	[9:0]	oVGA_B;   				//	VGA Blue[9:0]
+wire	[9:0]	grayscale_color;	
+wire	[9:0]	grayscale_bw;
+wire			grayscale_valid;
+wire  			grayscale_start;
+
 
 //power on start
 wire             auto_start;
@@ -514,7 +519,8 @@ CCD_Capture			u3	(	.oDATA(mCCD_DATA),
 							.iSTART(!KEY[3]|auto_start),
 							.iEND(!KEY[2]),
 							.iCLK(~D5M_PIXLCLK),
-							.iRST(DLY_RST_2)
+							.iRST(DLY_RST_2),
+							.oPROC(grayscale_start)
 						);
 //D5M raw date convert to RGB data
 `ifdef VGA_640x480p60
@@ -646,6 +652,18 @@ I2C_CCD_Config 		u8	(	//	Host Side
 							.I2C_SCLK(D5M_SCLK),
 							.I2C_SDAT(D5M_SDATA)
 						);
+Grayscale 			u9	(
+							.i_clk(VGA_CTRL_CLK),
+							.i_rst_n(DLY_RST_2),
+							.i_start(grayscale_start), // 
+							.i_red(oVGA_R),
+							.i_green(oVGA_G),
+							.i_blue(oVGA_B),
+							.read_request(Read),
+							.o_color(grayscale_color),
+							.o_bw(grayscale_bw),
+							.o_valid(grayscale_valid)
+);
 //VGA DISPLAY
 VGA_Controller		u1	(	//	Host Side
 							.oRequest(Read),
