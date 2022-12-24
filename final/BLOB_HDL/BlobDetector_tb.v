@@ -1284,6 +1284,8 @@ module BlobDetector_tb;
   // Data source for ctrlIn_vStart
   initial
     begin : ctrlIn_vStart_fileread
+      // $dumpfile("BLOB_Detector.fsdb");
+      // $dumpvars;
       fp_ctrlIn_vStart = $fopen("ctrlIn_vStart.dat", "r");
       status_ctrlIn_vStart = $rewind(fp_ctrlIn_vStart);
     end
@@ -1630,8 +1632,8 @@ module BlobDetector_tb;
                                .GradThresh(GradThresh_1),  // uint8
                                .AreaThresh(AreaThresh_1),  // uint32
                                .CloseOp(CloseOp_1),
-                               .VideoMode(VideoMode_1),  // uint8
-                               .blobIndex(blobIndex),  // ufix10
+                               .VideoMode(0),  // uint8
+                               .blobIndex(0),  // ufix10 // blobIndex
                                .ce_out(ce_out),
                                .pixelOutR(pixelOutR),  // uint8
                                .pixelOutG(pixelOutG),  // uint8
@@ -3073,6 +3075,7 @@ module BlobDetector_tb;
 
   always @(posedge clk or posedge reset)
     begin : totalNum_o_checker
+    $display("%d\n", totalNum_o);
       if (reset == 1'b1) begin
         totalNum_o_testFailure <= 1'b0;
       end
