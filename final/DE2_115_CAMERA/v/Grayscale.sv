@@ -21,12 +21,12 @@ parameter S_IDLE = 0;
 parameter S_COLOR = 1;
 
 // === parameters ===
-parameter weight_red = 8'b10011001;
-parameter weight_green = 10'b1001011001;
-parameter weight_blue = 6'b100101;
+parameter weight_red = 5'b10011; // 0.010011
+parameter weight_green = 7'b1001011; // 0.1001011
+parameter weight_blue = 6'b100101; // 0.00100101
 parameter threshold = 125;
-parameter shift_red = 9;
-parameter shift_green = 10;
+parameter shift_red = 6;
+parameter shift_green = 7;
 parameter shift_blue = 8;
 parameter num_pixel = `SIZE;
 logic state_r, state_w;
