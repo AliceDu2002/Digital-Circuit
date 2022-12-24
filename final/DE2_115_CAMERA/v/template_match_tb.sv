@@ -2,6 +2,7 @@
 
 module tb;
     localparam CLK = 10;
+    localparam HCLK = 5;
 
     logic clk;
     logic rst;
@@ -10,6 +11,7 @@ module tb;
     logic [14:0] out;
     logic input_1;
     logic input_2;
+    always #(HCLK) clk = ~clk;
     always #CLK input_1 = $random%2;
     always #CLK input_2 = $random%2;
     logic [19:0] addr;

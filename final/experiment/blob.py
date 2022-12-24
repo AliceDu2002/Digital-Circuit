@@ -41,14 +41,18 @@ data_i = 0
 category = [0]
 merge = [0]
 
-formimg = np.zeros((640,480), dtype = np.uint8)
-buffer = [0] * 482
+formimg = np.zeros((480,640), dtype = np.uint8)
+buffer = [0] * 642
 
-width = 480
+width = 640
+
+light_threshold = 130
+size_threshold = 0.125
+
 for i in range(1, len(img)):
     for j in range(0, len(img[0])):
         
-        if img[i][j] > 130:
+        if img[i][j] > light_threshold:
             data[data_i] = 0
             formimg[i][j] = 0
         else:
@@ -97,7 +101,7 @@ for i in range(0, len(category)):
 
 finalcount = 0
 for i in range(0, len(category)):
-    if category[i] > 0.1*max:
+    if category[i] > size_threshold * max:
         finalcount += 1
 print("Final Count:", finalcount)
 
