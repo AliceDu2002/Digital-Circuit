@@ -56,7 +56,7 @@ module tb;
 		fp_test 	= $fopen("./../cpp/test_data/random_pattern.bin", "rb");
 		fp_golden	= $fopen("./../cpp/test_data/pattern_ans.txt", "r");
 		d 			= $fscanf(fp_golden, "%d", data_num);
-		data_num = 10;
+		// data_num = 10;
 		rst 	= 1;
 		i_valid = 0;
 		i_ready = 0;

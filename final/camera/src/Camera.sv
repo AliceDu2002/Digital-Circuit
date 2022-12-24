@@ -8,6 +8,8 @@ module Camera (
     inout ov7670_siod;
     output ov7670_pwdn;
     output ov7670_reset;
+
+    // SRAM
     output [19:0] o_SRAM_ADDR,
 	inout  [15:0] io_SRAM_DQ,
 	output        o_SRAM_WE_N,
@@ -77,7 +79,10 @@ assign o_SRAM_LB_N = 1'b0;
 assign o_SRAM_UB_N = 1'b0;
 
 //=== submodule ===
-Intializer initializer();
+Intializer initializer(
+
+    
+);
 
 always_comb begin
     rgb4_w = rgb4_r;
