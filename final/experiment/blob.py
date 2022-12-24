@@ -102,4 +102,4 @@ for i in range(0, len(category)):
 print("Final Count:", finalcount)
 
 image = Image.fromarray(formimg, "L")
-image.save(output_img)
+image.save(binarize_img)
