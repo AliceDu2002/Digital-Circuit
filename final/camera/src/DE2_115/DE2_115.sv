@@ -163,8 +163,13 @@ Camera camera(
     input[7:0] ov7670_data; // get RGB data
 
     // to SDRAM
-    .address(address); // length?
-    .data(data); // a pixel
+    .o_SRAM_ADDR(SRAM_ADDR),
+	.io_SRAM_DQ(SRAM_DQ),
+	.o_SRAM_WE_N(SRAM_WE_N),
+	.o_SRAM_CE_N(SRAM_CE_N),
+	.o_SRAM_OE_N(SRAM_OE_N),
+	.o_SRAM_LB_N(SRAM_LB_N),
+	.o_SRAM_UB_N(SRAM_UB_N),
 
     // to VGA
     .vga_red(vga_red);
@@ -195,8 +200,6 @@ VGA vga(
     .vga_sync_N(VGA_SYNC_N);
     .vga_CLK(VGA_CLK);
 );
-
-Memory memory();
 
 Debounce deb1(
 	.i_in(KEY[1]),
