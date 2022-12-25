@@ -677,7 +677,7 @@ Grayscale 			u9	(
 							.o_blue(grayscale_blue),
 							.o_green(grayscale_green)
 );
-Blob blob(
+Blob_pipeline blob(
 							.i_clk(CLOCK2_50),
 							.i_rst_n(DLY_RST_2),
 							.i_valid(grayscale_start),

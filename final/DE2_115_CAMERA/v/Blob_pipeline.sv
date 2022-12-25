@@ -6,7 +6,7 @@
 `define BUF_ENTRY_SIZE 7
 `define PIXEL_ENTRY_SIZE 15
 
-module Blob(
+module Blob_pipeline(
     input i_clk,
     input i_rst_n,
     input i_valid,
