@@ -12,7 +12,7 @@ module Grayscale (
 
     // communication with further image process
     output[9:0] o_color,
-    output[9:0] o_bw,
+    output o_bw,
     output o_valid
 );
 
@@ -38,7 +38,7 @@ logic[19:0] count_r, count_w;
 logic valid_r, valid_w;
 
 // === outputs ===
-assign o_bw = (red_r[9:0] + green_r[9:0] + blue_r[9:0] > threshold) ? 255 : 0;
+assign o_bw = (red_r[9:0] + green_r[9:0] + blue_r[9:0] > threshold) ? 0 : 1;
 assign o_color = red_r[9:0] + green_r[9:0] + blue_r[9:0];
 assign read_request = read_request_r;
 assign o_valid = valid_r;

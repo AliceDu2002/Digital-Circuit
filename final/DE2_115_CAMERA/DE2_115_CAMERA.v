@@ -464,7 +464,7 @@ wire	[9:0]	oVGA_R;   				//	VGA Red[9:0]
 wire	[9:0]	oVGA_G;	 				//	VGA Green[9:0]
 wire	[9:0]	oVGA_B;   				//	VGA Blue[9:0]
 wire	[9:0]	grayscale_color;	
-wire	[9:0]	grayscale_bw;
+wire			grayscale_bw;
 wire			grayscale_valid;
 wire  			grayscale_start;
 
