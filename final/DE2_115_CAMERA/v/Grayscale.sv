@@ -46,9 +46,9 @@ logic vga_start_r, vga_start_w;
 // === outputs ===
 assign o_bw = (red_r[9:0] + green_r[9:0] + blue_r[9:0] > `THRESHOLD) ? 0 : 1;
 assign o_color = (red_r[9:0] + green_r[9:0] + blue_r[9:0]) >> 2;
-assign o_red = red_r;
-assign o_green = green_r;
-assign o_blue = blue_r;
+assign o_red = red_r[9:0];
+assign o_green = green_r[9:0];
+assign o_blue = blue_r[9:0];
 assign read_request = read_request_r;
 assign o_valid = valid_r;
 assign o_vga = vga_start_r;
@@ -81,14 +81,13 @@ always_comb begin
         // red_w = (i_red*weight_red) >> shift_red;;
         // green_w = (i_green*weight_green) >> shift_green;
         // blue_w = (i_blue*weight_blue) >> shift_blue;
-        red_w = i_red;
-        green_w = i_green;
-        blue_w = i_blue;
+        red_w[9:0] = i_red;
+        green_w[9:0] = i_green;
+        blue_w[9:0] = i_blue;
         state_w = S_COLOR;
         if(count_r >= `SIZE) begin
-            state_w = S_IDLE;
+            state_w = S_WAIT;
             valid_w = 0;
-            state_w = S_IDLE;
         end
     end
     S_WAIT: begin

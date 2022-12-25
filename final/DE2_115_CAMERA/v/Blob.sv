@@ -111,29 +111,29 @@ always_comb begin
                             ptr_w = ptr_r + 1;
                         end
                         pixels_w[buffer_r[`BUF_SIZE-1]] = pixels_r[buffer_r[`BUF_SIZE-1]] + 1;
-                        if (buffer_r[2]>0 && buffer_r[2]!=buffer_r[`BUF_SIZE-1]) begin
-                            if (tisch_r[buffer_r[`BUF_SIZE-1]] > tisch_r[buffer_r[2]]) begin
-                                if (isNew_r == 0) begin
-                                    tisch_w[tisch_r[buffer_r[`BUF_SIZE-1]]] = tisch_r[buffer_r[2]];
-                                end
-                                else begin
-                                    isNew_w = 0;
-                                    for (int i=0; i<640; i=i+1) begin
-													if(i<ptr_r+1) begin
-														buffer_w[`BUF_SIZE-1-i] = buffer_r[2];
-														pixels_w[buffer_r[2]] = pixels_r[buffer_r[2]] + 1;
-													 end
-                                    end
-                                    pixels_w[curcat_r] = 0;
-                                    curcat_w = curcat_r - 1;
-                                    tisch_w[curcat_r] = 0;
-                                end
-                            end
-                            else if (tisch_r[buffer_r[`BUF_SIZE-1]] < tisch_r[buffer_r[2]]) begin
-                                tisch_w[tisch_r[buffer_r[2]]] = tisch_r[buffer_r[`BUF_SIZE-1]];
-                                isNew_w = 0;
-                            end
-                        end
+                        // if (buffer_r[2]>0 && buffer_r[2]!=buffer_r[`BUF_SIZE-1]) begin
+                        //     if (tisch_r[buffer_r[`BUF_SIZE-1]] > tisch_r[buffer_r[2]]) begin
+                        //         if (isNew_r == 0) begin
+                        //             tisch_w[tisch_r[buffer_r[`BUF_SIZE-1]]] = tisch_r[buffer_r[2]];
+                        //         end
+                        //         else begin
+                        //             isNew_w = 0;
+                        //             for (int i=0; i<640; i=i+1) begin
+						// 							if(i<ptr_r+1) begin
+						// 								buffer_w[`BUF_SIZE-1-i] = buffer_r[2];
+						// 								pixels_w[buffer_r[2]] = pixels_r[buffer_r[2]] + 1;
+						// 							 end
+                        //             end
+                        //             pixels_w[curcat_r] = 0;
+                        //             curcat_w = curcat_r - 1;
+                        //             tisch_w[curcat_r] = 0;
+                        //         end
+                        //     end
+                        //     else if (tisch_r[buffer_r[`BUF_SIZE-1]] < tisch_r[buffer_r[2]]) begin
+                        //         tisch_w[tisch_r[buffer_r[2]]] = tisch_r[buffer_r[`BUF_SIZE-1]];
+                        //         isNew_w = 0;
+                        //     end
+                        // end
                     end
                     else if (buffer_r[1] != 0) begin
                         pixels_w[buffer_r[1]] = pixels_r[buffer_r[1]] + 1;

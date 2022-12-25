@@ -662,7 +662,7 @@ I2C_CCD_Config 		u8	(	//	Host Side
 							.I2C_SDAT(D5M_SDATA)
 						);
 Grayscale 			u9	(
-							.i_clk(VGA_CTRL_CLK),
+							.i_clk(CLOCK2_50),
 							.i_rst_n(DLY_RST_2),
 							.i_start(grayscale_start), // 
 							.i_red(oVGA_R),
@@ -678,7 +678,7 @@ Grayscale 			u9	(
 							.o_green(grayscale_green)
 );
 Blob blob(
-							.i_clk(VGA_CTRL_CLK),
+							.i_clk(CLOCK2_50),
 							.i_rst_n(DLY_RST_2),
 							.i_valid(grayscale_valid),
 							.i_seq(grayscale_bw),
