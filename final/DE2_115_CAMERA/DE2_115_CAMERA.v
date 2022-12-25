@@ -606,7 +606,7 @@ Sdram_Control	u7	(	//	HOST Side
 
 							//	FIFO Read Side 1
 						    .RD1_DATA(Read_DATA1),
-				        	.RD1(Read),
+				        	.RD1((grayscale_start) ? Read_vga : Read),
 				        	.RD1_ADDR(0),
 `ifdef VGA_640x480p60
 						    .RD1_MAX_ADDR(640*480/2),
@@ -620,7 +620,7 @@ Sdram_Control	u7	(	//	HOST Side
 							
 							//	FIFO Read Side 2
 						    .RD2_DATA(Read_DATA2),
-							.RD2(Read),
+							.RD2((grayscale_start) ? Read_vga : Read),
 							.RD2_ADDR(23'h100000),
 `ifdef VGA_640x480p60
 						    .RD2_MAX_ADDR(23'h100000+640*480/2),
@@ -669,12 +669,12 @@ Grayscale 			u9	(
 //VGA DISPLAY
 VGA_Controller		u1	(	//	Host Side
 							.oRequest(Read_vga),
-							// .iRed((grayscale_start) ? o_color : Read_DATA2[9:0]),
-							// .iGreen((grayscale_start) ? o_color : {Read_DATA1[14:10],Read_DATA2[14:10]}),
-							// .iBlue((grayscale_start) ? o_color : Read_DATA1[9:0]),
-							.iRed(o_color),
-							.iGreen(o_color),
-							.iBlue(o_color),
+							.iRed((grayscale_start) ? o_color : Read_DATA2[9:0]),
+							.iGreen((grayscale_start) ? o_color : {Read_DATA1[14:10],Read_DATA2[14:10]}),
+							.iBlue((grayscale_start) ? o_color : Read_DATA1[9:0]),
+							// .iRed(o_color),
+							// .iGreen(o_color),
+							// .iBlue(o_color),
 							//	VGA Side
 							.oVGA_R(oVGA_R),
 							.oVGA_G(oVGA_G),
