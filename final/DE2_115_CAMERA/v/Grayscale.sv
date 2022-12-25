@@ -1,4 +1,4 @@
-`define SIZE 479999
+`define SIZE 640*480-1
 `define TH 512
 module Grayscale (
     input i_clk,
@@ -14,7 +14,11 @@ module Grayscale (
     // communication with further image process
     output[9:0] o_color,
     output o_bw,
-    output o_valid
+    output o_valid,
+    output[9:0] o_red,
+    output[9:0] o_green,
+    output[9:0] o_blue,
+    output o_vga
 );
 
 // === states ===
@@ -38,12 +42,17 @@ logic[20:0] blue_r, blue_w;
 logic read_request_r, read_request_w; 
 logic[19:0] count_r, count_w;
 logic valid_r, valid_w;
+logic vga_start_r, vga_start_w;
 
 // === outputs ===
 assign o_bw = (red_r[9:0] + green_r[9:0] + blue_r[9:0] > threshold) ? 0 : 1;
-assign o_color = red_r[9:0] + green_r[9:0] + blue_r[9:0];
+assign o_color = (red_r[9:0] + green_r[9:0] + blue_r[9:0]) >> 2;
+assign o_red = red_r;
+assign o_green = green_r;
+assign o_blue = blue_r;
 assign read_request = read_request_r;
 assign o_valid = valid_r;
+assign vga_start = vga_start_r;
 
 always_comb begin
     state_w = state_r;
@@ -53,11 +62,13 @@ always_comb begin
     read_request_w = read_request_r;
     count_w = count_r;
     valid_w = valid_r;
+    vga_start_w = vga_start_r;
 
     case(state_r)
     S_IDLE: begin
         if(i_start) begin
             read_request_w = 1;
+            vga_start_w = 1;
             state_w = S_COLOR;
             count_w = 0;
         end
@@ -65,15 +76,19 @@ always_comb begin
     end
     S_COLOR: begin
         read_request_w = 0;
+        vga_start_w = 0;
         count_w = count_r + 1;
         valid_w = 1;
-        red_w = (i_red*weight_red) >> shift_red;;
-        green_w = (i_green*weight_green) >> shift_green;
-        blue_w = (i_blue*weight_blue) >> shift_blue;
+        // red_w = (i_red*weight_red) >> shift_red;;
+        // green_w = (i_green*weight_green) >> shift_green;
+        // blue_w = (i_blue*weight_blue) >> shift_blue;
+        red_w = i_red;
+        green_w = i_green;
+        blue_w = i_blue;
         state_w = S_COLOR;
         if(count_r >= num_pixel) begin
             valid_w = 0;
-            state_w = S_WAIT;
+            state_w = S_IDLE;
         end
     end
     S_WAIT: begin
@@ -93,6 +108,7 @@ always_ff @(posedge i_clk or negedge i_rst_n) begin
         read_request_r <= 0;
         count_r <= 0;
         valid_r <= 0;
+        vga_start_r <= 0;
     end
     else begin
         state_r <= state_w;
@@ -102,6 +118,7 @@ always_ff @(posedge i_clk or negedge i_rst_n) begin
         read_request_r <= read_request_w;
         count_r <= count_w;
         valid_r <= valid_w;
+        vga_start_r <= vga_start_w;
     end
 end
 
