@@ -613,7 +613,7 @@ Sdram_Control	u7	(	//	HOST Side
 
 							//	FIFO Read Side 1
 						    .RD1_DATA(Read_DATA1),
-				        	.RD1((grayscale_start) ? Read : Read_vga),
+				        	.RD1(Read_vga),
 				        	.RD1_ADDR(0),
 `ifdef VGA_640x480p60
 						    .RD1_MAX_ADDR(640*480/2),
@@ -627,7 +627,7 @@ Sdram_Control	u7	(	//	HOST Side
 							
 							//	FIFO Read Side 2
 						    .RD2_DATA(Read_DATA2),
-							.RD2((grayscale_start) ? Read : Read_vga),
+							.RD2(Read_vga),
 							.RD2_ADDR(23'h100000),
 `ifdef VGA_640x480p60
 						    .RD2_MAX_ADDR(23'h100000+640*480/2),
@@ -662,13 +662,13 @@ I2C_CCD_Config 		u8	(	//	Host Side
 							.I2C_SDAT(D5M_SDATA)
 						);
 Grayscale 			u9	(
-							.i_clk(CLOCK2_50),
-							.i_rst_n(DLY_RST_2),
-							.i_start(grayscale_start), // 
+							// .i_clk(VGA_CTRL_CLK),
+							// .i_rst_n(DLY_RST_2),
+							// .i_start(grayscale_start), // 
 							.i_red(Read_DATA2[9:0]),
 							.i_green({Read_DATA1[14:10],Read_DATA2[14:10]}),
 							.i_blue(Read_DATA1[9:0]),
-							.read_request(Read),
+							// .read_request(Read),
 							.o_color(grayscale_color),
 							.o_bw(grayscale_bw),
 							.o_valid(grayscale_valid),
@@ -680,21 +680,23 @@ Grayscale 			u9	(
 // Blob blob(
 // 							.i_clk(CLOCK2_50),
 // 							.i_rst_n(DLY_RST_2),
-// 							.i_valid(grayscale_valid),
+// 							.i_valid(grayscale_start),
 // 							.i_seq(grayscale_bw),
 // 							.o_valid(o_valid),
 // 							.o_count(count)
 // );
 //VGA DISPLAY
 VGA_Controller		u1	(	//	Host Side
-							.istart((grayscale_start) ? vga_start : KEY[3]),
 							.oRequest(Read_vga),
-							.iRed((grayscale_start) ? grayscale_red : Read_DATA2[9:0]),
-							.iGreen((grayscale_start) ? grayscale_blue : {Read_DATA1[14:10],Read_DATA2[14:10]}),
-							.iBlue((grayscale_start) ? grayscale_green : Read_DATA1[9:0]),
-							// .iRed(o_color),
-							// .iGreen(o_color),
-							// .iBlue(o_color),
+							.iRed((grayscale_start) ? grayscale_bw : grayscale_red),
+							.iGreen((grayscale_start) ? grayscale_bw : grayscale_green),
+							.iBlue((grayscale_start) ? grayscale_color_bw : grayscale_blue),
+							// .iRed(grayscale_red),
+							// .iGreen(grayscale_green),
+							// .iBlue(grayscale_blue),
+							// .iRed(grayscale_color),
+							// .iGreen(grayscale_color),
+							// .iBlue(grayscale_color),
 							//	VGA Side
 							.oVGA_R(oVGA_R),
 							.oVGA_G(oVGA_G),

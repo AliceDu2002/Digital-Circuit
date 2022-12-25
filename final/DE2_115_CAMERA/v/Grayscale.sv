@@ -1,12 +1,12 @@
 `define SIZE 640*480-1
-`define THRESHOLD 512
+`define THRESHOLD 20
 module Grayscale (
-    input i_clk,
-    input i_rst_n,
-    input i_start,
+    // input i_clk,
+    // input i_rst_n,
+    // input i_start,
 
     // communication with SDRAM
-    output read_request,
+    // output read_request,
     input[9:0] i_red,
     input[9:0] i_green,
     input[9:0] i_blue,
@@ -43,89 +43,94 @@ logic[19:0] count_r, count_w;
 logic valid_r, valid_w;
 logic vga_start_r, vga_start_w;
 logic first_frame_r, first_frame_w;
+logic[10:0] color_w;
 
 // === outputs ===
-assign o_bw = (red_r[9:0] + green_r[9:0] + blue_r[9:0] > `THRESHOLD) ? 0 : 1;
-assign o_color = (red_r[9:0] + green_r[9:0] + blue_r[9:0]) >> 2;
-assign o_red = red_r[9:0];
-assign o_green = green_r[9:0];
-assign o_blue = blue_r[9:0];
-assign read_request = read_request_r;
+assign o_bw = (color_w > `THRESHOLD) ? 10'b111111 : 0;
+assign o_color = color_w[10:1];
+assign o_red = i_red;
+assign o_green = i_green;
+assign o_blue = i_blue;
 assign o_valid = valid_r;
 assign o_vga = vga_start_r;
 
 always_comb begin
-    state_w = state_r;
-    red_w = red_r;
-    green_w = green_r;
-    blue_w = blue_r;
-    read_request_w = read_request_r;
-    count_w = count_r;
-    valid_w = valid_r;
-    vga_start_w = vga_start_r;
-    first_frame_w = first_frame_r;
+    red_w = (i_red*weight_red) >> shift_red;
+    green_w = (i_green*weight_green) >> shift_green;
+    blue_w = (i_blue*weight_blue) >> shift_blue;
+    color_w = (red_w + green_w + blue_w);
 
-    case(state_r)
-    S_IDLE: begin
-        if(i_start) begin
-            read_request_w = 1;
-            if(first_frame_r) begin
-                vga_start_w = 1;
-            end
-            state_w = S_COLOR;
-            count_w = 0;
-        end
+//     state_w = state_r;
+//     red_w = red_r;
+//     green_w = green_r;
+//     blue_w = blue_r;
+//     read_request_w = read_request_r;
+//     count_w = count_r;
+//     valid_w = valid_r;
+//     vga_start_w = vga_start_r;
+//     first_frame_w = first_frame_r;
 
-    end
-    S_COLOR: begin
-        read_request_w = 0;
-        vga_start_w = 0;
-        count_w = count_r + 1;
-        valid_w = 1;
-        // red_w = (i_red*weight_red) >> shift_red;;
-        // green_w = (i_green*weight_green) >> shift_green;
-        // blue_w = (i_blue*weight_blue) >> shift_blue;
-        red_w[9:0] = i_red;
-        green_w[9:0] = i_green;
-        blue_w[9:0] = i_blue;
-        state_w = S_COLOR;
-        if(count_r >= `SIZE) begin
-            state_w = S_IDLE;
-            valid_w = 0;
-            first_frame_w = 0;
-        end
-    end
-    S_WAIT: begin
-        if(!i_start) begin
-            state_w = S_IDLE;
-        end
-    end
-    endcase
+//     case(state_r)
+//     S_IDLE: begin
+//         if(i_start) begin
+//             read_request_w = 1;
+//             if(first_frame_r) begin
+//                 vga_start_w = 1;
+//             end
+//             state_w = S_COLOR;
+//             count_w = 0;
+//         end
+
+//     end
+//     S_COLOR: begin
+//         read_request_w = 0;
+//         vga_start_w = 0;
+//         count_w = count_r + 1;
+//         valid_w = 1;
+//         // red_w = (i_red*weight_red) >> shift_red;;
+//         // green_w = (i_green*weight_green) >> shift_green;
+//         // blue_w = (i_blue*weight_blue) >> shift_blue;
+//         red_w[9:0] = i_red;
+//         green_w[9:0] = i_green;
+//         blue_w[9:0] = i_blue;
+//         state_w = S_COLOR;
+//         if(count_r >= `SIZE) begin
+//             state_w = S_IDLE;
+//             valid_w = 0;
+//             first_frame_w = 0;
+//         end
+//     end
+//     S_WAIT: begin
+//         if(!i_start) begin
+//             state_w = S_IDLE;
+//         end
+//     end
+//     endcase
 end
 
-always_ff @(posedge i_clk or negedge i_rst_n) begin
-    if(!i_rst_n) begin
-        state_r <= 0;
-        red_r <= 0;
-        green_r <= 0;
-        blue_r <= 0;
-        read_request_r <= 0;
-        count_r <= 0;
-        valid_r <= 0;
-        vga_start_r <= 0;
-        first_frame_r <= 1;
-    end
-    else begin
-        state_r <= state_w;
-        red_r <= red_w;
-        green_r <= green_w;
-        blue_r <= blue_w;
-        read_request_r <= read_request_w;
-        count_r <= count_w;
-        valid_r <= valid_w;
-        vga_start_r <= vga_start_w;
-        first_frame_r <= first_frame_w;
-    end
-end
+// always_ff @(posedge i_clk or negedge i_rst_n) begin
+//     if(!i_rst_n) begin
+//         state_r <= 0;
+//         red_r <= 0;
+//         green_r <= 0;
+//         blue_r <= 0;
+//         read_request_r <= 0;
+//         count_r <= 0;
+//         valid_r <= 0;
+//         vga_start_r <= 0;
+//         first_frame_r <= 1;
+//     end
+//     else begin
+//         state_r <= state_w;
+//         red_r <= red_w;
+//         green_r <= green_w;
+//         blue_r <= blue_w;
+//         read_request_r <= read_request_w;
+//         count_r <= count_w;
+//         valid_r <= valid_w;
+//         vga_start_r <= vga_start_w;
+//         first_frame_r <= first_frame_w;
+//     end
+// end
 
 endmodule
