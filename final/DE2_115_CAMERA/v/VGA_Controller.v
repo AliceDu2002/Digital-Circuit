@@ -97,6 +97,7 @@ parameter	V_SYNC_TOTAL=	628;
 parameter	X_START		=	H_SYNC_CYC+H_SYNC_BACK;
 parameter	Y_START		=	V_SYNC_CYC+V_SYNC_BACK;
 //	Host Side
+input 				istart;
 input		[9:0]	iRed;
 input		[9:0]	iGreen;
 input		[9:0]	iBlue;
