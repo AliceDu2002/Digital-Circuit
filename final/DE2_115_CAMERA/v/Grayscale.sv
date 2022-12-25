@@ -42,6 +42,7 @@ logic read_request_r, read_request_w;
 logic[19:0] count_r, count_w;
 logic valid_r, valid_w;
 logic vga_start_r, vga_start_w;
+logic first_frame_r, first_frame_w;
 
 // === outputs ===
 assign o_bw = (red_r[9:0] + green_r[9:0] + blue_r[9:0] > `THRESHOLD) ? 0 : 1;
@@ -62,12 +63,15 @@ always_comb begin
     count_w = count_r;
     valid_w = valid_r;
     vga_start_w = vga_start_r;
+    first_frame_w = first_frame_r;
 
     case(state_r)
     S_IDLE: begin
         if(i_start) begin
             read_request_w = 1;
-            vga_start_w = 1;
+            if(first_frame_r) begin
+                vga_start_w = 1;
+            end
             state_w = S_COLOR;
             count_w = 0;
         end
@@ -86,8 +90,9 @@ always_comb begin
         blue_w[9:0] = i_blue;
         state_w = S_COLOR;
         if(count_r >= `SIZE) begin
-            state_w = S_WAIT;
+            state_w = S_IDLE;
             valid_w = 0;
+            first_frame_w = 0;
         end
     end
     S_WAIT: begin
@@ -108,6 +113,7 @@ always_ff @(posedge i_clk or negedge i_rst_n) begin
         count_r <= 0;
         valid_r <= 0;
         vga_start_r <= 0;
+        first_frame_r <= 1;
     end
     else begin
         state_r <= state_w;
@@ -118,6 +124,7 @@ always_ff @(posedge i_clk or negedge i_rst_n) begin
         count_r <= count_w;
         valid_r <= valid_w;
         vga_start_r <= vga_start_w;
+        first_frame_r <= first_frame_w;
     end
 end
 
