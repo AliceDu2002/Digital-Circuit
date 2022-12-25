@@ -117,6 +117,8 @@ always_comb begin
                                         pixels_w[buffer_r[2]] = pixels_r[buffer_r[2]] + 1;
                                     end
                                     pixels_w[curcat_r] = 0;
+                                    curcat_w = curcat_r - 1;
+                                    tisch_w[curcat_r] = 0;
                                 end
                             end
                             else if (tisch_r[buffer_r[`BUF_SIZE-1]] < tisch_r[buffer_r[2]]) begin

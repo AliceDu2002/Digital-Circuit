@@ -35,6 +35,8 @@ logic [2:0] state_r, state_w;
 logic [9:0] counter_r, counter_w;
 
 logic isFirstRow_r, isFirstRow_w;
+logic isNew_r, isNew_w;
+logic [9:0] ptr_r, ptr_w;
 logic [`BUF_ENTRY_SIZE-1:0] category_w;
 logic [`BUF_ENTRY_SIZE-1:0] curcat_r, curcat_w;
 logic [`PIXEL_ENTRY_SIZE-1:0] largest_category_r, largest_category_w; 
@@ -62,6 +64,8 @@ always_comb begin
     curcat_w = curcat_r;
     category_w = 0;
     o_valid_w = o_valid_r;
+    isNew_w = isNew_r;
+    ptr_w = ptr_r;
 
     case(state_r)
         S_IDLE: begin
@@ -87,42 +91,65 @@ always_comb begin
                 if ( counter_r == 10'd639) begin            // right side
                     category_w = 0;
                     counter_w = 0;
+                    ptr_w = 0;
                 end
                 else if (counter_r == 10'd0) begin
                     category_w = 0;
                     counter_w = counter_r +1;
+                    ptr_w = 0;
                 end
                 else if (!i_seq) begin                   // left side
                     category_w = 0;
                     counter_w = counter_r +1;
+                    ptr_w = 0;
                 end
                 else if (i_seq) begin
                     counter_w = counter_r + 1;
                     if (buffer_r[`BUF_SIZE-1] != 0) begin
                         category_w = buffer_r[`BUF_SIZE-1];
+                        if (ptr_r < `BUF_SIZE) begin
+                            ptr_w = ptr_r + 1;
+                        end
                         pixels_w[buffer_r[`BUF_SIZE-1]] = pixels_r[buffer_r[`BUF_SIZE-1]] + 1;
                         if (buffer_r[2]>0 && buffer_r[2]!=buffer_r[`BUF_SIZE-1]) begin
                             if (tisch_r[buffer_r[`BUF_SIZE-1]] > tisch_r[buffer_r[2]]) begin
-                                tisch_w[tisch_r[buffer_r[`BUF_SIZE-1]]] = tisch_r[buffer_r[2]];
+                                if (isNew_r == 0) begin
+                                    tisch_w[tisch_r[buffer_r[`BUF_SIZE-1]]] = tisch_r[buffer_r[2]];
+                                end
+                                else begin
+                                    isNew_w = 0;
+                                    for (int i=0; i<ptr_r+1; i=i+1) begin
+                                        buffer_w[`BUF_SIZE-1-i] = buffer_r[2];
+                                        pixels_w[buffer_r[2]] = pixels_r[buffer_r[2]] + 1;
+                                    end
+                                    pixels_w[curcat_r] = 0;
+                                    curcat_w = curcat_r - 1;
+                                    tisch_w[curcat_r] = 0;
+                                end
                             end
                             else if (tisch_r[buffer_r[`BUF_SIZE-1]] < tisch_r[buffer_r[2]]) begin
                                 tisch_w[tisch_r[buffer_r[2]]] = tisch_r[buffer_r[`BUF_SIZE-1]];
+                                isNew_w = 0;
                             end
                         end
                     end
                     else if (buffer_r[1] != 0) begin
                         pixels_w[buffer_r[1]] = pixels_r[buffer_r[1]] + 1;
                         category_w = buffer_r[1];
+                        isNew_w = 0;
                     end
                     else if (buffer_r[2] != 0) begin
                         pixels_w[buffer_r[2]] = pixels_r[buffer_r[2]] + 1;
                         category_w = buffer_r[2];
+                        isNew_w = 0;
                     end
                     else begin
                         category_w = curcat_r + 1;
                         curcat_w = curcat_r + 1;
                         pixels_w[curcat_r+1] = 1;
                         tisch_w[curcat_r+1] = curcat_r+1;
+                        ptr_w = 0;
+                        isNew_w = 1;
                     end
                 end
             end
@@ -194,6 +221,8 @@ always_ff @(posedge i_clk or posedge i_rst) begin
         curcat_r <= 0;
         counter_r <= 0;
         o_valid_r <= 0;
+        isNew_r <= 0;
+        ptr_r <= 0; 
     end
     else begin
         largest_category_r <= largest_category_w;
@@ -211,6 +240,8 @@ always_ff @(posedge i_clk or posedge i_rst) begin
         curcat_r <= curcat_w;
         counter_r <= counter_w;
         o_valid_r <= o_valid_w;
+        isNew_r <= isNew_w;
+        ptr_r <= ptr_w;
     end
 end
 endmodule
