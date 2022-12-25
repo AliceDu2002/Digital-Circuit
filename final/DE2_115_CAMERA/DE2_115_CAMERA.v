@@ -451,6 +451,7 @@ wire			DLY_RST_2;
 wire			DLY_RST_3;
 wire			DLY_RST_4;
 wire			Read;
+wire 			Read_vga ;
 reg		[11:0]	rCCD_DATA;
 reg				rCCD_LVAL;
 reg				rCCD_FVAL;
@@ -467,6 +468,7 @@ wire	[9:0]	grayscale_color;
 wire			grayscale_bw;
 wire			grayscale_valid;
 wire  			grayscale_start;
+
 
 
 //power on start
@@ -554,6 +556,7 @@ SEG7_LUT_8 			u5	(	.oSEG0(HEX0),.oSEG1(HEX1),
 							.oSEG2(HEX2),.oSEG3(HEX3),
 							.oSEG4(HEX4),.oSEG5(HEX5),
 							.oSEG6(HEX6),.oSEG7(HEX7),
+							.iCOLOR(grayscale_valid),
 							.iDIG(Frame_Cont[31:0])
 						);
 
@@ -604,7 +607,7 @@ Sdram_Control	u7	(	//	HOST Side
 
 							//	FIFO Read Side 1
 						    .RD1_DATA(Read_DATA1),
-				        	.RD1(Read),
+				        	.RD1((grayscale_start) ? Read : Read_vga),
 				        	.RD1_ADDR(0),
 `ifdef VGA_640x480p60
 						    .RD1_MAX_ADDR(640*480/2),
@@ -618,7 +621,7 @@ Sdram_Control	u7	(	//	HOST Side
 							
 							//	FIFO Read Side 2
 						    .RD2_DATA(Read_DATA2),
-							.RD2(Read),
+							.RD2((grayscale_start) ? Read : Read_vga),
 							.RD2_ADDR(23'h100000),
 `ifdef VGA_640x480p60
 						    .RD2_MAX_ADDR(23'h100000+640*480/2),
@@ -666,10 +669,13 @@ Grayscale 			u9	(
 );
 //VGA DISPLAY
 VGA_Controller		u1	(	//	Host Side
-							.oRequest(Read),
-							.iRed((grayscale_start) ? o_color : Read_DATA2[9:0]),
-							.iGreen((grayscale_start) ? o_color : {Read_DATA1[14:10],Read_DATA2[14:10]}),
-							.iBlue((grayscale_start) ? o_color : Read_DATA1[9:0]),
+							.oRequest(Read_vga),
+							.iRed((grayscale_start) ? grayscale_color : Read_DATA2[9:0]),
+							.iGreen((grayscale_start) ? grayscale_color : {Read_DATA1[14:10],Read_DATA2[14:10]}),
+							.iBlue((grayscale_start) ? grayscale_color : Read_DATA1[9:0]),
+							// .iRed(o_color),
+							// .iGreen(o_color),
+							// .iBlue(o_color),
 							//	VGA Side
 							.oVGA_R(oVGA_R),
 							.oVGA_G(oVGA_G),

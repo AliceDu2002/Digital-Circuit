@@ -20,6 +20,7 @@ module Grayscale (
 // === states ===
 parameter S_IDLE = 0;
 parameter S_COLOR = 1;
+parameter S_WAIT = 2;
 
 // === parameters ===
 parameter weight_red = 5'b10011; // 0.010011
@@ -29,7 +30,7 @@ parameter shift_red = 6;
 parameter shift_green = 7;
 parameter shift_blue = 8;
 parameter num_pixel = `SIZE;
-logic state_r, state_w;
+logic[1:0] state_r, state_w;
 logic[20:0] red_r, red_w;
 logic[20:0] green_r, green_w;
 logic[20:0] blue_r, blue_w;
@@ -72,6 +73,12 @@ always_comb begin
         if(count_r >= `SIZE) begin
             state_w = S_IDLE;
             valid_w = 0;
+            state_w = S_WAIT;
+        end
+    end
+    S_WAIT: begin
+        if(!i_start) begin
+            state_w = S_IDLE;
         end
     end
     endcase
