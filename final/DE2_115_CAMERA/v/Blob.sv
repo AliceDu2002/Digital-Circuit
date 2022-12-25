@@ -78,7 +78,7 @@ always_comb begin
             largest_category_w = 0;
         end
         S_PROC: begin
-            if (isEnd_r == 480000) begin
+            if (isEnd_r == `IMG_COL*`IMG_ROW) begin
                 state_w = S_MERGE;
                 counter_w = `TABLE_ENTRY-1;
             end
@@ -234,6 +234,7 @@ always_ff @(posedge i_clk or negedge i_rst_n) begin
         o_valid_r <= 0;
         isNew_r <= 0;
         ptr_r <= 0; 
+        isEnd_r <= 0;
     end
     else begin
         largest_category_r <= largest_category_w;

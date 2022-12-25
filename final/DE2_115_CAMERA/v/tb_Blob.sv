@@ -3,9 +3,9 @@
 `define IMG_ROW 480
 `define IMG_COL 640
 `define BUF_SIZE 642
-`define TABLE_ENTRY 256
-`define TABLE_ENTRY_SIZE 8
-`define BUF_ENTRY_SIZE 8
+`define TABLE_ENTRY 128
+`define TABLE_ENTRY_SIZE 7
+`define BUF_ENTRY_SIZE 7
 `define PIXEL_ENTRY_SIZE 15
 module tb;
     localparam CLK = 10;
@@ -19,7 +19,7 @@ module tb;
 
     integer fp;
     always #(HCLK) clk = ~clk;
-    Blob blob(
+    Blob_pipeline blob(
         .i_clk(clk),
         .i_rst_n(rst_n),
         .i_valid(i_valid),
@@ -37,14 +37,15 @@ module tb;
         rst_n = 0;
         #(CLK) 
         rst_n = 1;
-        #(20*CLK)
+        #(20*CLK) 
         i_valid = 1;
+        #(1.01*CLK) 
+        i_valid = 0;
         for(int i=0; i<640*480; i=i+1) begin
             @(posedge clk);
             $fscanf(fp, "%d", seq);
         end
         @(posedge clk);
-        i_valid = 0;
         for(int i=0; i<`TABLE_ENTRY; i++) begin
             $display("%d\n", blob.pixels_r[i]);
             $display("%d\n", blob.tisch_r[i]);
