@@ -147,7 +147,7 @@ assign	mVGA_B	=	(	H_Cont>=X_START 	&& H_Cont<X_START+H_SYNC_ACT &&
 						V_Cont>=Y_START+v_mask 	&& V_Cont<Y_START+V_SYNC_ACT )
 						?	iBlue	:	0;
 
-always@(posedge iCLK or negedge iRST_N)
+always@(posedge iCLK or negedge iRST_N or posedge istart)
 	begin
 		if (!iRST_N || istart)
 			begin
@@ -174,7 +174,7 @@ always@(posedge iCLK or negedge iRST_N)
 
 
 //	Pixel LUT Address Generator
-always@(posedge iCLK or negedge iRST_N)
+always@(posedge iCLK or negedge iRST_N or posedge istart)
 begin
 	if(!iRST_N || istart)
 	oRequest	<=	0;
@@ -189,7 +189,7 @@ begin
 end
 
 //	H_Sync Generator, Ref. 40 MHz Clock
-always@(posedge iCLK or negedge iRST_N)
+always@(posedge iCLK or negedge iRST_N or posedge istart)
 begin
 	if(!iRST_N || istart)
 	begin
@@ -212,7 +212,7 @@ begin
 end
 
 //	V_Sync Generator, Ref. H_Sync
-always@(posedge iCLK or negedge iRST_N)
+always@(posedge iCLK or negedge iRST_N or posedge istart)
 begin
 	if(!iRST_N || istart)
 	begin

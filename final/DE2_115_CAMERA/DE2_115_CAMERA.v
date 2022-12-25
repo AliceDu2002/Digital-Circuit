@@ -678,8 +678,8 @@ Grayscale 			u9	(
 							.o_green(grayscale_green)
 );
 Blob blob(
-							.i_clk(clk),
-							.i_rst_n(rst_n),
+							.i_clk(VGA_CTRL_CLK),
+							.i_rst_n(DLY_RST_2),
 							.i_valid(grayscale_valid),
 							.i_seq(grayscale_bw),
 							.o_valid(o_valid),

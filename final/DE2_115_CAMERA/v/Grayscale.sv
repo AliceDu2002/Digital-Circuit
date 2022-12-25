@@ -51,7 +51,7 @@ assign o_green = green_r;
 assign o_blue = blue_r;
 assign read_request = read_request_r;
 assign o_valid = valid_r;
-assign vga_start = vga_start_r;
+assign o_vga = vga_start_r;
 
 always_comb begin
     state_w = state_r;
