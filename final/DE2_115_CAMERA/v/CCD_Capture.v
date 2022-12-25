@@ -67,6 +67,7 @@ output	[15:0]	oX_Cont;
 output	[15:0]	oY_Cont;
 output	[31:0]	oFrame_Cont;
 output			oDVAL;
+output 			oPROC;
 reg				Pre_FVAL;
 reg				mCCD_FVAL;
 reg				mCCD_LVAL;
