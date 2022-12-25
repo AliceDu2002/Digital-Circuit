@@ -1,9 +1,6 @@
 import cv2
 import numpy as np
 from PIL import Image
-
-from PIL import Image
-import numpy as np
 import sys
  
 input_img = "img/IMG_8201.jpeg"
@@ -49,15 +46,23 @@ width = 640
 
 light_threshold = 130
 size_threshold = 0.125
+
+f = open("sequence.txt", "w")
+
+for i in range(0, 640):
+    f.write("0\n")
+
 for i in range(1, len(img)):
     for j in range(0, len(img[0])):
         
         if img[i][j] > light_threshold:
             data[data_i] = 0
             formimg[i][j] = 0
+            f.write("0\n")
         else:
             data[data_i] = 1
-            formimg[i][j] = 255
+            formimg[i][j] = 1
+            f.write("1\n")
         buffer.pop()
         if j == 0 or j == len(img[0])-1:
             buffer.insert(0, 0)
@@ -101,9 +106,10 @@ for i in range(0, len(category)):
 
 finalcount = 0
 for i in range(0, len(category)):
-    if category[i] > size_threshold * max:
+    if category[i] > size_threshold*max:
         finalcount += 1
 print("Final Count:", finalcount)
-
-image = Image.fromarray(formimg, "L")
+print("category", len(category))
+print(merge)
+image = Image.fromarray(formimg*255, "L")
 image.save(binarize_img)
