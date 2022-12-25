@@ -41,6 +41,7 @@
 // --------------------------------------------------------------------
 
 module	VGA_Controller(	//	Host Side
+						istart,
 						iRed,
 						iGreen,
 						iBlue,
@@ -147,7 +148,7 @@ assign	mVGA_B	=	(	H_Cont>=X_START 	&& H_Cont<X_START+H_SYNC_ACT &&
 
 always@(posedge iCLK or negedge iRST_N)
 	begin
-		if (!iRST_N || vga_start)
+		if (!iRST_N || istart)
 			begin
 				oVGA_R <= 0;
 				oVGA_G <= 0;
@@ -174,7 +175,7 @@ always@(posedge iCLK or negedge iRST_N)
 //	Pixel LUT Address Generator
 always@(posedge iCLK or negedge iRST_N)
 begin
-	if(!iRST_N || vga_start)
+	if(!iRST_N || istart)
 	oRequest	<=	0;
 	else
 	begin
@@ -189,7 +190,7 @@ end
 //	H_Sync Generator, Ref. 40 MHz Clock
 always@(posedge iCLK or negedge iRST_N)
 begin
-	if(!iRST_N || vga_start)
+	if(!iRST_N || istart)
 	begin
 		H_Cont		<=	0;
 		mVGA_H_SYNC	<=	0;
@@ -212,7 +213,7 @@ end
 //	V_Sync Generator, Ref. H_Sync
 always@(posedge iCLK or negedge iRST_N)
 begin
-	if(!iRST_N || vga_start)
+	if(!iRST_N || istart)
 	begin
 		V_Cont		<=	0;
 		mVGA_V_SYNC	<=	0;
