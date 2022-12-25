@@ -61,6 +61,7 @@ always_comb begin
     isFirstRow_w = isFirstRow_r;
     curcat_w = curcat_r;
     category_w = 0;
+    o_valid_w = o_valid_r;
 
     case(state_r)
         S_IDLE: begin
@@ -75,23 +76,27 @@ always_comb begin
                 state_w = S_MERGE;
                 counter_w = `TABLE_ENTRY-1;
             end
-            if (counter_r < 640 && isFirstRow_r) begin      // Ignore first row
+            if (counter_r < 10'd640 && isFirstRow_r) begin      // Ignore first row
                 counter_w = counter_r + 1;
             end
             else if (isFirstRow_r) begin                    // First row finished
                 counter_w = 0;
                 isFirstRow_w = 0;
             end
-            else begin                                      // Start blob algorithm
-                if (counter_r == 0 || !i_seq) begin                   // left side
-                    category_w = 0;
-                    counter_w = counter_r + 1;
-                end
-                else if (counter_r == 639) begin            // right side
+            else begin                                   // Start blob algorithm
+                if ( counter_r == 10'd639) begin            // right side
                     category_w = 0;
                     counter_w = 0;
                 end
-                else begin
+                else if (counter_r == 10'd0) begin
+                    category_w = 0;
+                    counter_w = counter_r +1;
+                end
+                else if (!i_seq) begin                   // left side
+                    category_w = 0;
+                    counter_w = counter_r +1;
+                end
+                else if (i_seq) begin
                     counter_w = counter_r + 1;
                     if (buffer_r[`BUF_SIZE-1] != 0) begin
                         category_w = buffer_r[`BUF_SIZE-1];
@@ -116,6 +121,7 @@ always_comb begin
                     else begin
                         category_w = curcat_r + 1;
                         curcat_w = curcat_r + 1;
+                        pixels_w[curcat_r+1] = 1;
                         tisch_w[curcat_r+1] = curcat_r+1;
                     end
                 end
@@ -158,7 +164,7 @@ always_comb begin
                 counter_w = counter_r+1;
             end
             else begin
-                state_w = S_DONE;
+                state_w = S_OUTPUT;
             end
         end
         S_OUTPUT: begin
@@ -187,6 +193,7 @@ always_ff @(posedge i_clk or posedge i_rst) begin
         isFirstRow_r <= 0;
         curcat_r <= 0;
         counter_r <= 0;
+        o_valid_r <= 0;
     end
     else begin
         largest_category_r <= largest_category_w;
@@ -203,6 +210,7 @@ always_ff @(posedge i_clk or posedge i_rst) begin
         isFirstRow_r <= isFirstRow_w;
         curcat_r <= curcat_w;
         counter_r <= counter_w;
+        o_valid_r <= o_valid_w;
     end
 end
 endmodule
