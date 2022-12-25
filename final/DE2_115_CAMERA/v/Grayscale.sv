@@ -1,4 +1,5 @@
-`define SIZE 169
+`define SIZE 479999
+`define TH 512
 module Grayscale (
     input i_clk,
     input i_rst_n,
@@ -24,7 +25,7 @@ parameter S_COLOR = 1;
 parameter weight_red = 5'b10011; // 0.010011
 parameter weight_green = 7'b1001011; // 0.1001011
 parameter weight_blue = 6'b100101; // 0.00100101
-parameter threshold = 125;
+parameter threshold = `TH;
 parameter shift_red = 6;
 parameter shift_green = 7;
 parameter shift_blue = 8;
