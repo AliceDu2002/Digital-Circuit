@@ -1,5 +1,5 @@
 `define SIZE 640*480-1
-`define THRESHOLD 20
+`define THRESHOLD 600
 module Grayscale (
     // input i_clk,
     // input i_rst_n,
@@ -46,8 +46,9 @@ logic first_frame_r, first_frame_w;
 logic[10:0] color_w;
 
 // === outputs ===
-assign o_bw = (color_w > `THRESHOLD) ? 10'b111111 : 0;
-assign o_color = color_w[10:1];
+assign o_bw = (color_w > `THRESHOLD) ? 0 : 1;
+// assign o_color = color_w[10:1];
+assign o_color = (color_w > `THRESHOLD) ? 10'b1111111111 : 0;
 assign o_red = i_red;
 assign o_green = i_green;
 assign o_blue = i_blue;

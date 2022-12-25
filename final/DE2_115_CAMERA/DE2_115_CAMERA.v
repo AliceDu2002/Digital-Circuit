@@ -677,20 +677,20 @@ Grayscale 			u9	(
 							.o_blue(grayscale_blue),
 							.o_green(grayscale_green)
 );
-// Blob blob(
-// 							.i_clk(CLOCK2_50),
-// 							.i_rst_n(DLY_RST_2),
-// 							.i_valid(grayscale_start),
-// 							.i_seq(grayscale_bw),
-// 							.o_valid(o_valid),
-// 							.o_count(count)
-// );
+Blob blob(
+							.i_clk(CLOCK2_50),
+							.i_rst_n(DLY_RST_2),
+							.i_valid(grayscale_start),
+							.i_seq(grayscale_bw),
+							.o_valid(o_valid),
+							.o_count(count)
+);
 //VGA DISPLAY
 VGA_Controller		u1	(	//	Host Side
 							.oRequest(Read_vga),
-							.iRed((grayscale_start) ? grayscale_bw : grayscale_red),
-							.iGreen((grayscale_start) ? grayscale_bw : grayscale_green),
-							.iBlue((grayscale_start) ? grayscale_color_bw : grayscale_blue),
+							.iRed((grayscale_start) ? grayscale_color : grayscale_red),
+							.iGreen((grayscale_start) ? grayscale_color : grayscale_green),
+							.iBlue((grayscale_start) ? grayscale_color : grayscale_blue),
 							// .iRed(grayscale_red),
 							// .iGreen(grayscale_green),
 							// .iBlue(grayscale_blue),
