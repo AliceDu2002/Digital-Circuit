@@ -468,6 +468,8 @@ wire	[9:0]	grayscale_color;
 wire			grayscale_bw;
 wire			grayscale_valid;
 wire  			grayscale_start;
+wire 			o_valid;
+reg     [7:0]   count;
 
 
 
