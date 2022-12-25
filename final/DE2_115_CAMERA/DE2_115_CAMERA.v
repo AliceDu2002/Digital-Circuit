@@ -556,6 +556,7 @@ SEG7_LUT_8 			u5	(	.oSEG0(HEX0),.oSEG1(HEX1),
 							.oSEG2(HEX2),.oSEG3(HEX3),
 							.oSEG4(HEX4),.oSEG5(HEX5),
 							.oSEG6(HEX6),.oSEG7(HEX7),
+							.iCOLOR(grayscale_color),
 							.iDIG(Frame_Cont[31:0])
 						);
 
