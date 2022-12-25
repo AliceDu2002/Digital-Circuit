@@ -118,9 +118,11 @@ always_comb begin
                                 end
                                 else begin
                                     isNew_w = 0;
-                                    for (int i=0; i<ptr_r+1; i=i+1) begin
-                                        buffer_w[`BUF_SIZE-1-i] = buffer_r[2];
-                                        pixels_w[buffer_r[2]] = pixels_r[buffer_r[2]] + 1;
+                                    for (int i=0; i<640; i=i+1) begin
+													if(i<ptr_r+1) begin
+														buffer_w[`BUF_SIZE-1-i] = buffer_r[2];
+														pixels_w[buffer_r[2]] = pixels_r[buffer_r[2]] + 1;
+													 end
                                     end
                                     pixels_w[curcat_r] = 0;
                                     curcat_w = curcat_r - 1;
