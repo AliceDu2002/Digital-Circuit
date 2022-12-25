@@ -667,6 +667,14 @@ Grayscale 			u9	(
 							.o_bw(grayscale_bw),
 							.o_valid(grayscale_valid)
 );
+Blob blob(
+							.i_clk(clk),
+							.i_rst_n(rst_n),
+							.i_valid(grayscale_valid),
+							.i_seq(grayscale_valid),
+							.o_valid(o_valid),
+							.o_count(count)
+);
 //VGA DISPLAY
 VGA_Controller		u1	(	//	Host Side
 							.oRequest(Read_vga),
