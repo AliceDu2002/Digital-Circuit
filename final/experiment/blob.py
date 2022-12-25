@@ -6,7 +6,7 @@ from PIL import Image
 import numpy as np
 import sys
  
-input_img = "IMG_8201.jpeg"
+input_img = "img/IMG_8201.jpeg"
 grayscale_img = "test_Y.jpg"
 binarize_img = "test_Z.jpg"
  
@@ -16,6 +16,7 @@ numpydata = np.asarray(img)
 R = np.zeros((480, 640), dtype = np.uint8)
 G = np.zeros((480, 640), dtype = np.uint8)
 B = np.zeros((480, 640), dtype = np.uint8)
+print(numpydata.shape)
 for i in range(480):
     for j in range(640):
         R[i][j] = numpydata[i][j][0]
@@ -48,7 +49,6 @@ width = 640
 
 light_threshold = 130
 size_threshold = 0.125
-
 for i in range(1, len(img)):
     for j in range(0, len(img[0])):
         
@@ -83,7 +83,7 @@ for i in range(1, len(img)):
                 merge.append(len(merge))
         else:
             buffer.insert(0,0)
-       
+print(merge)
 count = 0 
 for i in range(len(category)-1, 0, -1):
     if merge[i] == i:
