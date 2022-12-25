@@ -606,7 +606,7 @@ Sdram_Control	u7	(	//	HOST Side
 
 							//	FIFO Read Side 1
 						    .RD1_DATA(Read_DATA1),
-				        	.RD1((grayscale_start) ? Read_vga : Read),
+				        	.RD1((grayscale_start) ? Read : Read_vga),
 				        	.RD1_ADDR(0),
 `ifdef VGA_640x480p60
 						    .RD1_MAX_ADDR(640*480/2),
@@ -620,7 +620,7 @@ Sdram_Control	u7	(	//	HOST Side
 							
 							//	FIFO Read Side 2
 						    .RD2_DATA(Read_DATA2),
-							.RD2((grayscale_start) ? Read_vga : Read),
+							.RD2((grayscale_start) ? Read : Read_vga),
 							.RD2_ADDR(23'h100000),
 `ifdef VGA_640x480p60
 						    .RD2_MAX_ADDR(23'h100000+640*480/2),
