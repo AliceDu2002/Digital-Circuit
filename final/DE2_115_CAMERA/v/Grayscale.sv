@@ -1,4 +1,5 @@
-`define SIZE 169
+`define SIZE 640*480-1
+`define THRESHOLD 300
 module Grayscale (
     input i_clk,
     input i_rst_n,
@@ -24,7 +25,6 @@ parameter S_COLOR = 1;
 parameter weight_red = 5'b10011; // 0.010011
 parameter weight_green = 7'b1001011; // 0.1001011
 parameter weight_blue = 6'b100101; // 0.00100101
-parameter threshold = 125;
 parameter shift_red = 6;
 parameter shift_green = 7;
 parameter shift_blue = 8;
@@ -38,7 +38,7 @@ logic[19:0] count_r, count_w;
 logic valid_r, valid_w;
 
 // === outputs ===
-assign o_bw = (red_r[9:0] + green_r[9:0] + blue_r[9:0] > threshold) ? 0 : 1;
+assign o_bw = (red_r[9:0] + green_r[9:0] + blue_r[9:0] > `THRESHOLD) ? 0 : 1;
 assign o_color = red_r[9:0] + green_r[9:0] + blue_r[9:0];
 assign read_request = read_request_r;
 assign o_valid = valid_r;
@@ -65,11 +65,11 @@ always_comb begin
         read_request_w = 0;
         count_w = count_r + 1;
         valid_w = 1;
-        red_w = (i_red*weight_red) >> shift_red;;
+        red_w = (i_red*weight_red) >> shift_red;
         green_w = (i_green*weight_green) >> shift_green;
         blue_w = (i_blue*weight_blue) >> shift_blue;
         state_w = S_COLOR;
-        if(count_r >= num_pixel) begin
+        if(count_r >= `SIZE) begin
             state_w = S_IDLE;
             valid_w = 0;
         end

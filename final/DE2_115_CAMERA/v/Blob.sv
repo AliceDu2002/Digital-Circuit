@@ -8,7 +8,7 @@
 
 module Blob(
     input i_clk,
-    input i_rst,
+    input i_rst_n,
     input i_valid,
     input i_seq,
     output o_valid,
@@ -205,8 +205,8 @@ always_comb begin
     endcase
 end
 
-always_ff @(posedge i_clk or posedge i_rst) begin
-    if(i_rst) begin
+always_ff @(posedge i_clk or negedge i_rst_n) begin
+    if(~i_rst_n) begin
         state_r <= S_IDLE;
         for(int i=0; i<`BUF_SIZE; i=i+1) begin
             buffer_r[i] <= 0;
