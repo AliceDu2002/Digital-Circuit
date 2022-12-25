@@ -669,9 +669,9 @@ Grayscale 			u9	(
 //VGA DISPLAY
 VGA_Controller		u1	(	//	Host Side
 							.oRequest(Read_vga),
-							.iRed((grayscale_start) ? o_color : Read_DATA2[9:0]),
-							.iGreen((grayscale_start) ? o_color : {Read_DATA1[14:10],Read_DATA2[14:10]}),
-							.iBlue((grayscale_start) ? o_color : Read_DATA1[9:0]),
+							.iRed((grayscale_start) ? grayscale_color : Read_DATA2[9:0]),
+							.iGreen((grayscale_start) ? grayscale_color : {Read_DATA1[14:10],Read_DATA2[14:10]}),
+							.iBlue((grayscale_start) ? grayscale_color : Read_DATA1[9:0]),
 							// .iRed(o_color),
 							// .iGreen(o_color),
 							// .iBlue(o_color),
