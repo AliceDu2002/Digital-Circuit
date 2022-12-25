@@ -472,6 +472,8 @@ wire 			vga_start;
 wire	[9:0]	grayscale_red;
 wire	[9:0]	grayscale_blue;
 wire	[9:0]	grayscale_green;
+wire 			o_valid;
+reg     [7:0]   count;
 
 
 
@@ -674,6 +676,14 @@ Grayscale 			u9	(
 							.o_red(grayscale_red),
 							.o_blue(grayscale_blue),
 							.o_green(grayscale_green)
+);
+Blob blob(
+							.i_clk(clk),
+							.i_rst_n(rst_n),
+							.i_valid(grayscale_valid),
+							.i_seq(grayscale_valid),
+							.o_valid(o_valid),
+							.o_count(count)
 );
 //VGA DISPLAY
 VGA_Controller		u1	(	//	Host Side
