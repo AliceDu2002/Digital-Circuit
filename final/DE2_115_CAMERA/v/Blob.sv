@@ -1,9 +1,9 @@
 `define IMG_ROW 480
 `define IMG_COL 640
 `define BUF_SIZE 642
-`define TABLE_ENTRY 256
-`define TABLE_ENTRY_SIZE 8
-`define BUF_ENTRY_SIZE 8
+`define TABLE_ENTRY 128
+`define TABLE_ENTRY_SIZE 7
+`define BUF_ENTRY_SIZE 7
 `define PIXEL_ENTRY_SIZE 15
 
 module Blob(

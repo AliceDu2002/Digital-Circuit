@@ -1,14 +1,14 @@
-Analysis & Synthesis Status : Successful - Sun Dec 25 23:04:55 2022
+Analysis & Synthesis Status : Successful - Mon Dec 26 02:29:33 2022
 Quartus II 64-Bit Version : 15.0.0 Build 145 04/22/2015 SJ Full Version
 Revision Name : DE2_115_CAMERA
 Top-level Entity Name : DE2_115_CAMERA
 Family : Cyclone IV E
-Total logic elements : 39,211
-    Total combinational functions : 38,774
-    Dedicated logic registers : 8,681
-Total registers : 8681
+Total logic elements : 21,270
+    Total combinational functions : 20,834
+    Dedicated logic registers : 5,409
+Total registers : 5409
 Total pins : 428
 Total virtual pins : 0
-Total memory bits : 63,976
+Total memory bits : 64,658
 Embedded Multiplier 9-bit elements : 0
 Total PLLs : 1
