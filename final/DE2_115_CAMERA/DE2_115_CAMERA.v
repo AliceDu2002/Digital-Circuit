@@ -473,7 +473,7 @@ wire	[9:0]	grayscale_red;
 wire	[9:0]	grayscale_blue;
 wire	[9:0]	grayscale_green;
 wire 			o_valid;
-reg     [7:0]   count;
+wire     [7:0]   count;
 
 
 
