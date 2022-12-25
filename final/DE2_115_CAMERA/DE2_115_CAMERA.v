@@ -662,12 +662,12 @@ I2C_CCD_Config 		u8	(	//	Host Side
 							.I2C_SDAT(D5M_SDATA)
 						);
 Grayscale 			u9	(
-							.i_clk(VGA_CTRL_CLK),
+							.i_clk(CLOCK2_50),
 							.i_rst_n(DLY_RST_2),
 							.i_start(grayscale_start), // 
-							.i_red(oVGA_R),
-							.i_green(oVGA_G),
-							.i_blue(oVGA_B),
+							.i_red(Read_DATA2[9:0]),
+							.i_green({Read_DATA1[14:10],Read_DATA2[14:10]}),
+							.i_blue(Read_DATA1[9:0]),
 							.read_request(Read),
 							.o_color(grayscale_color),
 							.o_bw(grayscale_bw),
@@ -677,17 +677,17 @@ Grayscale 			u9	(
 							.o_blue(grayscale_blue),
 							.o_green(grayscale_green)
 );
-Blob blob(
-							.i_clk(VGA_CTRL_CLK),
-							.i_rst_n(DLY_RST_2),
-							.i_valid(grayscale_valid),
-							.i_seq(grayscale_bw),
-							.o_valid(o_valid),
-							.o_count(count)
-);
+// Blob blob(
+// 							.i_clk(CLOCK2_50),
+// 							.i_rst_n(DLY_RST_2),
+// 							.i_valid(grayscale_valid),
+// 							.i_seq(grayscale_bw),
+// 							.o_valid(o_valid),
+// 							.o_count(count)
+// );
 //VGA DISPLAY
 VGA_Controller		u1	(	//	Host Side
-							.istart(vga_start),
+							.istart((grayscale_start) ? vga_start : KEY[3]),
 							.oRequest(Read_vga),
 							.iRed((grayscale_start) ? grayscale_red : Read_DATA2[9:0]),
 							.iGreen((grayscale_start) ? grayscale_blue : {Read_DATA1[14:10],Read_DATA2[14:10]}),
