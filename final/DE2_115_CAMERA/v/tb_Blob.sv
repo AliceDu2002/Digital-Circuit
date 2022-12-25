@@ -12,7 +12,7 @@ module tb;
     localparam HCLK = 5;
 
     logic clk;
-    logic rst;
+    logic rst_n;
     logic [7:0] count;
     logic i_valid, o_valid;
     logic seq;
@@ -21,7 +21,7 @@ module tb;
     always #(HCLK) clk = ~clk;
     Blob blob(
         .i_clk(clk),
-        .i_rst(rst),
+        .i_rst_n(rst_n),
         .i_valid(i_valid),
         .i_seq(seq),
         .o_valid(o_valid),
@@ -32,11 +32,11 @@ module tb;
         fp = $fopen("sequence.txt", "r");
         $fsdbDumpfile("blob.fsdb");
 		$fsdbDumpvars;
-        rst = 0;
+        rst_n = 1;
         #(CLK)
-        rst = 1;
+        rst_n = 0;
         #(CLK) 
-        rst = 0;
+        rst_n = 1;
         #(20*CLK)
         i_valid = 1;
         for(int i=0; i<640*480; i=i+1) begin
