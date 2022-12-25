@@ -33,6 +33,7 @@ parameter S_DONE = 6;
 
 logic [2:0] state_r, state_w;
 logic [9:0] counter_r, counter_w;
+logic [18:0] isEnd_r, isEnd_w;
 
 logic isFirstRow_r, isFirstRow_w;
 logic isNew_r, isNew_w;
@@ -65,10 +66,11 @@ always_comb begin
     category_w = 0;
     isNew_w = isNew_r;
     ptr_w = ptr_r;
+    isEnd_w = isEnd_r
 
     case(state_r)
         S_IDLE: begin
-            if(i_valid) begin
+            if(isEnd_r = 10'd) begin
                 state_w = S_PROC;
                 isFirstRow_w = 1;
             end
