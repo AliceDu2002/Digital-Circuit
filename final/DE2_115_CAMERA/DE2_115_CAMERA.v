@@ -468,6 +468,12 @@ wire	[9:0]	grayscale_color;
 wire			grayscale_bw;
 wire			grayscale_valid;
 wire  			grayscale_start;
+wire 			vga_start;
+wire	[9:0]	grayscale_red;
+wire	[9:0]	grayscale_blue;
+wire	[9:0]	grayscale_green;
+wire 			o_valid;
+reg     [7:0]   count;
 
 
 
@@ -556,7 +562,7 @@ SEG7_LUT_8 			u5	(	.oSEG0(HEX0),.oSEG1(HEX1),
 							.oSEG2(HEX2),.oSEG3(HEX3),
 							.oSEG4(HEX4),.oSEG5(HEX5),
 							.oSEG6(HEX6),.oSEG7(HEX7),
-							.iCOLOR(grayscale_valid),
+							.iCOLOR(count),
 							.iDIG(Frame_Cont[31:0])
 						);
 
@@ -665,14 +671,27 @@ Grayscale 			u9	(
 							.read_request(Read),
 							.o_color(grayscale_color),
 							.o_bw(grayscale_bw),
-							.o_valid(grayscale_valid)
+							.o_valid(grayscale_valid),
+							.o_vga(vga_start),
+							.o_red(grayscale_red),
+							.o_blue(grayscale_blue),
+							.o_green(grayscale_green)
+);
+Blob blob(
+							.i_clk(clk),
+							.i_rst_n(rst_n),
+							.i_valid(grayscale_valid),
+							.i_seq(grayscale_bw),
+							.o_valid(o_valid),
+							.o_count(count)
 );
 //VGA DISPLAY
 VGA_Controller		u1	(	//	Host Side
+							.i_start(vga_start),
 							.oRequest(Read_vga),
-							.iRed((grayscale_start) ? grayscale_color : Read_DATA2[9:0]),
-							.iGreen((grayscale_start) ? grayscale_color : {Read_DATA1[14:10],Read_DATA2[14:10]}),
-							.iBlue((grayscale_start) ? grayscale_color : Read_DATA1[9:0]),
+							.iRed((grayscale_start) ? grayscale_red : Read_DATA2[9:0]),
+							.iGreen((grayscale_start) ? grayscale_blue : {Read_DATA1[14:10],Read_DATA2[14:10]}),
+							.iBlue((grayscale_start) ? grayscale_green : Read_DATA1[9:0]),
 							// .iRed(o_color),
 							// .iGreen(o_color),
 							// .iBlue(o_color),
