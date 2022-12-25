@@ -43,14 +43,14 @@
 module SEG7_LUT_8 (	oSEG0,oSEG1,oSEG2,oSEG3,oSEG4,oSEG5,oSEG6,oSEG7,iDIG,iCOLOR );
 input	[31:0]	iDIG;
 output	[6:0]	oSEG0,oSEG1,oSEG2,oSEG3,oSEG4,oSEG5,oSEG6,oSEG7;
-input   iCOLOR;
+input   [7:0]   iCOLOR;
 
 SEG7_LUT	u0	(	oSEG0,iDIG[3:0]		);
 SEG7_LUT	u1	(	oSEG1,iDIG[7:4]		);
 SEG7_LUT	u2	(	oSEG2,iDIG[11:8]	);
 SEG7_LUT	u3	(	oSEG3,iDIG[15:12]	);
-SEG7_LUT	u4	(	oSEG4,iCOLOR	);
-SEG7_LUT	u5	(	oSEG5,0	);
+SEG7_LUT	u4	(	oSEG4,iCOLOR[3:0]	);
+SEG7_LUT	u5	(	oSEG5,iCOLOR[7:4]	);
 SEG7_LUT	u6	(	oSEG6,0	);
 SEG7_LUT	u7	(	oSEG7,0	);
 
