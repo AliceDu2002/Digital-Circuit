@@ -78,18 +78,12 @@ always_comb begin
         vga_start_w = 0;
         count_w = count_r + 1;
         valid_w = 1;
-<<<<<<< HEAD
         // red_w = (i_red*weight_red) >> shift_red;;
         // green_w = (i_green*weight_green) >> shift_green;
         // blue_w = (i_blue*weight_blue) >> shift_blue;
         red_w = i_red;
         green_w = i_green;
         blue_w = i_blue;
-=======
-        red_w = (i_red*weight_red) >> shift_red;
-        green_w = (i_green*weight_green) >> shift_green;
-        blue_w = (i_blue*weight_blue) >> shift_blue;
->>>>>>> c0ed2d9993d6d666568534dc6fb7672cbaefa0c6
         state_w = S_COLOR;
         if(count_r >= `SIZE) begin
             state_w = S_IDLE;
