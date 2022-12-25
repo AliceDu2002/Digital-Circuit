@@ -687,7 +687,7 @@ Blob blob(
 );
 //VGA DISPLAY
 VGA_Controller		u1	(	//	Host Side
-							.i_start(vga_start),
+							.istart(vga_start),
 							.oRequest(Read_vga),
 							.iRed((grayscale_start) ? grayscale_red : Read_DATA2[9:0]),
 							.iGreen((grayscale_start) ? grayscale_blue : {Read_DATA1[14:10],Read_DATA2[14:10]}),
