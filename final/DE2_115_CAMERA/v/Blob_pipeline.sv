@@ -47,7 +47,7 @@ logic o_valid_r, o_valid_w;
 logic o_sdram_request_r, o_sdram_request_w;
 
 // assign o_count = final_count_r;
-assign o_count = curcat_r;
+assign o_count = final_count_r;
 assign o_valid = o_valid_r;
 assign o_sdram_request = o_sdram_request_r;
 
