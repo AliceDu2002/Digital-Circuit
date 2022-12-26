@@ -474,6 +474,7 @@ wire 			o_valid;
 wire     [7:0]   count;
 wire			Read_blob;
 wire			oPROC_CCD;
+wire			blob_ready;
 
 
 
@@ -682,7 +683,7 @@ Blob_pipeline u10(
 							.i_rst_n(DLY_RST_2),
 							.i_valid(grayscale_start),
 							.i_seq(grayscale_bw),
-							.o_valid(o_valid),
+							.o_valid(blob_valid),
 							.o_count(count),
 							.o_sdram_request(Read_blob)
 );
@@ -717,7 +718,9 @@ VGA_Blob_SYNC_Control u12(
     .i_rst_n(DLY_RST_2),
     .i_oPROC_CCD(oPROC_CCD),
     .i_VGA_VSYNC(VGA_VS),
-    .o_grayscale_start(grayscale_start)
+	.i_blob_end(blob_ready),
+    .o_grayscale_start(grayscale_start),
+	.o_blob_end(o_valid)
 );
 
 SevenHexDecoder u11(
