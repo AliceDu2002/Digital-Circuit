@@ -17,7 +17,7 @@ module Grayscale (
     // output o_valid,
     output[9:0] o_red,
     output[9:0] o_green,
-    output[9:0] o_blue,
+    output[9:0] o_blue
     // output o_vga
 );
 

@@ -76,7 +76,12 @@ always_comb begin
                 isFirstRow_w = 1;
             end
             largest_category_w = 0;
-				final_count_w = 0;
+			final_count_w = 0;
+            counter_w = 0;
+            isNew_w = 0;
+            ptr_w = 0; 
+            isEnd_w = 0;
+            curcat_w = 0;
         end
         S_PROC: begin
             if (isEnd_r == `IMG_COL*`IMG_ROW) begin
