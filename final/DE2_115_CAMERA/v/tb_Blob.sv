@@ -19,7 +19,7 @@ module tb;
 
     integer fp;
     always #(HCLK) clk = ~clk;
-    Blob_pipeline blob(
+    Blob blob(
         .i_clk(clk),
         .i_rst_n(rst_n),
         .i_valid(i_valid),

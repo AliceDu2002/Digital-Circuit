@@ -256,6 +256,7 @@ always_ff @(posedge i_clk or negedge i_rst_n) begin
         o_valid_r <= o_valid_w;
         isNew_r <= isNew_w;
         ptr_r <= ptr_w;
+        isEnd_r <= isEnd_w;
     end
 end
 endmodule
