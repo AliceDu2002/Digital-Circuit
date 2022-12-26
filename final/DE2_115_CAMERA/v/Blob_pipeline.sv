@@ -1,6 +1,6 @@
-`define IMG_ROW 600
-`define IMG_COL 800
-`define BUF_SIZE 802
+`define IMG_ROW 480
+`define IMG_COL 640
+`define BUF_SIZE 642
 `define TABLE_ENTRY 128
 `define TABLE_ENTRY_SIZE 7
 `define BUF_ENTRY_SIZE 7
