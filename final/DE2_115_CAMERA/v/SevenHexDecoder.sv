@@ -21,6 +21,8 @@ parameter D6 = 7'b0000010;
 parameter D7 = 7'b1011000;
 parameter D8 = 7'b0000000;
 parameter D9 = 7'b0010000;
+parameter Dark = 7'b1111111;
+
 always_comb begin
 	case(i_hex)
 		5'h0: begin o_seven_ten = D0; o_seven_one = D0; end

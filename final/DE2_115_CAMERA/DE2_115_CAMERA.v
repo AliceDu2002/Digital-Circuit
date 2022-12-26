@@ -686,12 +686,12 @@ Blob_pipeline blob(
 //VGA DISPLAY
 VGA_Controller		u1	(	//	Host Side
 							.oRequest(Read_vga),
-							.iRed((grayscale_start) ? grayscale_color : grayscale_red),
-							.iGreen((grayscale_start) ? grayscale_color : grayscale_green),
-							.iBlue((grayscale_start) ? grayscale_color : grayscale_blue),
-							// .iRed(grayscale_red),
-							// .iGreen(grayscale_green),
-							// .iBlue(grayscale_blue),
+							// .iRed((grayscale_start) ? grayscale_color : grayscale_red),
+							// .iGreen((grayscale_start) ? grayscale_color : grayscale_green),
+							// .iBlue((grayscale_start) ? grayscale_color : grayscale_blue),
+							.iRed((grayscale_start) ? ((grayscale_bw) ? 10'b111111111 : 10'b0) : ((SW[7]) ? Read_DATA2[9:0] : grayscale_color)),
+							.iGreen((grayscale_start) ? ((grayscale_bw) ? 10'b111111111 : 10'b0) : ((SW[7]) ? {Read_DATA1[14:10],Read_DATA2[14:10]} : grayscale_color)),
+							.iBlue((grayscale_start) ? ((grayscale_bw) ? 10'b111111111 : 10'b0) : ((SW[7]) ? Read_DATA1[9:0] : grayscale_color)),
 							// .iRed(grayscale_color),
 							// .iGreen(grayscale_color),
 							// .iBlue(grayscale_color),
