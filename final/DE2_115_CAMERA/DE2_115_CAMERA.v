@@ -562,7 +562,7 @@ SEG7_LUT_8 			u5	(	.oSEG0(HEX0),.oSEG1(HEX1),
 							.oSEG2(HEX2),.oSEG3(HEX3),
 							.oSEG4(HEX4),.oSEG5(HEX5),
 							.oSEG6(HEX6),.oSEG7(HEX7),
-							.iCOLOR(count),
+							.iCOLOR((o_valid) ? count : 0),
 							.iDIG(Frame_Cont[31:0])
 						);
 
@@ -678,7 +678,7 @@ Grayscale 			u9	(
 							.o_green(grayscale_green)
 );
 Blob_pipeline blob(
-							.i_clk(CLOCK2_50),
+							.i_clk(VGA_CTRL_CLK),
 							.i_rst_n(DLY_RST_2),
 							.i_valid(grayscale_start),
 							.i_seq(grayscale_bw),

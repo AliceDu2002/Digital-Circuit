@@ -210,8 +210,10 @@ always_comb begin
             state_w = S_DONE;
         end
         S_DONE: begin
-            o_valid_w = 0;
-            state_w = S_IDLE;
+				if(!i_valid) begin
+					state_w = S_IDLE;
+					o_valid_w = 0;
+				end
         end
     endcase
 end

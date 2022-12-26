@@ -1,6 +1,6 @@
-`define IMG_ROW 480
-`define IMG_COL 640
-`define BUF_SIZE 642
+`define IMG_ROW 600
+`define IMG_COL 800
+`define BUF_SIZE 802
 `define TABLE_ENTRY 128
 `define TABLE_ENTRY_SIZE 7
 `define BUF_ENTRY_SIZE 7
@@ -76,6 +76,7 @@ always_comb begin
                 isFirstRow_w = 1;
             end
             largest_category_w = 0;
+				final_count_w = 0;
         end
         S_PROC: begin
             if (isEnd_r == `IMG_COL*`IMG_ROW) begin
@@ -213,8 +214,10 @@ always_comb begin
             state_w = S_DONE;
         end
         S_DONE: begin
-            o_valid_w = 0;
-            state_w = S_IDLE;
+				if(!i_valid) begin
+					state_w = S_IDLE;
+					o_valid_w = 0;
+				end
         end
     endcase
 end
