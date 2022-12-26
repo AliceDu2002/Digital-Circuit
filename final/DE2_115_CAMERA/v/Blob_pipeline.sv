@@ -44,7 +44,8 @@ logic [`PIXEL_ENTRY_SIZE-1:0] largest_category_r, largest_category_w;
 logic [7:0] final_count_r, final_count_w;
 logic o_valid_r, o_valid_w;
 
-assign o_count = final_count_r;
+// assign o_count = final_count_r;
+assign o_count = curcat_r;
 assign o_valid = o_valid_r;
 
 // combinantial
@@ -219,10 +220,10 @@ always_comb begin
             state_w = S_DONE;
         end
         S_DONE: begin
-				if(!i_valid) begin
-					state_w = S_IDLE;
-					o_valid_w = 0;
-				end
+            if(!i_valid) begin
+                state_w = S_IDLE;
+                o_valid_w = 0;
+            end
         end
     endcase
 end

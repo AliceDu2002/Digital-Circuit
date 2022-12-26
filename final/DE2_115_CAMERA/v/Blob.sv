@@ -1,6 +1,6 @@
-`define IMG_ROW 480
-`define IMG_COL 640
-`define BUF_SIZE 642
+`define IMG_ROW 600
+`define IMG_COL 800
+`define BUF_SIZE 802
 `define TABLE_ENTRY 128
 `define TABLE_ENTRY_SIZE 7
 `define BUF_ENTRY_SIZE 7
@@ -82,7 +82,7 @@ always_comb begin
                 state_w = S_MERGE;
                 counter_w = `TABLE_ENTRY-1;
             end
-            if (counter_r < 10'd640 && isFirstRow_r) begin      // Ignore first row
+            if (counter_r < `IMG_COL && isFirstRow_r) begin      // Ignore first row
                 counter_w = counter_r + 1;
                 isEnd_w = isEnd_r + 1;
             end
@@ -93,7 +93,7 @@ always_comb begin
             end
             else begin                                   // Start blob algorithm
                 isEnd_w = isEnd_r + 1;
-                if (counter_r == 10'd639) begin            // right side
+                if (counter_r == `IMG_COL-1) begin            // right side
                     category_w = 0;
                     counter_w = 0;
                     ptr_w = 0;
@@ -210,10 +210,10 @@ always_comb begin
             state_w = S_DONE;
         end
         S_DONE: begin
-				if(!i_valid) begin
-					state_w = S_IDLE;
-					o_valid_w = 0;
-				end
+            if(!i_valid) begin
+                state_w = S_IDLE;
+                o_valid_w = 0;
+            end
         end
     endcase
 end
