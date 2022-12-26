@@ -1,14 +1,14 @@
-`define IMG_ROW 480
-`define IMG_COL 640
-`define BUF_SIZE 642
-`define TABLE_ENTRY 256
-`define TABLE_ENTRY_SIZE 8
-`define BUF_ENTRY_SIZE 8
+`define IMG_ROW 600
+`define IMG_COL 800
+`define BUF_SIZE 802
+`define TABLE_ENTRY 128
+`define TABLE_ENTRY_SIZE 7
+`define BUF_ENTRY_SIZE 7
 `define PIXEL_ENTRY_SIZE 15
 
 module Blob(
     input i_clk,
-    input i_rst,
+    input i_rst_n,
     input i_valid,
     input i_seq,
     output o_valid,
@@ -30,6 +30,7 @@ parameter S_FINDMAX = 3;
 parameter S_COUNT = 4;
 parameter S_OUTPUT = 5;
 parameter S_DONE = 6;
+parameter S_CATEGORY = 7;
 
 logic [2:0] state_r, state_w;
 logic [9:0] counter_r, counter_w;
@@ -43,6 +44,13 @@ logic [`BUF_ENTRY_SIZE-1:0] curcat_r, curcat_w;
 logic [`PIXEL_ENTRY_SIZE-1:0] largest_category_r, largest_category_w; 
 logic [7:0] final_count_r, final_count_w;
 logic o_valid_r, o_valid_w;
+// categorize parameter
+logic prev_r, prev_w;
+logic cur_r, cur_w;
+logic gap_r, gap_w;
+logic splitpoint_r, splitpoint_w;
+logic biggerNum_r, biggerNum_w;
+logic smallerNum_r, smallerNum_w;
 
 assign o_count = final_count_r;
 assign o_valid = o_valid_r;
@@ -64,67 +72,87 @@ always_comb begin
     isFirstRow_w = isFirstRow_r;
     curcat_w = curcat_r;
     category_w = 0;
+    o_valid_w = o_valid_r;
     isNew_w = isNew_r;
     ptr_w = ptr_r;
-    isEnd_w = isEnd_r
+    isEnd_w = isEnd_r;
+    // categorize part
+    prev_w = prev_r;
+    cur_w = cur_r;
+    gap_w = gap_r;
+    splitpoint_w = splitpoint_r;
+    biggerNum_w = biggerNum_r;
+    smallerNum_w = smallerNum_r;
 
     case(state_r)
         S_IDLE: begin
-            if(isEnd_r = 10'd) begin
+            if(i_valid) begin
                 state_w = S_PROC;
                 isFirstRow_w = 1;
             end
             largest_category_w = 0;
         end
         S_PROC: begin
-            if (!i_valid) begin
+            if (isEnd_r == `IMG_COL*`IMG_ROW) begin
                 state_w = S_MERGE;
                 counter_w = `TABLE_ENTRY-1;
             end
-            if (counter_r < 640 && isFirstRow_r) begin      // Ignore first row
+            if (counter_r < `IMG_COL && isFirstRow_r) begin      // Ignore first row
                 counter_w = counter_r + 1;
+                isEnd_w = isEnd_r + 1;
             end
             else if (isFirstRow_r) begin                    // First row finished
                 counter_w = 0;
                 isFirstRow_w = 0;
+                isEnd_w = isEnd_r + 1;
             end
-            else begin                                      // Start blob algorithm
-                if (counter_r == 0 || !i_seq) begin                   // left side
-                    category_w = 0;
-                    counter_w = counter_r + 1;
-                    ptr_w = 0;
-                end
-                else if (counter_r == 639) begin            // right side
+            else begin                                   // Start blob algorithm
+                isEnd_w = isEnd_r + 1;
+                if (counter_r == `IMG_COL-1) begin            // right side
                     category_w = 0;
                     counter_w = 0;
                     ptr_w = 0;
                 end
-                else begin
+                else if (counter_r == 10'd0) begin
+                    category_w = 0;
+                    counter_w = counter_r + 1;
+                    ptr_w = 0;
+                end
+                else if (!i_seq) begin                   // left side
+                    category_w = 0;
+                    counter_w = counter_r +1;
+                    ptr_w = 0;
+                end
+                else if (i_seq) begin
                     counter_w = counter_r + 1;
                     if (buffer_r[`BUF_SIZE-1] != 0) begin
                         category_w = buffer_r[`BUF_SIZE-1];
-                        pixels_w[buffer_r[`BUF_SIZE-1]] = pixels_r[buffer_r[`BUF_SIZE-1]] + 1;
                         if (ptr_r < `BUF_SIZE) begin
                             ptr_w = ptr_r + 1;
                         end
-                        if (buffer_r[2]>0 && buffer_r[2]!=buffer_r[`BUF_SIZE-1]) begin
+                        pixels_w[buffer_r[`BUF_SIZE-1]] = pixels_r[buffer_r[`BUF_SIZE-1]] + 1;
+                        if (buffer_r[2] != 0 && (buffer_r[2]!=buffer_r[`BUF_SIZE-1])) begin
                             if (tisch_r[buffer_r[`BUF_SIZE-1]] > tisch_r[buffer_r[2]]) begin
                                 if (isNew_r == 0) begin
-                                    tisch_w[tisch_r[buffer_r[`BUF_SIZE-1]]] = tisch_r[buffer_r[2]];
+                                    category_w = buffer_r[`BUF_SIZE-1];
+                                    tisch_w[buffer_r[`BUF_SIZE-1]] = buffer_r[2];
                                 end
                                 else begin
                                     isNew_w = 0;
-                                    for (int i=0; i<ptr_r+1; i=i+1) begin
-                                        buffer_w[i] = buffer_r[2];
-                                        pixels_w[buffer_r[2]] = pixels_r[buffer_r[2]] + 1;
+                                    for (int i=0; i<200; i=i+1) begin
+                                        if(i<ptr_r+1) begin
+                                            buffer_w[`BUF_SIZE-1-i] = buffer_r[2];
+                                        end
                                     end
+                                    pixels_w[buffer_r[2]] = pixels_r[buffer_r[2]] + ptr_r + 2;
                                     pixels_w[curcat_r] = 0;
                                     curcat_w = curcat_r - 1;
                                     tisch_w[curcat_r] = 0;
+                                    category_w = buffer_r[2];
                                 end
                             end
                             else if (tisch_r[buffer_r[`BUF_SIZE-1]] < tisch_r[buffer_r[2]]) begin
-                                tisch_w[tisch_r[buffer_r[2]]] = tisch_r[buffer_r[`BUF_SIZE-1]];
+                                tisch_w[buffer_r[2]] = buffer_r[`BUF_SIZE-1];
                                 isNew_w = 0;
                             end
                         end
@@ -133,11 +161,13 @@ always_comb begin
                         pixels_w[buffer_r[1]] = pixels_r[buffer_r[1]] + 1;
                         category_w = buffer_r[1];
                         isNew_w = 0;
+                        ptr_w = 0;
                     end
                     else if (buffer_r[2] != 0) begin
                         pixels_w[buffer_r[2]] = pixels_r[buffer_r[2]] + 1;
                         category_w = buffer_r[2];
                         isNew_w = 0;
+                        ptr_w = 0;
                     end
                     else begin
                         category_w = curcat_r + 1;
@@ -183,26 +213,42 @@ always_comb begin
             if(counter_r != `TABLE_ENTRY) begin
                 if(pixels_r[counter_r] > largest_category_r>>3) begin
                     final_count_w = final_count_r+1;
+                    // categorize part
+                    pixels_w[final_count_r] = pixels_r[counter_r];
                 end
                 counter_w = counter_r+1;
             end
             else begin
-                state_w = S_DONE;
+                state_w = S_OUTPUT;
             end
         end
         S_OUTPUT: begin
             o_valid_w = 1;
             state_w = S_DONE;
+            // categorize part
+            curcat_w = 0;
         end
         S_DONE: begin
-            o_valid_w = 0;
-            state_w = S_IDLE;
+            if(!i_valid) begin
+                state_w = S_IDLE;
+                o_valid_w = 0;
+            end
+        end
+        S_CATEGORY: begin
+            if (largest_category_r > 0) begin
+                if (t)
+            end
+            for (int i=0; i<final_count_r; i=i+1) begin
+                if (largest_category_r-pixels_r[i]>0 && largest_category_r-pixels_r[i]<100) begin
+                    
+                end
+            end
         end
     endcase
 end
 
-always_ff @(posedge i_clk or posedge i_rst) begin
-    if(i_rst) begin
+always_ff @(posedge i_clk or negedge i_rst_n) begin
+    if(~i_rst_n) begin
         state_r <= S_IDLE;
         for(int i=0; i<`BUF_SIZE; i=i+1) begin
             buffer_r[i] <= 0;
@@ -216,8 +262,10 @@ always_ff @(posedge i_clk or posedge i_rst) begin
         isFirstRow_r <= 0;
         curcat_r <= 0;
         counter_r <= 0;
+        o_valid_r <= 0;
         isNew_r <= 0;
         ptr_r <= 0; 
+        isEnd_r <= 0;
     end
     else begin
         largest_category_r <= largest_category_w;
@@ -234,8 +282,10 @@ always_ff @(posedge i_clk or posedge i_rst) begin
         isFirstRow_r <= isFirstRow_w;
         curcat_r <= curcat_w;
         counter_r <= counter_w;
+        o_valid_r <= o_valid_w;
         isNew_r <= isNew_w;
         ptr_r <= ptr_w;
+        isEnd_r <= isEnd_w;
     end
 end
 endmodule
