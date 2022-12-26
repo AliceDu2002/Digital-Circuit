@@ -473,6 +473,7 @@ wire	[9:0]	grayscale_green;
 wire 			o_valid;
 wire     [7:0]   count;
 wire			Read_blob;
+wire			oPROC_CCD;
 
 
 
@@ -527,7 +528,7 @@ CCD_Capture			u3	(	.oDATA(mCCD_DATA),
 							.iEND(!KEY[2]),
 							.iCLK(~D5M_PIXLCLK),
 							.iRST(DLY_RST_2),
-							.oPROC(grayscale_start)
+							.oPROC(oPROC_CCD)
 						);
 //D5M raw date convert to RGB data
 `ifdef VGA_640x480p60
@@ -692,8 +693,8 @@ VGA_Controller		u1	(	//	Host Side
 							// .iGreen((grayscale_start) ? grayscale_color : grayscale_green),
 							// .iBlue((grayscale_start) ? grayscale_color : grayscale_blue),
 							.iRed((grayscale_start && !o_valid) ? 0 : ((SW[7]) ? grayscale_red : grayscale_color)),
-							.iGreen((grayscale_start) ? 0 : ((SW[7]) ? grayscale_green : grayscale_color)),
-							.iBlue((grayscale_start) ? 0 : ((SW[7]) ? grayscale_blue : grayscale_color)),
+							.iGreen((grayscale_start && !o_valid) ? 0 : ((SW[7]) ? grayscale_green : grayscale_color)),
+							.iBlue((grayscale_start && !o_valid) ? 0 : ((SW[7]) ? grayscale_blue : grayscale_color)),
 							// .iRed(grayscale_color),
 							// .iGreen(grayscale_color),
 							// .iBlue(grayscale_color),
@@ -710,6 +711,15 @@ VGA_Controller		u1	(	//	Host Side
 							.iRST_N(DLY_RST_2),
 							.iZOOM_MODE_SW(SW[16])
 						);
+
+VGA_Blob_SYNC_Control u12(
+	.i_clk(CLOCK_50),
+    .i_rst_n(DLY_RST_2),
+    .i_oPROC_CCD(oPROC_CCD),
+    .i_VGA_VSYNC(VGA_VS),
+    .o_grayscale_start(grayscale_start)
+);
+
 SevenHexDecoder u11(
 	.i_hex(count[4:0]),
 	.o_seven_ten(HEX5),
