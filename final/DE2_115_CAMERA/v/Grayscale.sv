@@ -14,11 +14,11 @@ module Grayscale (
     // communication with further image process
     output[9:0] o_color,
     output o_bw,
-    output o_valid,
+    // output o_valid,
     output[9:0] o_red,
     output[9:0] o_green,
     output[9:0] o_blue,
-    output o_vga
+    // output o_vga
 );
 
 // === states ===
@@ -34,15 +34,15 @@ parameter shift_red = 6;
 parameter shift_green = 7;
 parameter shift_blue = 8;
 parameter num_pixel = `SIZE;
-logic[1:0] state_r, state_w;
-logic[20:0] red_r, red_w;
-logic[20:0] green_r, green_w;
-logic[20:0] blue_r, blue_w;
-logic read_request_r, read_request_w; 
-logic[19:0] count_r, count_w;
-logic valid_r, valid_w;
-logic vga_start_r, vga_start_w;
-logic first_frame_r, first_frame_w;
+// logic[1:0] state_r, state_w;/
+logic[20:0] red_w;
+logic[20:0] green_w;
+logic[20:0] blue_w;
+// logic read_request_r, read_request_w; 
+// logic[19:0] count_r, count_w;
+// logic valid_r, valid_w;
+// logic vga_start_r, vga_start_w;
+// logic first_frame_r, first_frame_w;
 logic[10:0] color_w;
 
 // === outputs ===
@@ -52,8 +52,8 @@ assign o_color = (color_w > `THRESHOLD) ? 10'b1111111111 : 0;
 assign o_red = i_red;
 assign o_green = i_green;
 assign o_blue = i_blue;
-assign o_valid = valid_r;
-assign o_vga = vga_start_r;
+// assign o_valid = valid_r;
+// assign o_vga = vga_start_r;
 
 always_comb begin
     red_w = (i_red*weight_red) >> shift_red;

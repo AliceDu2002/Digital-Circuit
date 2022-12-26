@@ -466,9 +466,7 @@ wire	[9:0]	oVGA_G;	 				//	VGA Green[9:0]
 wire	[9:0]	oVGA_B;   				//	VGA Blue[9:0]
 wire	[9:0]	grayscale_color;	
 wire			grayscale_bw;
-wire			grayscale_valid;
 wire  			grayscale_start;
-wire 			vga_start;
 wire	[9:0]	grayscale_red;
 wire	[9:0]	grayscale_blue;
 wire	[9:0]	grayscale_green;
@@ -671,8 +669,8 @@ Grayscale 			u9	(
 							// .read_request(Read),
 							.o_color(grayscale_color),
 							.o_bw(grayscale_bw),
-							.o_valid(grayscale_valid),
-							.o_vga(vga_start),
+							// .o_valid(grayscale_valid),
+							// .o_vga(vga_start),
 							.o_red(grayscale_red),
 							.o_blue(grayscale_blue),
 							.o_green(grayscale_green)
