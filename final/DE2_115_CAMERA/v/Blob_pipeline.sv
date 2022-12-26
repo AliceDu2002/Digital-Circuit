@@ -95,6 +95,7 @@ always_comb begin
             if (isEnd_r == `IMG_COL*`IMG_ROW) begin
                 counter_w = `TABLE_ENTRY-1;
                 state_w = S_MERGE;
+                o_sdram_request_w = 0;
             end
             else if (counter_r < `IMG_COL && isFirstRow_r) begin      // Ignore first row
                 counter_w = counter_r + 1;
@@ -183,6 +184,7 @@ always_comb begin
             end
         end
         S_MERGE: begin
+            o_sdram_request_w = 0;
             if(counter_r != 0) begin
                 if(counter_r != tisch_r[counter_r] && (tisch_r[counter_r] != 0)) begin
                     // tisch_r[counter_r] must be the destination, since it is smaller
@@ -199,6 +201,7 @@ always_comb begin
             end
         end
         S_FINDMAX: begin
+            o_sdram_request_w = 0;
             if(counter_r != `TABLE_ENTRY) begin
                 if(largest_category_r<pixels_r[counter_r]) begin
                     largest_category_w = pixels_r[counter_r];
@@ -212,6 +215,7 @@ always_comb begin
             end
         end
         S_COUNT: begin
+            o_sdram_request_w = 0;
             if(counter_r != `TABLE_ENTRY) begin
                 if(pixels_r[counter_r] > largest_category_r>>3) begin
                     final_count_w = final_count_r+1;
@@ -223,10 +227,12 @@ always_comb begin
             end
         end
         S_OUTPUT: begin
+            o_sdram_request_w = 0;
             o_valid_w = 1;
             state_w = S_DONE;
         end
         S_DONE: begin
+            o_sdram_request_w = 0;
             if(!i_valid) begin
                 state_w = S_IDLE;
                 o_valid_w = 0;
