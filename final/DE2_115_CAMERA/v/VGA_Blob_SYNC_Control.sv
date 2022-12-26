@@ -68,7 +68,7 @@ always_comb begin
 end
 
 parameter S_WAIT_BLOB = 0;
-// parameter S_WAIT_VSYNC_I = 1;
+parameter S_WAIT_VSYNC = 1;
 parameter S_IDLE = 2;
 
 logic[1:0] end_state_r, end_state_w;
@@ -85,12 +85,12 @@ always_comb begin
                 o_blob_end_w = 1;
             end
             else if (i_blob_end) begin
-                end_state_w = S_WAIT_VSYNC_I;
+                end_state_w = S_WAIT_VSYNC;
             end
         end
-        S_WAIT_VSYNC_I: begin
+        S_WAIT_VSYNC: begin
             if(i_VGA_VSYNC) begin
-                state_w = S_IDLE;
+                end_state_w = S_IDLE;
                 o_blob_end_w = 1;
             end
         end
