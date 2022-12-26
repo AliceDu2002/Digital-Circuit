@@ -95,8 +95,9 @@ always_comb begin
             end
         end
         S_IDLE: begin
-            if(i_oPROC_CCD) begin
+            if(!i_oPROC_CCD) begin
                 end_state_w = S_WAIT_BLOB;
+                o_blob_end_w = 0;
             end
         end
     endcase

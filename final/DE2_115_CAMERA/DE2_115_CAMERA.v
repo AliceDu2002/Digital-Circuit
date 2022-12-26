@@ -683,7 +683,7 @@ Blob_pipeline u10(
 							.i_rst_n(DLY_RST_2),
 							.i_valid(grayscale_start),
 							.i_seq(grayscale_bw),
-							.o_valid(blob_valid),
+							.o_valid(blob_ready),
 							.o_count(count),
 							.o_sdram_request(Read_blob)
 );
