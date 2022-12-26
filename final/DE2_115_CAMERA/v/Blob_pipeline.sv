@@ -4,7 +4,7 @@
 `define TABLE_ENTRY 128
 `define TABLE_ENTRY_SIZE 7
 `define BUF_ENTRY_SIZE 7
-`define PIXEL_ENTRY_SIZE 15
+`define PIXEL_ENTRY_SIZE 18
 
 module Blob_pipeline(
     input i_clk,

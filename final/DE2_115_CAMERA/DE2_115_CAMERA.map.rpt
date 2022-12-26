@@ -1,5 +1,5 @@
 Analysis & Synthesis report for DE2_115_CAMERA
-Mon Dec 26 12:18:12 2022
+Mon Dec 26 12:51:42 2022
 Quartus II 64-Bit Version 15.0.0 Build 145 04/22/2015 SJ Full Version
 
 
@@ -128,15 +128,15 @@ agreement for further details.
 +----------------------------------------------------------------------------------+
 ; Analysis & Synthesis Summary                                                     ;
 +------------------------------------+---------------------------------------------+
-; Analysis & Synthesis Status        ; Successful - Mon Dec 26 12:18:11 2022       ;
+; Analysis & Synthesis Status        ; Successful - Mon Dec 26 12:51:41 2022       ;
 ; Quartus II 64-Bit Version          ; 15.0.0 Build 145 04/22/2015 SJ Full Version ;
 ; Revision Name                      ; DE2_115_CAMERA                              ;
 ; Top-level Entity Name              ; DE2_115_CAMERA                              ;
 ; Family                             ; Cyclone IV E                                ;
-; Total logic elements               ; 21,525                                      ;
-;     Total combinational functions  ; 21,090                                      ;
-;     Dedicated logic registers      ; 5,429                                       ;
-; Total registers                    ; 5429                                        ;
+; Total logic elements               ; 23,983                                      ;
+;     Total combinational functions  ; 23,548                                      ;
+;     Dedicated logic registers      ; 5,816                                       ;
+; Total registers                    ; 5816                                        ;
 ; Total pins                         ; 428                                         ;
 ; Total virtual pins                 ; 0                                           ;
 ; Total memory bits                  ; 64,658                                      ;
@@ -240,12 +240,12 @@ agreement for further details.
 ; Number detected on machine ; 8           ;
 ; Maximum allowed            ; 4           ;
 ;                            ;             ;
-; Average used               ; 1.02        ;
+; Average used               ; 1.00        ;
 ; Maximum used               ; 4           ;
 ;                            ;             ;
 ; Usage by Processor         ; % Time Used ;
 ;     Processor 1            ; 100.0%      ;
-;     Processors 2-4         ;   0.6%      ;
+;     Processors 2-4         ; < 0.1%      ;
 ;     Processors 5-8         ;   0.0%      ;
 +----------------------------+-------------+
 
@@ -351,20 +351,20 @@ agreement for further details.
 +---------------------------------------------+------------------------------------------------------------------------+
 ; Resource                                    ; Usage                                                                  ;
 +---------------------------------------------+------------------------------------------------------------------------+
-; Estimated Total logic elements              ; 21,525                                                                 ;
+; Estimated Total logic elements              ; 23,983                                                                 ;
 ;                                             ;                                                                        ;
-; Total combinational functions               ; 21090                                                                  ;
+; Total combinational functions               ; 23548                                                                  ;
 ; Logic element usage by number of LUT inputs ;                                                                        ;
-;     -- 4 input functions                    ; 18529                                                                  ;
-;     -- 3 input functions                    ; 1772                                                                   ;
-;     -- <=2 input functions                  ; 789                                                                    ;
+;     -- 4 input functions                    ; 20942                                                                  ;
+;     -- 3 input functions                    ; 1797                                                                   ;
+;     -- <=2 input functions                  ; 809                                                                    ;
 ;                                             ;                                                                        ;
 ; Logic elements by mode                      ;                                                                        ;
-;     -- normal mode                          ; 20456                                                                  ;
-;     -- arithmetic mode                      ; 634                                                                    ;
+;     -- normal mode                          ; 22890                                                                  ;
+;     -- arithmetic mode                      ; 658                                                                    ;
 ;                                             ;                                                                        ;
-; Total registers                             ; 5429                                                                   ;
-;     -- Dedicated logic registers            ; 5429                                                                   ;
+; Total registers                             ; 5816                                                                   ;
+;     -- Dedicated logic registers            ; 5816                                                                   ;
 ;     -- I/O registers                        ; 0                                                                      ;
 ;                                             ;                                                                        ;
 ; I/O pins                                    ; 428                                                                    ;
@@ -376,9 +376,9 @@ agreement for further details.
 ;     -- PLLs                                 ; 1                                                                      ;
 ;                                             ;                                                                        ;
 ; Maximum fan-out node                        ; sdram_pll:u6|altpll:altpll_component|altpll_f423:auto_generated|clk[0] ;
-; Maximum fan-out                             ; 5042                                                                   ;
-; Total fan-out                               ; 105335                                                                 ;
-; Average fan-out                             ; 3.82                                                                   ;
+; Maximum fan-out                             ; 5429                                                                   ;
+; Total fan-out                               ; 116650                                                                 ;
+; Average fan-out                             ; 3.83                                                                   ;
 +---------------------------------------------+------------------------------------------------------------------------+
 
 
@@ -387,8 +387,8 @@ agreement for further details.
 +--------------------------------------------------------------+-------------------+--------------+-------------+--------------+---------+-----------+------+--------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------+
 ; Compilation Hierarchy Node                                   ; LC Combinationals ; LC Registers ; Memory Bits ; DSP Elements ; DSP 9x9 ; DSP 18x18 ; Pins ; Virtual Pins ; Full Hierarchy Name                                                                                                                                                                        ; Library Name ;
 +--------------------------------------------------------------+-------------------+--------------+-------------+--------------+---------+-----------+------+--------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------+
-; |DE2_115_CAMERA                                              ; 21090 (1)         ; 5429 (14)    ; 64658       ; 0            ; 0       ; 0         ; 428  ; 0            ; |DE2_115_CAMERA                                                                                                                                                                            ; work         ;
-;    |Blob_pipeline:blob|                                      ; 19500 (19464)     ; 4323 (4302)  ; 4186        ; 0            ; 0       ; 0         ; 0    ; 0            ; |DE2_115_CAMERA|Blob_pipeline:blob                                                                                                                                                         ; work         ;
+; |DE2_115_CAMERA                                              ; 23548 (1)         ; 5816 (14)    ; 64658       ; 0            ; 0       ; 0         ; 428  ; 0            ; |DE2_115_CAMERA                                                                                                                                                                            ; work         ;
+;    |Blob_pipeline:blob|                                      ; 21958 (21922)     ; 4710 (4689)  ; 4186        ; 0            ; 0       ; 0         ; 0    ; 0            ; |DE2_115_CAMERA|Blob_pipeline:blob                                                                                                                                                         ; work         ;
 ;       |altshift_taps:buffer_r_rtl_0|                         ; 36 (0)            ; 21 (0)       ; 4186        ; 0            ; 0       ; 0         ; 0    ; 0            ; |DE2_115_CAMERA|Blob_pipeline:blob|altshift_taps:buffer_r_rtl_0                                                                                                                            ; work         ;
 ;          |shift_taps_1mm:auto_generated|                     ; 36 (0)            ; 21 (1)       ; 4186        ; 0            ; 0       ; 0         ; 0    ; 0            ; |DE2_115_CAMERA|Blob_pipeline:blob|altshift_taps:buffer_r_rtl_0|shift_taps_1mm:auto_generated                                                                                              ; work         ;
 ;             |altsyncram_49b1:altsyncram2|                    ; 0 (0)             ; 0 (0)        ; 4186        ; 0            ; 0       ; 0         ; 0    ; 0            ; |DE2_115_CAMERA|Blob_pipeline:blob|altshift_taps:buffer_r_rtl_0|shift_taps_1mm:auto_generated|altsyncram_49b1:altsyncram2                                                                  ; work         ;
@@ -652,12 +652,12 @@ Encoding Type:  One-Hot
 +----------------------------------------------+-------+
 ; Statistic                                    ; Value ;
 +----------------------------------------------+-------+
-; Total registers                              ; 5429  ;
+; Total registers                              ; 5816  ;
 ; Number of registers using Synchronous Clear  ; 182   ;
 ; Number of registers using Synchronous Load   ; 1497  ;
-; Number of registers using Asynchronous Clear ; 5273  ;
+; Number of registers using Asynchronous Clear ; 5660  ;
 ; Number of registers using Asynchronous Load  ; 0     ;
-; Number of registers using Clock Enable       ; 2378  ;
+; Number of registers using Clock Enable       ; 2765  ;
 ; Number of registers using Preset             ; 0     ;
 +----------------------------------------------+-------+
 
@@ -714,296 +714,296 @@ Encoding Type:  One-Hot
 +--------------------+-----------+---------------+----------------------+------------------------+------------+---------------------------------------------------------------------------------+
 ; Multiplexer Inputs ; Bus Width ; Baseline Area ; Area if Restructured ; Saving if Restructured ; Registered ; Example Multiplexer Output                                                      ;
 +--------------------+-----------+---------------+----------------------+------------------------+------------+---------------------------------------------------------------------------------+
-; 3:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; Yes        ; |DE2_115_CAMERA|CCD_Capture:u3|mSTART                                           ;
+; 3:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; Yes        ; |DE2_115_CAMERA|CCD_Capture:u3|oProcess                                         ;
 ; 3:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; Yes        ; |DE2_115_CAMERA|Sdram_Control:u7|command:u_command|BA[0]                        ;
 ; 3:1                ; 16 bits   ; 32 LEs        ; 32 LEs               ; 0 LEs                  ; Yes        ; |DE2_115_CAMERA|Sdram_Control:u7|control_interface:u_control_interface|timer[7] ;
-; 3:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; Yes        ; |DE2_115_CAMERA|Sdram_Control:u7|command:u_command|command_done                 ;
-; 4:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; Yes        ; |DE2_115_CAMERA|I2C_CCD_Config:u8|senosr_exposure[15]                           ;
-; 4:1                ; 3 bits    ; 6 LEs         ; 6 LEs                ; 0 LEs                  ; Yes        ; |DE2_115_CAMERA|VGA_Controller:u1|oVGA_G[9]                                     ;
-; 4:1                ; 21 bits   ; 42 LEs        ; 42 LEs               ; 0 LEs                  ; Yes        ; |DE2_115_CAMERA|VGA_Controller:u1|oVGA_B[8]                                     ;
-; 4:1                ; 10 bits   ; 20 LEs        ; 20 LEs               ; 0 LEs                  ; Yes        ; |DE2_115_CAMERA|Sdram_Control:u7|command:u_command|SA[1]                        ;
-; 4:1                ; 16 bits   ; 32 LEs        ; 16 LEs               ; 16 LEs                 ; Yes        ; |DE2_115_CAMERA|CCD_Capture:u3|X_Cont[7]                                        ;
-; 4:1                ; 16 bits   ; 32 LEs        ; 16 LEs               ; 16 LEs                 ; Yes        ; |DE2_115_CAMERA|CCD_Capture:u3|Y_Cont[3]                                        ;
-; 5:1                ; 4 bits    ; 12 LEs        ; 8 LEs                ; 4 LEs                  ; Yes        ; |DE2_115_CAMERA|Sdram_Control:u7|command:u_command|rp_shift[2]                  ;
-; 5:1                ; 16 bits   ; 48 LEs        ; 32 LEs               ; 16 LEs                 ; Yes        ; |DE2_115_CAMERA|Sdram_Control:u7|mADDR[20]                                      ;
-; 64:1               ; 4 bits    ; 168 LEs       ; 44 LEs               ; 124 LEs                ; Yes        ; |DE2_115_CAMERA|I2C_CCD_Config:u8|mI2C_DATA[12]                                 ;
+; 3:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; Yes        ; |DE2_115_CAMERA|Sdram_Control:u7|command:u_command|command_delay[4]             ;
+; 4:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; Yes        ; |DE2_115_CAMERA|I2C_CCD_Config:u8|senosr_exposure[5]                            ;
+; 4:1                ; 3 bits    ; 6 LEs         ; 6 LEs                ; 0 LEs                  ; Yes        ; |DE2_115_CAMERA|VGA_Controller:u1|oVGA_B[9]                                     ;
+; 4:1                ; 21 bits   ; 42 LEs        ; 42 LEs               ; 0 LEs                  ; Yes        ; |DE2_115_CAMERA|VGA_Controller:u1|oVGA_G[5]                                     ;
+; 4:1                ; 10 bits   ; 20 LEs        ; 20 LEs               ; 0 LEs                  ; Yes        ; |DE2_115_CAMERA|Sdram_Control:u7|command:u_command|SA[2]                        ;
+; 4:1                ; 16 bits   ; 32 LEs        ; 16 LEs               ; 16 LEs                 ; Yes        ; |DE2_115_CAMERA|CCD_Capture:u3|X_Cont[15]                                       ;
+; 4:1                ; 16 bits   ; 32 LEs        ; 16 LEs               ; 16 LEs                 ; Yes        ; |DE2_115_CAMERA|CCD_Capture:u3|Y_Cont[11]                                       ;
+; 5:1                ; 4 bits    ; 12 LEs        ; 8 LEs                ; 4 LEs                  ; Yes        ; |DE2_115_CAMERA|Sdram_Control:u7|command:u_command|rp_shift[1]                  ;
+; 5:1                ; 16 bits   ; 48 LEs        ; 32 LEs               ; 16 LEs                 ; Yes        ; |DE2_115_CAMERA|Sdram_Control:u7|mADDR[7]                                       ;
+; 64:1               ; 4 bits    ; 168 LEs       ; 44 LEs               ; 124 LEs                ; Yes        ; |DE2_115_CAMERA|I2C_CCD_Config:u8|mI2C_DATA[11]                                 ;
 ; 6:1                ; 2 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; Yes        ; |DE2_115_CAMERA|Sdram_Control:u7|CMD[1]                                         ;
-; 9:1                ; 10 bits   ; 60 LEs        ; 40 LEs               ; 20 LEs                 ; Yes        ; |DE2_115_CAMERA|RAW2RGB:u4|rRed[3]                                              ;
+; 9:1                ; 10 bits   ; 60 LEs        ; 40 LEs               ; 20 LEs                 ; Yes        ; |DE2_115_CAMERA|RAW2RGB:u4|rRed[5]                                              ;
 ; 7:1                ; 3 bits    ; 12 LEs        ; 9 LEs                ; 3 LEs                  ; Yes        ; |DE2_115_CAMERA|Sdram_Control:u7|RD_MASK[0]                                     ;
-; 7:1                ; 3 bits    ; 12 LEs        ; 6 LEs                ; 6 LEs                  ; Yes        ; |DE2_115_CAMERA|Sdram_Control:u7|WR_MASK[0]                                     ;
-; 10:1               ; 10 bits   ; 60 LEs        ; 40 LEs               ; 20 LEs                 ; Yes        ; |DE2_115_CAMERA|RAW2RGB:u4|rBlue[6]                                             ;
-; 10:1               ; 10 bits   ; 60 LEs        ; 40 LEs               ; 20 LEs                 ; Yes        ; |DE2_115_CAMERA|RAW2RGB:u4|rGreen[12]                                           ;
-; 7:1                ; 10 bits   ; 40 LEs        ; 20 LEs               ; 20 LEs                 ; Yes        ; |DE2_115_CAMERA|Sdram_Control:u7|ST[8]                                          ;
+; 7:1                ; 3 bits    ; 12 LEs        ; 6 LEs                ; 6 LEs                  ; Yes        ; |DE2_115_CAMERA|Sdram_Control:u7|mWR                                            ;
+; 10:1               ; 10 bits   ; 60 LEs        ; 40 LEs               ; 20 LEs                 ; Yes        ; |DE2_115_CAMERA|RAW2RGB:u4|rBlue[4]                                             ;
+; 10:1               ; 10 bits   ; 60 LEs        ; 40 LEs               ; 20 LEs                 ; Yes        ; |DE2_115_CAMERA|RAW2RGB:u4|rGreen[11]                                           ;
+; 7:1                ; 10 bits   ; 40 LEs        ; 20 LEs               ; 20 LEs                 ; Yes        ; |DE2_115_CAMERA|Sdram_Control:u7|ST[4]                                          ;
 ; 9:1                ; 7 bits    ; 42 LEs        ; 14 LEs               ; 28 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[0][5]                                ;
-; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[1][5]                                ;
+; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[1][6]                                ;
 ; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[65][6]                               ;
-; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[33][0]                               ;
-; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[97][4]                               ;
-; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[17][4]                               ;
-; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[81][4]                               ;
-; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[49][5]                               ;
-; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[113][4]                              ;
-; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[9][0]                                ;
-; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[73][2]                               ;
+; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[33][2]                               ;
+; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[97][6]                               ;
+; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[17][2]                               ;
+; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[81][1]                               ;
+; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[49][1]                               ;
+; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[113][2]                              ;
+; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[9][1]                                ;
+; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[73][6]                               ;
 ; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[41][6]                               ;
-; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[105][0]                              ;
-; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[25][1]                               ;
-; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[89][5]                               ;
-; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[57][6]                               ;
-; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[121][1]                              ;
-; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[5][0]                                ;
-; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[69][0]                               ;
-; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[37][4]                               ;
-; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[101][5]                              ;
-; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[21][3]                               ;
-; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[85][6]                               ;
-; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[53][0]                               ;
-; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[117][5]                              ;
-; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[13][1]                               ;
-; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[77][1]                               ;
-; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[45][4]                               ;
-; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[109][4]                              ;
-; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[29][6]                               ;
-; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[93][1]                               ;
-; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[61][3]                               ;
-; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[125][5]                              ;
-; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[3][4]                                ;
-; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[67][1]                               ;
-; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[35][4]                               ;
-; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[99][2]                               ;
-; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[19][4]                               ;
-; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[83][3]                               ;
-; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[51][2]                               ;
-; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[115][0]                              ;
+; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[105][5]                              ;
+; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[25][0]                               ;
+; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[89][0]                               ;
+; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[57][2]                               ;
+; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[121][6]                              ;
+; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[5][2]                                ;
+; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[69][2]                               ;
+; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[37][1]                               ;
+; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[101][3]                              ;
+; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[21][2]                               ;
+; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[85][3]                               ;
+; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[53][1]                               ;
+; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[117][0]                              ;
+; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[13][0]                               ;
+; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[77][2]                               ;
+; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[45][6]                               ;
+; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[109][3]                              ;
+; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[29][1]                               ;
+; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[93][3]                               ;
+; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[61][0]                               ;
+; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[125][0]                              ;
+; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[3][3]                                ;
+; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[67][4]                               ;
+; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[35][3]                               ;
+; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[99][0]                               ;
+; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[19][1]                               ;
+; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[83][1]                               ;
+; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[51][6]                               ;
+; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[115][2]                              ;
 ; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[11][0]                               ;
 ; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[75][2]                               ;
-; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[43][2]                               ;
-; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[107][5]                              ;
-; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[27][0]                               ;
-; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[91][6]                               ;
-; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[59][5]                               ;
-; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[123][3]                              ;
+; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[43][4]                               ;
+; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[107][6]                              ;
+; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[27][5]                               ;
+; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[91][0]                               ;
+; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[59][2]                               ;
+; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[123][0]                              ;
 ; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[7][2]                                ;
-; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[71][3]                               ;
-; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[39][1]                               ;
+; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[71][2]                               ;
+; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[39][0]                               ;
 ; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[103][3]                              ;
-; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[23][2]                               ;
+; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[23][0]                               ;
 ; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[87][4]                               ;
-; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[55][4]                               ;
-; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[119][2]                              ;
-; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[15][2]                               ;
-; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[79][6]                               ;
-; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[47][3]                               ;
-; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[111][2]                              ;
-; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[31][3]                               ;
-; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[95][6]                               ;
-; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[63][5]                               ;
-; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[127][1]                              ;
-; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[2][6]                                ;
-; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[66][1]                               ;
-; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[34][2]                               ;
-; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[98][5]                               ;
-; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[18][3]                               ;
-; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[82][2]                               ;
-; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[50][3]                               ;
-; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[114][3]                              ;
-; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[10][3]                               ;
+; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[55][6]                               ;
+; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[119][3]                              ;
+; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[15][6]                               ;
+; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[79][1]                               ;
+; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[47][6]                               ;
+; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[111][6]                              ;
+; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[31][5]                               ;
+; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[95][0]                               ;
+; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[63][1]                               ;
+; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[127][3]                              ;
+; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[2][2]                                ;
+; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[66][2]                               ;
+; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[34][6]                               ;
+; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[98][0]                               ;
+; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[18][1]                               ;
+; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[82][5]                               ;
+; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[50][1]                               ;
+; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[114][1]                              ;
+; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[10][6]                               ;
 ; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[74][5]                               ;
-; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[42][0]                               ;
-; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[106][1]                              ;
-; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[26][3]                               ;
-; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[90][6]                               ;
-; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[58][6]                               ;
-; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[122][4]                              ;
-; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[6][1]                                ;
-; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[70][3]                               ;
-; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[38][5]                               ;
-; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[102][1]                              ;
-; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[22][5]                               ;
-; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[86][6]                               ;
-; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[54][3]                               ;
+; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[42][5]                               ;
+; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[106][0]                              ;
+; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[26][4]                               ;
+; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[90][5]                               ;
+; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[58][2]                               ;
+; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[122][6]                              ;
+; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[6][5]                                ;
+; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[70][2]                               ;
+; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[38][1]                               ;
+; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[102][0]                              ;
+; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[22][1]                               ;
+; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[86][2]                               ;
+; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[54][0]                               ;
 ; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[118][6]                              ;
-; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[14][5]                               ;
-; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[78][3]                               ;
-; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[46][4]                               ;
-; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[110][0]                              ;
-; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[30][2]                               ;
-; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[94][2]                               ;
+; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[14][2]                               ;
+; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[78][5]                               ;
+; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[46][6]                               ;
+; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[110][3]                              ;
+; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[30][1]                               ;
+; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[94][1]                               ;
 ; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[62][6]                               ;
-; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[126][6]                              ;
+; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[126][0]                              ;
 ; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[4][6]                                ;
-; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[68][3]                               ;
-; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[36][3]                               ;
+; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[68][2]                               ;
+; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[36][0]                               ;
 ; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[100][5]                              ;
-; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[20][3]                               ;
-; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[84][6]                               ;
-; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[52][5]                               ;
-; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[116][1]                              ;
-; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[12][2]                               ;
-; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[76][4]                               ;
-; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[44][3]                               ;
-; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[108][1]                              ;
-; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[28][0]                               ;
-; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[92][1]                               ;
-; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[60][3]                               ;
-; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[124][2]                              ;
-; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[8][2]                                ;
-; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[72][1]                               ;
-; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[40][1]                               ;
-; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[104][1]                              ;
-; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[24][3]                               ;
-; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[88][4]                               ;
-; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[56][5]                               ;
-; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[120][2]                              ;
-; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[16][0]                               ;
-; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[80][5]                               ;
-; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[48][4]                               ;
-; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[112][0]                              ;
-; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[32][6]                               ;
-; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[96][0]                               ;
-; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[64][6]                               ;
-; 14:1               ; 7 bits    ; 63 LEs        ; 14 LEs               ; 49 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|buffer_r[801][0]                             ;
-; 18:1               ; 10 bits   ; 120 LEs       ; 40 LEs               ; 80 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|counter_r[4]                                 ;
-; 20:1               ; 15 bits   ; 195 LEs       ; 60 LEs               ; 135 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[0][7]                               ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[127][6]                             ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[126][13]                            ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[125][3]                             ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[124][5]                             ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[123][4]                             ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[122][3]                             ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[121][11]                            ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[120][2]                             ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[119][8]                             ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[118][8]                             ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[117][8]                             ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[116][8]                             ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[115][8]                             ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[114][12]                            ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[113][8]                             ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[112][8]                             ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[111][8]                             ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[110][8]                             ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[109][8]                             ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[108][11]                            ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[107][3]                             ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[106][7]                             ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[105][8]                             ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[104][8]                             ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[103][8]                             ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[102][8]                             ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[101][8]                             ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[100][8]                             ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[99][8]                              ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[98][8]                              ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[97][8]                              ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[96][8]                              ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[95][8]                              ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[94][8]                              ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[93][8]                              ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[92][8]                              ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[91][8]                              ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[90][8]                              ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[89][6]                              ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[88][3]                              ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[87][8]                              ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[86][8]                              ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[85][8]                              ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[84][7]                              ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[83][13]                             ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[82][3]                              ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[81][5]                              ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[80][5]                              ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[79][4]                              ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[78][14]                             ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[77][12]                             ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[76][2]                              ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[75][11]                             ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[74][11]                             ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[73][7]                              ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[72][12]                             ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[71][14]                             ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[70][10]                             ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[69][1]                              ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[68][12]                             ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[67][10]                             ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[66][14]                             ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[65][2]                              ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[64][14]                             ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[63][12]                             ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[62][8]                              ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[61][5]                              ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[60][14]                             ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[59][7]                              ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[58][6]                              ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[57][3]                              ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[56][3]                              ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[55][3]                              ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[54][13]                             ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[53][6]                              ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[52][5]                              ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[51][6]                              ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[50][2]                              ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[49][2]                              ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[48][5]                              ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[47][5]                              ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[46][0]                              ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[45][9]                              ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[44][8]                              ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[43][8]                              ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[42][8]                              ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[41][2]                              ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[40][0]                              ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[39][10]                             ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[38][10]                             ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[37][13]                             ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[36][1]                              ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[35][3]                              ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[34][9]                              ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[33][11]                             ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[32][13]                             ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[31][7]                              ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[30][11]                             ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[29][8]                              ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[28][12]                             ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[27][4]                              ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[26][1]                              ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[25][12]                             ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[24][8]                              ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[23][7]                              ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[22][1]                              ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[21][3]                              ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[20][8]                              ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[19][10]                             ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[18][2]                              ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[17][13]                             ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[16][14]                             ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[15][6]                              ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[14][13]                             ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[13][1]                              ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[12][0]                              ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[11][14]                             ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[10][10]                             ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[9][6]                               ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[8][5]                               ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[7][5]                               ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[6][8]                               ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[5][7]                               ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[4][7]                               ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[3][12]                              ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[2][4]                               ;
-; 22:1               ; 15 bits   ; 210 LEs       ; 60 LEs               ; 150 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[1][10]                              ;
+; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[20][0]                               ;
+; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[84][3]                               ;
+; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[52][1]                               ;
+; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[116][2]                              ;
+; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[12][0]                               ;
+; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[76][1]                               ;
+; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[44][5]                               ;
+; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[108][6]                              ;
+; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[28][4]                               ;
+; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[92][4]                               ;
+; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[60][0]                               ;
+; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[124][0]                              ;
+; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[8][0]                                ;
+; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[72][5]                               ;
+; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[40][6]                               ;
+; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[104][6]                              ;
+; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[24][1]                               ;
+; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[88][5]                               ;
+; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[56][2]                               ;
+; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[120][6]                              ;
+; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[16][5]                               ;
+; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[80][1]                               ;
+; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[48][2]                               ;
+; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[112][4]                              ;
+; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[32][1]                               ;
+; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[96][1]                               ;
+; 12:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|tisch_r[64][3]                               ;
+; 14:1               ; 7 bits    ; 63 LEs        ; 14 LEs               ; 49 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|buffer_r[801][1]                             ;
+; 18:1               ; 10 bits   ; 120 LEs       ; 40 LEs               ; 80 LEs                 ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|counter_r[1]                                 ;
+; 20:1               ; 18 bits   ; 234 LEs       ; 72 LEs               ; 162 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[0][16]                              ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[127][2]                             ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[126][4]                             ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[125][6]                             ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[124][7]                             ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[123][4]                             ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[122][2]                             ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[121][7]                             ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[120][5]                             ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[119][0]                             ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[118][0]                             ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[117][7]                             ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[116][10]                            ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[115][7]                             ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[114][4]                             ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[113][12]                            ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[112][0]                             ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[111][0]                             ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[110][0]                             ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[109][11]                            ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[108][16]                            ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[107][9]                             ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[106][10]                            ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[105][2]                             ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[104][1]                             ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[103][12]                            ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[102][15]                            ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[101][6]                             ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[100][15]                            ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[99][16]                             ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[98][16]                             ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[97][5]                              ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[96][15]                             ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[95][12]                             ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[94][9]                              ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[93][7]                              ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[92][3]                              ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[91][14]                             ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[90][10]                             ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[89][12]                             ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[88][15]                             ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[87][10]                             ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[86][2]                              ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[85][9]                              ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[84][17]                             ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[83][2]                              ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[82][3]                              ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[81][10]                             ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[80][7]                              ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[79][5]                              ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[78][15]                             ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[77][2]                              ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[76][13]                             ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[75][1]                              ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[74][12]                             ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[73][5]                              ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[72][9]                              ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[71][14]                             ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[70][17]                             ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[69][12]                             ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[68][7]                              ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[67][5]                              ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[66][9]                              ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[65][3]                              ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[64][3]                              ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[63][7]                              ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[62][12]                             ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[61][7]                              ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[60][8]                              ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[59][12]                             ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[58][11]                             ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[57][7]                              ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[56][17]                             ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[55][1]                              ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[54][1]                              ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[53][4]                              ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[52][7]                              ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[51][6]                              ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[50][2]                              ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[49][12]                             ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[48][10]                             ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[47][1]                              ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[46][0]                              ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[45][11]                             ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[44][10]                             ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[43][12]                             ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[42][16]                             ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[41][12]                             ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[40][3]                              ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[39][1]                              ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[38][8]                              ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[37][14]                             ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[36][5]                              ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[35][2]                              ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[34][8]                              ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[33][8]                              ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[32][8]                              ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[31][8]                              ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[30][8]                              ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[29][8]                              ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[28][8]                              ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[27][4]                              ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[26][6]                              ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[25][8]                              ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[24][6]                              ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[23][14]                             ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[22][1]                              ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[21][6]                              ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[20][12]                             ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[19][2]                              ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[18][2]                              ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[17][14]                             ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[16][15]                             ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[15][13]                             ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[14][15]                             ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[13][17]                             ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[12][17]                             ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[11][2]                              ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[10][4]                              ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[9][15]                              ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[8][17]                              ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[7][2]                               ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[6][2]                               ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[5][7]                               ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[4][17]                              ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[3][1]                               ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[2][16]                              ;
+; 22:1               ; 18 bits   ; 252 LEs       ; 72 LEs               ; 180 LEs                ; Yes        ; |DE2_115_CAMERA|Blob_pipeline:blob|pixels_r[1][1]                               ;
 ; 3:1                ; 6 bits    ; 12 LEs        ; 6 LEs                ; 6 LEs                  ; Yes        ; |DE2_115_CAMERA|I2C_CCD_Config:u8|I2C_Controller:u0|SD_COUNTER[1]               ;
-; 4:1                ; 5 bits    ; 10 LEs        ; 10 LEs               ; 0 LEs                  ; Yes        ; |DE2_115_CAMERA|I2C_CCD_Config:u8|senosr_exposure[8]                            ;
+; 4:1                ; 5 bits    ; 10 LEs        ; 10 LEs               ; 0 LEs                  ; Yes        ; |DE2_115_CAMERA|I2C_CCD_Config:u8|senosr_exposure[6]                            ;
 ; 3:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; No         ; |DE2_115_CAMERA|I2C_CCD_Config:u8|Mux13                                         ;
-; 3:1                ; 15 bits   ; 30 LEs        ; 15 LEs               ; 15 LEs                 ; No         ; |DE2_115_CAMERA|Blob_pipeline:blob|largest_category_w                           ;
+; 3:1                ; 18 bits   ; 36 LEs        ; 18 LEs               ; 18 LEs                 ; No         ; |DE2_115_CAMERA|Blob_pipeline:blob|largest_category_w                           ;
 ; 3:1                ; 8 bits    ; 16 LEs        ; 8 LEs                ; 8 LEs                  ; No         ; |DE2_115_CAMERA|Blob_pipeline:blob|final_count_w                                ;
-; 128:1              ; 22 bits   ; 1870 LEs      ; 1870 LEs             ; 0 LEs                  ; No         ; |DE2_115_CAMERA|Blob_pipeline:blob|Mux87                                        ;
-; 128:1              ; 15 bits   ; 1275 LEs      ; 1275 LEs             ; 0 LEs                  ; No         ; |DE2_115_CAMERA|Blob_pipeline:blob|Mux36                                        ;
-; 128:1              ; 22 bits   ; 1870 LEs      ; 1870 LEs             ; 0 LEs                  ; No         ; |DE2_115_CAMERA|Blob_pipeline:blob|Mux1                                         ;
-; 128:1              ; 15 bits   ; 1275 LEs      ; 1275 LEs             ; 0 LEs                  ; No         ; |DE2_115_CAMERA|Blob_pipeline:blob|Mux74                                        ;
-; 128:1              ; 22 bits   ; 1870 LEs      ; 1870 LEs             ; 0 LEs                  ; No         ; |DE2_115_CAMERA|Blob_pipeline:blob|Mux27                                        ;
+; 128:1              ; 25 bits   ; 2125 LEs      ; 2125 LEs             ; 0 LEs                  ; No         ; |DE2_115_CAMERA|Blob_pipeline:blob|Mux96                                        ;
+; 128:1              ; 18 bits   ; 1530 LEs      ; 1530 LEs             ; 0 LEs                  ; No         ; |DE2_115_CAMERA|Blob_pipeline:blob|Mux49                                        ;
+; 128:1              ; 25 bits   ; 2125 LEs      ; 2125 LEs             ; 0 LEs                  ; No         ; |DE2_115_CAMERA|Blob_pipeline:blob|Mux10                                        ;
+; 128:1              ; 18 bits   ; 1530 LEs      ; 1530 LEs             ; 0 LEs                  ; No         ; |DE2_115_CAMERA|Blob_pipeline:blob|Mux83                                        ;
+; 128:1              ; 25 bits   ; 2125 LEs      ; 2125 LEs             ; 0 LEs                  ; No         ; |DE2_115_CAMERA|Blob_pipeline:blob|Mux26                                        ;
 ; 9:1                ; 19 bits   ; 114 LEs       ; 19 LEs               ; 95 LEs                 ; No         ; |DE2_115_CAMERA|Blob_pipeline:blob|isEnd_w                                      ;
-; 9:1                ; 3 bits    ; 18 LEs        ; 12 LEs               ; 6 LEs                  ; No         ; |DE2_115_CAMERA|Blob_pipeline:blob|Selector0                                    ;
+; 9:1                ; 3 bits    ; 18 LEs        ; 12 LEs               ; 6 LEs                  ; No         ; |DE2_115_CAMERA|Blob_pipeline:blob|Selector5                                    ;
 ; 11:1               ; 10 bits   ; 70 LEs        ; 20 LEs               ; 50 LEs                 ; No         ; |DE2_115_CAMERA|Blob_pipeline:blob|ptr_w                                        ;
 ; 13:1               ; 7 bits    ; 56 LEs        ; 14 LEs               ; 42 LEs                 ; No         ; |DE2_115_CAMERA|Blob_pipeline:blob|curcat_w                                     ;
 +--------------------+-----------+---------------+----------------------+------------------------+------------+---------------------------------------------------------------------------------+
@@ -2477,13 +2477,13 @@ Note: In order to hide this table in the UI and the text report file, please set
 ; Type                  ; Count                       ;
 +-----------------------+-----------------------------+
 ; boundary_port         ; 428                         ;
-; cycloneiii_ff         ; 5429                        ;
+; cycloneiii_ff         ; 5816                        ;
 ;     CLR               ; 1425                        ;
 ;     CLR SCLR          ; 61                          ;
 ;     CLR SCLR SLD      ; 21                          ;
 ;     CLR SLD           ; 1447                        ;
 ;     ENA               ; 45                          ;
-;     ENA CLR           ; 2222                        ;
+;     ENA CLR           ; 2609                        ;
 ;     ENA CLR SCLR      ; 87                          ;
 ;     ENA CLR SCLR SLD  ; 10                          ;
 ;     ENA SCLR          ; 1                           ;
@@ -2492,22 +2492,22 @@ Note: In order to hide this table in the UI and the text report file, please set
 ;     SLD               ; 4                           ;
 ;     plain             ; 91                          ;
 ; cycloneiii_io_obuf    ; 106                         ;
-; cycloneiii_lcell_comb ; 21098                       ;
-;     arith             ; 634                         ;
+; cycloneiii_lcell_comb ; 23556                       ;
+;     arith             ; 658                         ;
 ;         1 data inputs ; 5                           ;
-;         2 data inputs ; 427                         ;
-;         3 data inputs ; 202                         ;
-;     normal            ; 20464                       ;
+;         2 data inputs ; 442                         ;
+;         3 data inputs ; 211                         ;
+;     normal            ; 22898                       ;
 ;         0 data inputs ; 20                          ;
 ;         1 data inputs ; 47                          ;
-;         2 data inputs ; 298                         ;
-;         3 data inputs ; 1570                        ;
-;         4 data inputs ; 18529                       ;
+;         2 data inputs ; 303                         ;
+;         3 data inputs ; 1586                        ;
+;         4 data inputs ; 20942                       ;
 ; cycloneiii_pll        ; 1                           ;
 ; cycloneiii_ram_block  ; 105                         ;
 ;                       ;                             ;
-; Max LUT depth         ; 17.40                       ;
-; Average LUT depth     ; 10.85                       ;
+; Max LUT depth         ; 17.70                       ;
+; Average LUT depth     ; 11.16                       ;
 +-----------------------+-----------------------------+
 
 
@@ -2516,7 +2516,7 @@ Note: In order to hide this table in the UI and the text report file, please set
 +----------------+--------------+
 ; Partition Name ; Elapsed Time ;
 +----------------+--------------+
-; Top            ; 00:02:24     ;
+; Top            ; 00:02:33     ;
 +----------------+--------------+
 
 
@@ -2526,7 +2526,7 @@ Note: In order to hide this table in the UI and the text report file, please set
 Info: *******************************************************************
 Info: Running Quartus II 64-Bit Analysis & Synthesis
     Info: Version 15.0.0 Build 145 04/22/2015 SJ Full Version
-    Info: Processing started: Mon Dec 26 12:15:31 2022
+    Info: Processing started: Mon Dec 26 12:48:49 2022
 Info: Command: quartus_map --read_settings_files=on --write_settings_files=off DE2_115_CAMERA -c DE2_115_CAMERA
 Info (11104): Parallel Compilation has detected 8 hyper-threaded processors. However, the extra hyper-threaded processors will not be used by default. Parallel Compilation will use 4 of the 4 physical processors detected instead.
 Info (12021): Found 1 design units, including 1 entities, in source file v/sevenhexdecoder.sv
@@ -2536,6 +2536,7 @@ Info (12021): Found 1 design units, including 1 entities, in source file v/blob_
 Warning (10274): Verilog HDL macro warning at Blob.sv(2): overriding existing definition for macro "IMG_ROW", which was defined in "v/Blob_pipeline.sv", line 2
 Warning (10274): Verilog HDL macro warning at Blob.sv(3): overriding existing definition for macro "IMG_COL", which was defined in "v/Blob_pipeline.sv", line 3
 Warning (10274): Verilog HDL macro warning at Blob.sv(4): overriding existing definition for macro "BUF_SIZE", which was defined in "v/Blob_pipeline.sv", line 4
+Warning (10274): Verilog HDL macro warning at Blob.sv(8): overriding existing definition for macro "PIXEL_ENTRY_SIZE", which was defined in "v/Blob_pipeline.sv", line 8
 Info (12021): Found 1 design units, including 1 entities, in source file v/blob.sv
     Info (12023): Found entity 1: Blob
 Info (12021): Found 1 design units, including 1 entities, in source file v/grayscale.sv
@@ -3001,15 +3002,15 @@ Warning (10230): Verilog HDL assignment warning at Blob_pipeline.sv(115): trunca
 Warning (10230): Verilog HDL assignment warning at Blob_pipeline.sv(119): truncated value with size 32 to match size of target (19)
 Warning (10230): Verilog HDL assignment warning at Blob_pipeline.sv(120): truncated value with size 32 to match size of target (10)
 Warning (10230): Verilog HDL assignment warning at Blob_pipeline.sv(123): truncated value with size 32 to match size of target (10)
-Warning (10230): Verilog HDL assignment warning at Blob_pipeline.sv(125): truncated value with size 32 to match size of target (15)
-Warning (10230): Verilog HDL assignment warning at Blob_pipeline.sv(138): truncated value with size 32 to match size of target (15)
+Warning (10230): Verilog HDL assignment warning at Blob_pipeline.sv(125): truncated value with size 32 to match size of target (18)
+Warning (10230): Verilog HDL assignment warning at Blob_pipeline.sv(138): truncated value with size 32 to match size of target (18)
 Warning (10230): Verilog HDL assignment warning at Blob_pipeline.sv(140): truncated value with size 32 to match size of target (7)
 Warning (10230): Verilog HDL assignment warning at Blob_pipeline.sv(151): truncated value with size 32 to match size of target (19)
 Warning (10230): Verilog HDL assignment warning at Blob_pipeline.sv(152): truncated value with size 32 to match size of target (10)
-Warning (10230): Verilog HDL assignment warning at Blob_pipeline.sv(153): truncated value with size 32 to match size of target (15)
+Warning (10230): Verilog HDL assignment warning at Blob_pipeline.sv(153): truncated value with size 32 to match size of target (18)
 Warning (10230): Verilog HDL assignment warning at Blob_pipeline.sv(159): truncated value with size 32 to match size of target (19)
 Warning (10230): Verilog HDL assignment warning at Blob_pipeline.sv(160): truncated value with size 32 to match size of target (10)
-Warning (10230): Verilog HDL assignment warning at Blob_pipeline.sv(161): truncated value with size 32 to match size of target (15)
+Warning (10230): Verilog HDL assignment warning at Blob_pipeline.sv(161): truncated value with size 32 to match size of target (18)
 Warning (10230): Verilog HDL assignment warning at Blob_pipeline.sv(167): truncated value with size 32 to match size of target (19)
 Warning (10230): Verilog HDL assignment warning at Blob_pipeline.sv(168): truncated value with size 32 to match size of target (10)
 Warning (10230): Verilog HDL assignment warning at Blob_pipeline.sv(169): truncated value with size 32 to match size of target (7)
@@ -3345,18 +3346,18 @@ Warning (21074): Design contains 49 input pin(s) that do not drive logic
     Warning (15610): No output dependent on input pin "IRDA_RXD"
     Warning (15610): No output dependent on input pin "FL_RY"
     Warning (15610): No output dependent on input pin "D5M_STROBE"
-Info (21057): Implemented 22086 device resources after synthesis - the final resource count might be different
+Info (21057): Implemented 24544 device resources after synthesis - the final resource count might be different
     Info (21058): Implemented 88 input pins
     Info (21059): Implemented 234 output pins
     Info (21060): Implemented 106 bidirectional pins
-    Info (21061): Implemented 21552 logic cells
+    Info (21061): Implemented 24010 logic cells
     Info (21064): Implemented 105 RAM segments
     Info (21065): Implemented 1 PLLs
-Info: Quartus II 64-Bit Analysis & Synthesis was successful. 0 errors, 347 warnings
-    Info: Peak virtual memory: 5034 megabytes
-    Info: Processing ended: Mon Dec 26 12:18:12 2022
-    Info: Elapsed time: 00:02:41
-    Info: Total CPU time (on all processors): 00:02:50
+Info: Quartus II 64-Bit Analysis & Synthesis was successful. 0 errors, 348 warnings
+    Info: Peak virtual memory: 5067 megabytes
+    Info: Processing ended: Mon Dec 26 12:51:42 2022
+    Info: Elapsed time: 00:02:53
+    Info: Total CPU time (on all processors): 00:03:00
 
 
 +------------------------------------------+
