@@ -236,10 +236,14 @@ always_comb begin
         end
         S_CATEGORY: begin
             if (largest_category_r > 0) begin
-                if (t)
-            end
-            for (int i=0; i<final_count_r; i=i+1) begin
-                if (largest_category_r-pixels_r[i]>0 && largest_category_r-pixels_r[i]<100) begin
+                if (curcat_r < final_count_r) begin
+                    if (largest_category_r-pixels_r[curcat_r]>0 && largest_category_r-pixels_r[curcat_r]<100) begin
+                        cur_w = cur_r + 1;
+                    end
+                    curcat_w = curcat_r + 1;
+                end
+                if (curcat_r == final_count_r) begin
+                    curcat_r = 0;
                     
                 end
             end
