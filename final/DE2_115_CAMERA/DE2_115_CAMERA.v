@@ -466,9 +466,7 @@ wire	[9:0]	oVGA_G;	 				//	VGA Green[9:0]
 wire	[9:0]	oVGA_B;   				//	VGA Blue[9:0]
 wire	[9:0]	grayscale_color;	
 wire			grayscale_bw;
-wire			grayscale_valid;
 wire  			grayscale_start;
-wire 			vga_start;
 wire	[9:0]	grayscale_red;
 wire	[9:0]	grayscale_blue;
 wire	[9:0]	grayscale_green;
@@ -560,7 +558,7 @@ RAW2RGB				u4	(	.iCLK(D5M_PIXLCLK),
 //Frame count display
 SEG7_LUT_8 			u5	(	.oSEG0(HEX0),.oSEG1(HEX1),
 							.oSEG2(HEX2),.oSEG3(HEX3),
-							.oSEG4(HEX4),.oSEG5(HEX5),
+							//.oSEG4(HEX4),.oSEG5(HEX5),
 							.oSEG6(HEX6),.oSEG7(HEX7),
 							.iCOLOR((o_valid) ? count : 0),
 							.iDIG(Frame_Cont[31:0])
@@ -671,8 +669,8 @@ Grayscale 			u9	(
 							// .read_request(Read),
 							.o_color(grayscale_color),
 							.o_bw(grayscale_bw),
-							.o_valid(grayscale_valid),
-							.o_vga(vga_start),
+							// .o_valid(grayscale_valid),
+							// .o_vga(vga_start),
 							.o_red(grayscale_red),
 							.o_blue(grayscale_blue),
 							.o_green(grayscale_green)
@@ -710,5 +708,16 @@ VGA_Controller		u1	(	//	Host Side
 							.iRST_N(DLY_RST_2),
 							.iZOOM_MODE_SW(SW[16])
 						);
+SevenHexDecoder u11(
+	.i_hex(count[4:0]),
+	.o_seven_ten(HEX5),
+	.o_seven_one(HEX4)
+);
 
+// assign HEX2 = '1;
+// assign HEX3 = '1;
+// assign HEX4 = '1;
+// assign HEX5 = '1;
+// assign HEX6 = '1;
+// assign HEX7 = '1;
 endmodule
