@@ -12,7 +12,8 @@ module Blob_pipeline(
     input i_valid,
     input i_seq,
     output o_valid,
-    output [7:0] o_count
+    output [7:0] o_count,
+    output o_sdram_request
 );
 
 logic [`BUF_ENTRY_SIZE-1:0] buffer_r [`BUF_SIZE-1:0];
@@ -43,9 +44,12 @@ logic [`BUF_ENTRY_SIZE-1:0] curcat_r, curcat_w;
 logic [`PIXEL_ENTRY_SIZE-1:0] largest_category_r, largest_category_w; 
 logic [7:0] final_count_r, final_count_w;
 logic o_valid_r, o_valid_w;
+logic o_sdram_request_r, o_sdram_request_w;
 
+// assign o_count = final_count_r;
 assign o_count = final_count_r;
 assign o_valid = o_valid_r;
+assign o_sdram_request = o_sdram_request_r;
 
 // combinantial
 always_comb begin
@@ -68,13 +72,16 @@ always_comb begin
     isNew_w = isNew_r;
     ptr_w = ptr_r;
     isEnd_w = isEnd_r;
+    o_sdram_request_w = o_sdram_request_r;
 
     case(state_r)
         S_IDLE: begin
             if(i_valid) begin
                 state_w = S_PROC;
                 isFirstRow_w = 1;
+                o_sdram_request_w = 1;
             end
+            o_sdram_request_w = 0;
             largest_category_w = 0;
 			final_count_w = 0;
             counter_w = 0;
@@ -84,6 +91,7 @@ always_comb begin
             curcat_w = 0;
         end
         S_PROC: begin
+            o_sdram_request_w = 1;
             if (isEnd_r == `IMG_COL*`IMG_ROW) begin
                 state_w = S_MERGE;
                 counter_w = `TABLE_ENTRY-1;
@@ -219,10 +227,10 @@ always_comb begin
             state_w = S_DONE;
         end
         S_DONE: begin
-				if(!i_valid) begin
-					state_w = S_IDLE;
-					o_valid_w = 0;
-				end
+            if(!i_valid) begin
+                state_w = S_IDLE;
+                o_valid_w = 0;
+            end
         end
     endcase
 end
@@ -246,6 +254,7 @@ always_ff @(posedge i_clk or negedge i_rst_n) begin
         isNew_r <= 0;
         ptr_r <= 0; 
         isEnd_r <= 0;
+        o_sdram_request_r <= 0;
     end
     else begin
         largest_category_r <= largest_category_w;
@@ -266,6 +275,7 @@ always_ff @(posedge i_clk or negedge i_rst_n) begin
         isNew_r <= isNew_w;
         ptr_r <= ptr_w;
         isEnd_r <= isEnd_w;
+        o_sdram_request_r <= o_sdram_request_w;
     end
 end
 endmodule

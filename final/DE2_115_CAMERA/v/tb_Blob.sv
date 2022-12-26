@@ -1,8 +1,8 @@
 `timescale 1ns/100ps
 
-`define IMG_ROW 480
-`define IMG_COL 640
-`define BUF_SIZE 642
+`define IMG_ROW 600
+`define IMG_COL 800
+`define BUF_SIZE 802
 `define TABLE_ENTRY 128
 `define TABLE_ENTRY_SIZE 7
 `define BUF_ENTRY_SIZE 7
@@ -16,6 +16,7 @@ module tb;
     logic [7:0] count;
     logic i_valid, o_valid;
     logic seq;
+    logic o_sdram_request;
 
     integer fp;
     always #(HCLK) clk = ~clk;
@@ -25,7 +26,8 @@ module tb;
         .i_valid(i_valid),
         .i_seq(seq),
         .o_valid(o_valid),
-        .o_count(count)
+        .o_count(count),
+        .o_sdram_request(o_sdram_request)
     );
     initial begin
         clk = 1;
@@ -39,7 +41,7 @@ module tb;
         rst_n = 1;
         #(20*CLK) 
         i_valid = 1;
-        for(int i=0; i<640*480; i=i+1) begin
+        for(int i=0; i<`IMG_ROW*`IMG_COL; i=i+1) begin
             @(posedge clk);
             $fscanf(fp, "%d", seq);
         end
@@ -48,7 +50,7 @@ module tb;
         #(250000*CLK)
         i_valid = 1;
         $fseek(fp, 0, 0);
-        for(int i=0; i<640*480; i=i+1) begin
+        for(int i=0; i<`IMG_ROW*`IMG_COL; i=i+1) begin
             @(posedge clk);
             $fscanf(fp, "%d", seq);
         end

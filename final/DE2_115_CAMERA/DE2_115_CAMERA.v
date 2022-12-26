@@ -472,6 +472,7 @@ wire	[9:0]	grayscale_blue;
 wire	[9:0]	grayscale_green;
 wire 			o_valid;
 wire     [7:0]   count;
+wire			Read_blob;
 
 
 
@@ -611,7 +612,7 @@ Sdram_Control	u7	(	//	HOST Side
 
 							//	FIFO Read Side 1
 						    .RD1_DATA(Read_DATA1),
-				        	.RD1(Read_vga),
+				        	.RD1((grayscale_start && !o_valid) ? Read_blob : Read_vga),
 				        	.RD1_ADDR(0),
 `ifdef VGA_640x480p60
 						    .RD1_MAX_ADDR(640*480/2),
@@ -625,7 +626,7 @@ Sdram_Control	u7	(	//	HOST Side
 							
 							//	FIFO Read Side 2
 						    .RD2_DATA(Read_DATA2),
-							.RD2(Read_vga),
+							.RD2((grayscale_start && !o_valid) ? Read_blob : Read_vga),
 							.RD2_ADDR(23'h100000),
 `ifdef VGA_640x480p60
 						    .RD2_MAX_ADDR(23'h100000+640*480/2),
@@ -681,7 +682,8 @@ Blob_pipeline blob(
 							.i_valid(grayscale_start),
 							.i_seq(grayscale_bw),
 							.o_valid(o_valid),
-							.o_count(count)
+							.o_count(count),
+							.o_sdram_request(Read_blob)
 );
 //VGA DISPLAY
 VGA_Controller		u1	(	//	Host Side
@@ -689,9 +691,9 @@ VGA_Controller		u1	(	//	Host Side
 							// .iRed((grayscale_start) ? grayscale_color : grayscale_red),
 							// .iGreen((grayscale_start) ? grayscale_color : grayscale_green),
 							// .iBlue((grayscale_start) ? grayscale_color : grayscale_blue),
-							.iRed((grayscale_start) ? ((grayscale_bw) ? 10'b111111111 : 10'b0) : ((SW[7]) ? Read_DATA2[9:0] : grayscale_color)),
-							.iGreen((grayscale_start) ? ((grayscale_bw) ? 10'b111111111 : 10'b0) : ((SW[7]) ? {Read_DATA1[14:10],Read_DATA2[14:10]} : grayscale_color)),
-							.iBlue((grayscale_start) ? ((grayscale_bw) ? 10'b111111111 : 10'b0) : ((SW[7]) ? Read_DATA1[9:0] : grayscale_color)),
+							.iRed((grayscale_start && !o_valid) ? 0 : ((SW[7]) ? grayscale_red : grayscale_color)),
+							.iGreen((grayscale_start) ? 0 : ((SW[7]) ? grayscale_green : grayscale_color)),
+							.iBlue((grayscale_start) ? 0 : ((SW[7]) ? grayscale_blue : grayscale_color)),
 							// .iRed(grayscale_color),
 							// .iGreen(grayscale_color),
 							// .iBlue(grayscale_color),
