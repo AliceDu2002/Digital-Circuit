@@ -1,10 +1,10 @@
 `define IMG_ROW 600
 `define IMG_COL 800
 `define BUF_SIZE 802
-`define TABLE_ENTRY 128
+`define TABLE_ENTRY 100
 `define TABLE_ENTRY_SIZE 7
 `define BUF_ENTRY_SIZE 7
-`define PIXEL_ENTRY_SIZE 18
+`define PIXEL_ENTRY_SIZE 16
 
 module Blob_pipeline(
     input i_clk,

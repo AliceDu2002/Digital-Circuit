@@ -1,4 +1,4 @@
-module VAG_Blob_SYNC_Control (
+module VGA_Blob_SYNC_Control (
     input i_clk,
     input i_rst_n,
     input i_oPROC_CCD,
@@ -16,6 +16,7 @@ logic [1:0] state_w;
 
 logic o_grayscale_start_r;
 logic o_grayscale_start_w;
+assign o_grayscale_start = o_grayscale_start_r;
 
 always_comb begin
     o_grayscale_start_w = o_grayscale_start_r;

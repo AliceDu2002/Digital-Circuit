@@ -677,7 +677,7 @@ Grayscale 			u9	(
 							.o_blue(grayscale_blue),
 							.o_green(grayscale_green)
 );
-Blob_pipeline blob(
+Blob_pipeline u10(
 							.i_clk(VGA_CTRL_CLK),
 							.i_rst_n(DLY_RST_2),
 							.i_valid(grayscale_start),
@@ -713,7 +713,7 @@ VGA_Controller		u1	(	//	Host Side
 						);
 
 VGA_Blob_SYNC_Control u12(
-	.i_clk(CLOCK_50),
+	.i_clk(CLOCK2_50),
     .i_rst_n(DLY_RST_2),
     .i_oPROC_CCD(oPROC_CCD),
     .i_VGA_VSYNC(VGA_VS),
