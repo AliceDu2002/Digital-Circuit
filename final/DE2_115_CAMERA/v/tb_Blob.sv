@@ -16,6 +16,7 @@ module tb;
     logic [7:0] count;
     logic i_valid, o_valid;
     logic seq;
+    logic o_sdram_request;
 
     integer fp;
     always #(HCLK) clk = ~clk;
@@ -25,7 +26,8 @@ module tb;
         .i_valid(i_valid),
         .i_seq(seq),
         .o_valid(o_valid),
-        .o_count(count)
+        .o_count(count),
+        .o_sdram_request(o_sdram_request)
     );
     initial begin
         clk = 1;
