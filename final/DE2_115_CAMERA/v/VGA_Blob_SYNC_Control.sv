@@ -68,7 +68,7 @@ always_comb begin
 end
 
 parameter S_WAIT_BLOB = 0;
-parameter S_WAIT_VSYNC_I = 1;
+// parameter S_WAIT_VSYNC_I = 1;
 parameter S_IDLE = 2;
 
 logic[1:0] end_state_r, end_state_w;
@@ -95,7 +95,9 @@ always_comb begin
             end
         end
         S_IDLE: begin
-            end_state_w = S_IDLE;
+            if(i_oPROC_CCD) begin
+                end_state_w = S_WAIT_BLOB;
+            end
         end
     endcase
 end
