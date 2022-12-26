@@ -45,12 +45,12 @@ logic [`PIXEL_ENTRY_SIZE-1:0] largest_category_r, largest_category_w;
 logic [7:0] final_count_r, final_count_w;
 logic o_valid_r, o_valid_w;
 // categorize parameter
-logic prev_r, prev_w;
-logic cur_r, cur_w;
-logic gap_r, gap_w;
-logic splitpoint_r, splitpoint_w;
-logic biggerNum_r, biggerNum_w;
-logic smallerNum_r, smallerNum_w;
+logic [7:0] prev_r, prev_w;
+logic [7:0] cur_r, cur_w;
+logic [7:0] gap_r, gap_w;
+logic [`PIXEL_ENTRY_SIZE-1:0] splitpoint_r, splitpoint_w;
+logic [7:0] biggerNum_r, biggerNum_w;
+logic [7:0] smallerNum_r, smallerNum_w;
 
 assign o_count = final_count_r;
 assign o_valid = o_valid_r;
@@ -244,7 +244,7 @@ always_comb begin
                 end
                 if (curcat_r == final_count_r) begin
                     curcat_r = 0;
-                    
+
                 end
             end
         end
