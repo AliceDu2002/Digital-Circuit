@@ -17,7 +17,7 @@ logic [1:0] state_w;
 logic o_grayscale_start_r;
 logic o_grayscale_start_w;
 
-always @(*) begin
+always_comb begin
     o_grayscale_start_w = o_grayscale_start_r;
     state_w = state_r;
     case(state_r)
@@ -28,7 +28,6 @@ always @(*) begin
             end
             else if (i_oPROC_CCD) begin
                 state_w = S_WAIT_VSYNC_I;
-                o_grayscale_start_w = 1;
             end
         end
         S_WAIT_VSYNC_I: begin
@@ -38,7 +37,6 @@ always @(*) begin
             end
         end
         S_WAIT_OPROC_N: begin
-            o_grayscale_start_w = 1;
             if(~i_oPROC_CCD && i_VGA_VSYNC) begin
                 state_w = S_WAIT_OPROC;
                 o_grayscale_start_w = 0;
@@ -47,6 +45,11 @@ always @(*) begin
                 state_w = S_WAIT_VSYNC_II;
                 o_grayscale_start_w = 1;
             end
+            else begin
+                o_grayscale_start_w = 1;
+                state_w = S_WAIT_OPROC_N;
+            end
+
         end
         S_WAIT_VSYNC_II: begin
             if(i_VGA_VSYNC) begin
