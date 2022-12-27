@@ -24,17 +24,17 @@ module tb;
 
     integer fp;
     always #(HCLK) clk = ~clk;
-    Blob_categorize blob(
+    Blob_pipeline blob(
         .i_clk(clk),
         .i_rst_n(rst_n),
         .i_valid(i_valid),
         .i_seq(seq),
-        .i_switch(switch),
+        // .i_switch(switch),
         .o_valid(o_valid),
         .o_count(count),
-        .o_sdram_request(o_sdram_request),
-        .o_smaller(smaller),
-        .o_bigger(bigger)
+        .o_sdram_request(o_sdram_request)
+        // .o_smaller(smaller),
+        // .o_bigger(bigger)
     );
     initial begin
         clk = 1;
