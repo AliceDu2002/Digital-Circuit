@@ -475,6 +475,8 @@ wire     [7:0]   count;
 wire			Read_blob;
 wire			oPROC_CCD;
 wire			blob_ready;
+wire	[7:0]	bigger_count;
+wire	[7:0]	smaller_count;
 
 
 
@@ -561,10 +563,12 @@ RAW2RGB				u4	(	.iCLK(D5M_PIXLCLK),
 //Frame count display
 SEG7_LUT_8 			u5	(	.oSEG0(HEX0),.oSEG1(HEX1),
 							.oSEG2(HEX2),.oSEG3(HEX3),
-							//.oSEG4(HEX4),.oSEG5(HEX5),
+							.oSEG4(HEX4),.oSEG5(HEX5),
 							.oSEG6(HEX6),.oSEG7(HEX7),
 							.iCOLOR((o_valid) ? count : 0),
-							.iDIG(Frame_Cont[31:0])
+							.iDIG(Frame_Cont[31:0]),
+							.iBig((SW[12] && o_valid) ? bigger_count : 0),
+							.iSmall((SW[12] && o_valid) ? smaller_count : 0)
 						);
 
 sdram_pll 			u6	(
@@ -662,15 +666,18 @@ I2C_CCD_Config 		u8	(	//	Host Side
 							.I2C_SCLK(D5M_SCLK),
 							.I2C_SDAT(D5M_SDATA)
 						);
-Blob_pipeline u10(
+Blob_final u10(
 							.i_clk(VGA_CTRL_CLK),
 							.i_rst_n(DLY_RST_2),
 							.i_valid(oPROC_CCD && VGA_VS),
 							.i_proc_ccd(oPROC_CCD),
 							.i_data_valid(Read_vga),
 							.i_seq(grayscale_bw),
+							// .i_switch(SW[12]),
 							.o_valid(o_valid),
-							.o_count(count)
+							.o_count(count),
+							.o_bigger(bigger_count),
+							.o_smaller(smaller_count)
 );
 //VGA DISPLAY
 VGA_Controller		u1	(	//	Host Side
@@ -692,10 +699,10 @@ VGA_Controller		u1	(	//	Host Side
 							.iZOOM_MODE_SW(SW[16]),
 							.oCOLOR(grayscale_bw)
 						);
-SevenHexDecoder u11(
-	.i_hex(count[4:0]),
-	.o_seven_ten(HEX5),
-	.o_seven_one(HEX4)
-);
+// SevenHexDecoder u11(
+// 	.i_hex(count[4:0]),
+// 	.o_seven_ten(HEX5),
+// 	.o_seven_one(HEX4)
+// );
 
 endmodule
