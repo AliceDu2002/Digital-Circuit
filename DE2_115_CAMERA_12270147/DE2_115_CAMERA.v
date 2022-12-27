@@ -667,7 +667,7 @@ Blob_pipeline u10(
 							.i_rst_n(DLY_RST_2),
 							.i_valid(oPROC_CCD && VGA_VS),
 							.i_proc_ccd(oPROC_CCD),
-							.i_data_valid(oRequest),
+							.i_data_valid(Read_vga),
 							.i_seq(grayscale_bw),
 							.o_valid(o_valid),
 							.o_count(count)
